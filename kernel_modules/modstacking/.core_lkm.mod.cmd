@@ -1,0 +1,1 @@
+cmd_/home/rama/Downloads/Vector/kernel_modules/modstacking/core_lkm.mod := { echo  /home/rama/Downloads/Vector/kernel_modules/modstacking/core_lkm.o;  echo; } > /home/rama/Downloads/Vector/kernel_modules/modstacking/core_lkm.mod

@@ -1,0 +1,1 @@
+cmd_/home/rama/Downloads/Vector/kernel_modules/modstacking/user_lkm.mod := { echo  /home/rama/Downloads/Vector/kernel_modules/modstacking/user_lkm.o;  echo; } > /home/rama/Downloads/Vector/kernel_modules/modstacking/user_lkm.mod

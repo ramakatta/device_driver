@@ -1,0 +1,1 @@
+cmd_/home/rama/Downloads/Vector/kernel_modules/modstacking/Module.symvers := sed 's/\.ko$$/\.o/' /home/rama/Downloads/Vector/kernel_modules/modstacking/modules.order | scripts/mod/modpost -m -a  -o /home/rama/Downloads/Vector/kernel_modules/modstacking/Module.symvers -e -i Module.symvers   -T -

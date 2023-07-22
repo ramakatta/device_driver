@@ -1,0 +1,1 @@
+cmd_/home/rama/Downloads/Vector/kernel_modules/modstacking/core_lkm.ko := ld -r  -m elf_x86_64  --build-id=sha1  -T scripts/module.lds -o /home/rama/Downloads/Vector/kernel_modules/modstacking/core_lkm.ko /home/rama/Downloads/Vector/kernel_modules/modstacking/core_lkm.o /home/rama/Downloads/Vector/kernel_modules/modstacking/core_lkm.mod.o;  true

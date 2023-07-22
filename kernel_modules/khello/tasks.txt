@@ -1,0 +1,7 @@
+1. Try commenting module_exit() macro, build, load and try unloading
+
+2. Change MODULE_LICENSE("GPL") to MODULE_LICENSE("Proprietary")
+
+3. Return -1 in khello_init(), Return 1 in khello_init()
+
+
