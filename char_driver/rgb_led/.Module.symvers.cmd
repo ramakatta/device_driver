@@ -1,1 +1,0 @@
-cmd_/home/rama/Downloads/Manipal/kernel_space/raspberry/rgb_led/Module.symvers :=  sed 's/ko$$/o/'  /home/rama/Downloads/Manipal/kernel_space/raspberry/rgb_led/modules.order | scripts/mod/modpost -m -a    -o /home/rama/Downloads/Manipal/kernel_space/raspberry/rgb_led/Module.symvers -e -i Module.symvers -T - 
