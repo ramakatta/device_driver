@@ -10,10 +10,11 @@ Course content
    	- Configuring, Building and Installing customized Kernel.
    	- Boot process on X86 machine
   	Lab Tasks
-	a. Download  latest kernel version on Ubuntu machine.Configure debug kernel options. 
-   	   Boot Ubuntumachine with customized kernel.
+	a. Download  latest kernel version on Ubuntu machine.
+           Configure debug kernel options. 
+   	   Boot Ubuntu machine with a customized kernel.
 	b. Open grub.cfg file explore the options of new kernel configuration 
-2. Embedded Linux
+3. Embedded Linux
 	- Overview of Embedded Linux System Architecture
 	- Boot loader, root file system, Boot process on ARM
 	- Cross compilation, Tool Chain installation.
@@ -21,7 +22,7 @@ Course content
 	a. Flash Raspberry Pi SD image,
 	b. Cross compile and porting GPIO/I2C application on Raspberry Pi board
 	c. Build customized kernel for Raspberry Pi, port on board
-3. Modules & Device drivers
+4. Modules & Device drivers
 	- Mechanism vs. Policy
 	- How Applications Use Device Drivers
 	- Walking Through a System Call Accessing a Device
@@ -33,7 +34,7 @@ Course content
 	a. Set up the environment to compile kernel module on Raspberry PI board.
 	b. Write a kernel module with capabilities
 	c. Access kernel internals from your module.
-4. Character Devices
+5. Character Devices
 	- Device Nodes
 	- Major and Minor Numbers
 	- Reserving Major/Minor Numbers
