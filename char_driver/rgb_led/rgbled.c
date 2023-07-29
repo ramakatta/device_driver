@@ -129,7 +129,7 @@ int init_module(void)
 		return -1;
 	 }
 	 gpio_direction_output(gpio_array[i], 0);
-         /* Using this call the GPIO 21 will be visible in /sys/class/gpio/
+         /* Using this call the GPIO 20 will be visible in /sys/class/gpio/
  	  ** Now you can change the gpio values by using below commands also.
 	  ** echo 1 > /sys/class/gpio/gpio21/value  (turn ON the LED)
 	  ** echo 0 > /sys/class/gpio/gpio21/value  (turn OFF the LED)
