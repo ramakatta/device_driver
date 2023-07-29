@@ -1,0 +1,1 @@
+cmd_/home/rama/Downloads/Manipal/kernel_space/raspberry/rgb_led/rgbled.ko := arm-linux-gnueabihf-ld -r -EL -z noexecstack --build-id=sha1  -T scripts/module.lds -o /home/rama/Downloads/Manipal/kernel_space/raspberry/rgb_led/rgbled.ko /home/rama/Downloads/Manipal/kernel_space/raspberry/rgb_led/rgbled.o /home/rama/Downloads/Manipal/kernel_space/raspberry/rgb_led/rgbled.mod.o;  true
