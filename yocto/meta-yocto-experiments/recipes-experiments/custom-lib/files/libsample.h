@@ -1,0 +1,3 @@
+void samplelib();
+void function();
+               

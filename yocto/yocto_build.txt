@@ -1,0 +1,14 @@
+$ sudo apt update
+$ sudo apt install git git-lfs tar python3 python3-pip gcc
+$ sudo apt install gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev pylint3 xterm python3-subunit mesa-common-dev zstd liblz4-tool
+$ sudo apt install make python3-pip
+$ sudo pip3 install sphinx sphinx_rtd_theme pyyaml
+$ mkdir yocto
+$ cd yocto
+$ git clone git://git.yoctoproject.org/poky
+$ cd poky
+$ git checkout -b dunfell origin/dunfell
+$ source oe-init-build-env <name of your build directory>
+$ bitbake core-image-sato --runall=fetch
+$ bitbake core-image-sato
+$ runqemu nographic
