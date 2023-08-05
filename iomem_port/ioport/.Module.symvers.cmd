@@ -1,0 +1,1 @@
+cmd_/home/rama/Downloads/Manipal/kernel_space/iomem_port/ioport/Module.symvers := sed 's/\.ko$$/\.o/' /home/rama/Downloads/Manipal/kernel_space/iomem_port/ioport/modules.order | scripts/mod/modpost -m -a  -o /home/rama/Downloads/Manipal/kernel_space/iomem_port/ioport/Module.symvers -e -i Module.symvers   -T -

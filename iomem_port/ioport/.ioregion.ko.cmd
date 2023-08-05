@@ -1,0 +1,1 @@
+cmd_/home/rama/Downloads/Manipal/kernel_space/iomem_port/ioport/ioregion.ko := ld -r  -m elf_x86_64  --build-id=sha1  -T scripts/module.lds -o /home/rama/Downloads/Manipal/kernel_space/iomem_port/ioport/ioregion.ko /home/rama/Downloads/Manipal/kernel_space/iomem_port/ioport/ioregion.o /home/rama/Downloads/Manipal/kernel_space/iomem_port/ioport/ioregion.mod.o;  true
