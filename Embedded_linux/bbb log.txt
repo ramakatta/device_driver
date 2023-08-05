@@ -1,0 +1,137 @@
+http://wiki.beyondlogic.org/index.php/BeagleBoneBlack_Building_Kernel
+U-Boot# usb start
+(Re)start USB...
+USB0:   scanning bus 0 for devices... 1 USB Device(s) found
+       scanning usb for storage devices... 1 Storage Device(s) found
+U-Boot# fatls usb 0
+   102794   88.vbs
+  4538208   uimage
+    27103   am335x-boneblack.dtb
+
+3 file(s), 0 dir(s)
+
+U-Boot# fatload usb 0 0x82000000 uimage
+reading uimage
+4538208 bytes read in 3005 ms (1.4 MiB/s)
+U-Boot# fatload usb 0 0x88000000 am335x-boneblack.dtb
+reading am335x-boneblack.dtb
+27103 bytes read in 46 ms (575.2 KiB/s)
+U-Boot# setenv bootargs console=ttyO0,115200n8 quiet root=/dev/mmcblk0p2 ro rootfstype=ext4 rootwait
+U-Boot# bootm 0x82000000 - 0x88000000
+## Booting kernel from Legacy Image at 82000000 ...
+   Image Name:   Linux-3.12.9-00110-g089111c-dirt
+   Image Type:   ARM Linux Kernel Image (uncompressed)
+   Data Size:    4538144 Bytes = 4.3 MiB
+   Load Address: 80008000
+   Entry Point:  80008000
+   Verifying Checksum ... OK
+## Flattened Device Tree blob at 88000000
+   Booting using the fdt blob at 0x88000000
+   Loading Kernel Image ... OK
+   Using Device Tree in place at 88000000, end 880099de
+
+Starting kernel ...
+
+[    0.223920] bone-capemgr bone_capemgr.6: slot #0: No cape found
+[    0.267922] bone-capemgr bone_capemgr.6: slot #1: No cape found
+[    0.311918] bone-capemgr bone_capemgr.6: slot #2: No cape found
+[    0.355918] bone-capemgr bone_capemgr.6: slot #3: No cape found
+[    0.368240] musb-hdrc musb-hdrc.0.auto: Falied to request rx1.
+[    0.377730] musb-hdrc musb-hdrc.1.auto: Falied to request rx1.
+[    0.472363] /cpus/cpu@0: could not find phandle
+INIT: version 2.88 booting
+[info] Using makefile-style concurrent boot in runlevel S.
+[    0.958910] usb 2-1: device v13fe p3100 is not supported
+findfs: unable to resolve 'UUID=c406def9-89aa-4c0d-ba4e-9b9d598f3c58'
+[ ok ] Starting the hotplug events dispatcher: udevd.
+[....] Synthesizing the initial hotplug events...[    2.003128] bone-capemgr bone_capemgr.6: failed to load firmware 'BB-BONE-EMMC-2G-00A0.dtbo'
+[    2.012135] bone-capemgr bone_capemgr.6: loader: failed to load slot-4 BB-BONE-EMMC-2G:00A0 (prio 1)
+[ ok                                             done.
+[....] Waiting for /dev to be fully populated...[    3.822023] bone-capemgr bone_capemgr.6: failed to load firmware 'BB-BONELT-HDMI-00A0.dtbo'
+[    3.830935] bone-capemgr bone_capemgr.6: loader: failed to load slot-5 BB-BONELT-HDMI:00A0 (prio 1)
+[    3.866909] bone-capemgr bone_capemgr.6: failed to load firmware 'BB-BONELT-HDMIN-00A0.dtbo'
+[    3.875932] bone-capemgr bone_capemgr.6: loader: failed to load slot-6 BB-BONELT-HDMIN:00A0 (prio 2)
+done.
+[ ok ] Setting preliminary keymap...done.
+[ ok ] Setting parameters of disc: (none).
+[ ok ] Activating swap...done.
+[....] Checking root file system...fsck from util-linux 2.20.1
+rootfs: clean, 77338/230144 files, 399751/919296 blocks
+done.
+[ ok ] Cleaning up temporary files... /tmp.
+[info] Loading kernel module mt7601Usta.
+libkmod: ERROR ../libkmod/libkmod.c:554 kmod_search_moddep: could not open moddep file '/lib/modules/3.12.9-00110-g089111c-dirty/modules.dep.bin'
+[ ok ] Activating lvm and md swap...done.
+[....] Checking file systems...fsck from util-linux 2.20.1
+done.
+[ ok ] Mounting local filesystems...done.
+[ ok ] Activating swapfile swap...done.
+[ ok ] Cleaning up temporary files....
+[ ok ] Setting kernel variables ...done.
+[ ok ] Configuring network interfaces...done.
+[ ok ] Cleaning up temporary files....
+[ ok ] Setting up ALSA...done.
+[info] Setting console screen modes.
+setterm: cannot (un)set powersave mode: Inappropriate ioctl for device
+[info] Skipping font and keymap setup (handled by console-setup).
+[ ok ] Setting up console font and keymap...done.
+[ ok ] Setting up X socket directories... /tmp/.X11-unix /tmp/.ICE-unix.
+INIT: Entering runlevel: 2
+[info] Using makefile-style concurrent boot in runlevel 2.
+[ ok ] Starting enhanced syslogd: rsyslogd.
+[ ok ] Starting Remote Desktop Protocol server : xrdp sesman.
+[....] Starting ACPI services...RTNETLINK1 answers: No such file or directory
+acpid: error talking to the kernel via netlink
+. ok
+[....] Starting web server: apache2apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1 for ServerName
+. ok
+[ ok ] Loading cpufreq kernel modules...done (none).
+[ ok ] Starting periodic command scheduler: cron.
+[ ok ] Starting system message bus: dbus.
+[ ok ] Starting Avahi mDNS/DNS-SD Daemon: avahi-daemon.
+[ ok ] CPUFreq Utilities: Setting ondemand CPUFreq governor...CPU0...done.
+[ ok ] Starting Light Display Manager: lightdm.
+saned disabled; edit /etc/default/saned
+[ ok ] Starting OpenBSD Secure Shell server: sshd.
+Starting very small Busybox based DHCP server: Starting /usr/sbin/udhcpd...
+udhcpd.
+[ ok ] Starting Network connection manager: wicd.
+
+Debian GNU/Linux 7 beaglebone ttyO0
+
+default username:password is [debian:temppwd]
+
+Support/FAQ: http://elinux.org/Beagleboard:BeagleBoneBlack_Debian
+
+beaglebone login: root
+Last login: Wed Apr 23 20:20:31 UTC 2014 from sat-laptop.local on pts/0
+Linux beaglebone 3.12.9-00110-g089111c-dirty #1 SMP Fri Feb 27 03:06:57 PST 2015 armv7l
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+root@beaglebone:~# u[   26.187736] libphy: PHY 4a101000.mdio:01 not found
+[   26.193050] net eth0: phy 4a101000.mdio:01 not found on slave 1
+name -r
+3.12.9-00110-g089111c-dirty
+root@beaglebone:~#
+
+
+Kernel image, root fs, dtb
+
+1. kernel image and dtb 
+    -> mount rootfs
+       flash,sdcard, nfs ..
+     root=/dev/mmcblk0p2 ro rootfstype=ext4
+
+2. Kernel image, root fs, dtb
+     RAM root=/dev/ram
+
+3. (Kernel image + root fs), dtb
+     RAM root=/dev/ram
+   via - make menuconfig
+
+

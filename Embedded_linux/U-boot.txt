@@ -1,0 +1,7 @@
+U-boot files:
+
+1. T1040RDB/include/autoconf.mk
+1. arch/powerpc/cpu/mpc85xx/start.S ->board_init_r
+2. arch/powerpc/lib/board.c -> board_init_r
+	--- eth_initialize
+3. drivers/net/eth.c ---eth_initialize
