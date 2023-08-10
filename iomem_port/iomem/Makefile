@@ -1,4 +1,4 @@
-obj-m := iomem_reg.o
+obj-m := iomem.o
 #obj-m += ioresource.o
 #obj-m += iomap.o
 
