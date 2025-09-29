@@ -1,0 +1,1 @@
+savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/Kernel_Sync/kthread_simple/kthread_simple.mod := printf '%s\n'   kthread_simple.o | awk '!x[$$0]++ { print("/home/rama/Downloads/Vector_DD/Vector_DD/Kernel_Sync/kthread_simple/"$$0) }' > /home/rama/Downloads/Vector_DD/Vector_DD/Kernel_Sync/kthread_simple/kthread_simple.mod

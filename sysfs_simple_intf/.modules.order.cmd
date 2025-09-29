@@ -1,0 +1,1 @@
+savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/sysfs_simple_intf/modules.order := {   echo /home/rama/Downloads/Vector_DD/Vector_DD/sysfs_simple_intf/sysfs_simple_intf.o; :; } > /home/rama/Downloads/Vector_DD/Vector_DD/sysfs_simple_intf/modules.order

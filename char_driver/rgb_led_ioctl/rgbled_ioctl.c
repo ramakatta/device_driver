@@ -95,7 +95,7 @@ int init_module(void)
   	printk("Major : %u\n", MAJOR(devno));
   	printk("Minor : %u\n", MINOR(devno));
 
-        myclass = class_create(THIS_MODULE, DEVICE_NAME);
+        myclass = class_create(DEVICE_NAME);
 
         for (i=0; i<NUM_GPIO_LED; i++)
         {
@@ -228,6 +228,7 @@ static long my_ioctl(  struct file *filp,
                             unsigned int cmd,
                             unsigned long arg)
 {
+	struct gpio_desc *desc;
  /*	step 1: verify args */
 
         char port;
@@ -254,6 +255,8 @@ static long my_ioctl(  struct file *filp,
 			pr_info("gpio %d is request error \n",port);
 			return -1;
 	 	}
+
+		desc = gpio_to_desc(port);
 	 	gpio_direction_output(port, 0);
          	/* Using this call the GPIO 20 will be visible in /sys/class/gpio/
  	 	 ** Now you can change the gpio values by using below commands also.
@@ -263,7 +266,7 @@ static long my_ioctl(  struct file *filp,
   	  	** 
   	  	** the second argument prevents the direction from being changed.
   		*/
-  		gpio_export(port, false);
+  		gpiod_export(port, false); 
                 break;
 	  default:
 		pr_info("Invlaid parameter\n");

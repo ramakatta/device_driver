@@ -1,0 +1,4 @@
+Explore the multifile kernel feature using below makefile
+https://elixir.bootlin.com/linux/v6.16.4/source/drivers/net/ethernet/xilinx/Makefile
+Find similar explore in kernel source tree
+

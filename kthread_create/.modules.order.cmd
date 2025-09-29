@@ -1,0 +1,1 @@
+savedcmd_/home/rama/Downloads/Manipal/kernel_space/kthread_create/modules.order := {   echo /home/rama/Downloads/Manipal/kernel_space/kthread_create/kt.o; :; } > /home/rama/Downloads/Manipal/kernel_space/kthread_create/modules.order

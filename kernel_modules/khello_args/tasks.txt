@@ -1,0 +1,14 @@
+write kernel module using module_param_array macro
+/*
+ * module_param_array(name, type, nump, perm)
+ * name  = variable name
+ * type  = data type (int, charp, etc.)
+ * nump  = pointer to integer that will store number of parameters set
+ * perm  = file permission bits (for sysfs)
+ */
+module_param_array(myarr, int, &arr_count, 0660);
+MODULE_PARM_DESC(myarr, "An integer array of max 5 elements");
+
+Pass the array as below
+sudo insmod param_array.ko myarr=5,10,15
+

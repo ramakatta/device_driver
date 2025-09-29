@@ -1,1 +1,1 @@
-cmd_/home/rama/Downloads/Vector/kernel_modules/modstacking/core_lkm.ko := ld -r  -m elf_x86_64  --build-id=sha1  -T scripts/module.lds -o /home/rama/Downloads/Vector/kernel_modules/modstacking/core_lkm.ko /home/rama/Downloads/Vector/kernel_modules/modstacking/core_lkm.o /home/rama/Downloads/Vector/kernel_modules/modstacking/core_lkm.mod.o;  true
+savedcmd_core_lkm.ko := ld -r -m elf_x86_64 -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T /usr/src/linux-headers-6.14.0-28-generic/scripts/module.lds -o core_lkm.ko core_lkm.o core_lkm.mod.o .module-common.o

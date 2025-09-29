@@ -1,0 +1,1 @@
+cmd_/home/rama/Downloads/Vector_DD/char_driver/Dynamically_Allocate/Module.symvers := sed 's/\.ko$$/\.o/' /home/rama/Downloads/Vector_DD/char_driver/Dynamically_Allocate/modules.order | scripts/mod/modpost -m -a  -o /home/rama/Downloads/Vector_DD/char_driver/Dynamically_Allocate/Module.symvers -e -i Module.symvers   -T -

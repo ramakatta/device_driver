@@ -1,0 +1,1 @@
+savedcmd_misc_driver.ko := ld -r -m elf_x86_64 -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T /usr/src/linux-headers-6.14.0-28-generic/scripts/module.lds -o misc_driver.ko misc_driver.o misc_driver.mod.o .module-common.o

@@ -1,0 +1,2 @@
+1. Use the lsmod command to explore loaded kernel modules. From its output, identify a dependency module, and then verify the dependency details in /usr/lib/modules/$(uname -r)/modules.dep
+2. what is namespace pollution in linux kernel. Fix the issue in fix_me folder.

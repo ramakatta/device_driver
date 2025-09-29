@@ -1,0 +1,1 @@
+savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/sysfs_simple_intf/sysfs_simple_intf.mod := printf '%s\n'   sysfs_simple_intf.o | awk '!x[$$0]++ { print("/home/rama/Downloads/Vector_DD/Vector_DD/sysfs_simple_intf/"$$0) }' > /home/rama/Downloads/Vector_DD/Vector_DD/sysfs_simple_intf/sysfs_simple_intf.mod

@@ -1,0 +1,1 @@
+savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/per_cpu/Module.symvers :=  scripts/mod/modpost -M -m -a      -o /home/rama/Downloads/Vector_DD/Vector_DD/per_cpu/Module.symvers -T /home/rama/Downloads/Vector_DD/Vector_DD/per_cpu/modules.order -i Module.symvers -e 

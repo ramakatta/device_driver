@@ -1,0 +1,1 @@
+savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/Kernel_Sync/kthread_even_odd/Module.symvers :=  scripts/mod/modpost -M -m -a      -o /home/rama/Downloads/Vector_DD/Vector_DD/Kernel_Sync/kthread_even_odd/Module.symvers -T /home/rama/Downloads/Vector_DD/Vector_DD/Kernel_Sync/kthread_even_odd/modules.order -i Module.symvers -e 

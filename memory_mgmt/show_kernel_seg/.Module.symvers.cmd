@@ -1,0 +1,1 @@
+savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/memory_mgmt/show_kernel_seg/Module.symvers :=  scripts/mod/modpost -m -a      -o /home/rama/Downloads/Vector_DD/Vector_DD/memory_mgmt/show_kernel_seg/Module.symvers -T /home/rama/Downloads/Vector_DD/Vector_DD/memory_mgmt/show_kernel_seg/modules.order -i Module.symvers -e 

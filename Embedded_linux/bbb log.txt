@@ -119,6 +119,35 @@ name -r
 3.12.9-00110-g089111c-dirty
 root@beaglebone:~#
 
+##########################################################################
+###################U-Boot emmc #######################################
+U-Boot# fatload mmc 0 0x82000000 uimage
+reading uimage
+4538208 bytes read in 3005 ms (1.4 MiB/s)
+U-Boot# fatload mmc 0 0x88000000 am335x-boneblack.dtb
+reading am335x-boneblack.dtb
+27103 bytes read in 46 ms (575.2 KiB/s)
+U-Boot# setenv bootargs console=ttyO0,115200n8 quiet root=/dev/mmcblk0p2 ro rootfstype=ext4 rootwait
+U-Boot# bootm 0x82000000 - 0x88000000
+
+
+##########################################################################
+###################U-Boot tftpboot#######################################
+setenv ipaddr 192.168.0.250
+setenv serverip 192.168.0.251
+tftpboot 0x80F80000 am335x-boneblack.dtb
+tftpboot 0x80007FC0 uImage-BBB
+setenv bootargs console=ttyO0,115200n8 root=/dev/mmcblk0p2 ro rootfstype=ext4 rootwait
+bootm 0x80007FC0 - 0x80F80000
+##############################################################################
+
+
+#########################################################################
+################JTAG Interface###########################################
+xmd% dow -data devicetree.dtb 0x2a000000
+xmd% dow -data uramdisk.image.gz 0x2000000
+xmd% dow -data uImage 0x3000000
+#########################################################################
 
 Kernel image, root fs, dtb
 

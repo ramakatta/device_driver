@@ -98,7 +98,7 @@ static int __init etx_driver_init(void)
         /*Creating struct class*/
         if(IS_ERR(dev_class = class_create(THIS_MODULE,"etx_class"))){
             pr_err("Cannot create the struct class\n");
-            goto r_class;
+            goto r_cdev;
         }
 
         /*Creating device*/
@@ -111,6 +111,8 @@ static int __init etx_driver_init(void)
 
 r_device:
         class_destroy(dev_class);
+r_cdev:
+        cdev_del(&etx_cdev);
 r_class:
         unregister_chrdev_region(dev,1);
         return -1;

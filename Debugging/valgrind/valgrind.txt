@@ -1,0 +1,60 @@
+#include <stdlib.h>
+int main()
+{
+    char *x = malloc(100); /* or, in C++, "char *x = new char[100] */
+    return 0;
+}
+
+apt  install valgrind
+valgrind --show-reachable=yes --leak-check=full ./valg
+
+The strace command allows us to trace the system calls made by a program. This is
+useful for debugging, or simply to find out what a program is doing. In its simplest
+form, we use strace as follows:
+$ strace command arg...
+This runs command, with the given command-line arguments, producing a trace of
+the system calls it makes. By default, strace writes its output to stderr, but we can
+change this using the –o filename option.
+$srace ls
+execve("/usr/bin/ls", ["ls"], 0x7ffff7bc6470 /* 52 vars */) = 0
+brk(NULL)                               = 0x556970e01000
+arch_prctl(0x3001 /* ARCH_??? */, 0x7ffd4d7d0ce0) = -1 EINVAL (Invalid argument)
+access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+fstat(3, {st_mode=S_IFREG|0644, st_size=81048, ...}) = 0
+mmap(NULL, 81048, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f01dff43000
+close(3)                                = 0
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libselinux.so.1", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0@p\0\0\0\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0644, st_size=163200, ...}) = 0
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f01dff41000
+mmap(NULL, 174600, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f01dff16000
+mprotect(0x7f01dff1c000, 135168, PROT_NONE) = 0
+
+Simple commands for using strace
+
+1. simple usage
+   strace ls
+
+2. trace a particular system call(s)
+   strace -e read ls
+   strace -e trace=open,read,write,close ls
+
+3. print time stamp for each call when it got executed
+   strace -t ls
+
+4. print execution time for each system call
+   strace -r ls
+   strace -r ./usb_out 
+
+5. Get statistical report of system call
+   strace -c ls
+
+6. Attach strace to a running program
+   ps -C firefox
+   strace -p firefox_process_id
+
+
+
+
+

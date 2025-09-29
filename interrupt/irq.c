@@ -28,6 +28,7 @@ static irqreturn_t isr_routine(int irq, void *dev_id)
 {
 printk("in_interrupt: %d\n", in_interrupt());
 printk("in_irq : %d\n", in_irq());
+printk("in_task: %d\n", in_task());
 printk("Happy days\n");
 return IRQ_HANDLED;
 }

@@ -1,2 +1,1 @@
-/home/rama/Downloads/Vector/kernel_modules/modstacking/core_lkm.o
-
+./core_lkm.o

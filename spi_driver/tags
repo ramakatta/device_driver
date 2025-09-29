@@ -1,0 +1,46 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	//
+ETX_SSD1306_ClearDisplay	ssd1306.c	/^void ETX_SSD1306_ClearDisplay( void )$/;"	f	typeref:typename:void
+ETX_SSD1306_DeactivateScroll	ssd1306.c	/^void ETX_SSD1306_DeactivateScroll( void )$/;"	f	typeref:typename:void
+ETX_SSD1306_DisplayDeInit	ssd1306.c	/^void ETX_SSD1306_DisplayDeInit(void)$/;"	f	typeref:typename:void
+ETX_SSD1306_DisplayInit	ssd1306.c	/^int ETX_SSD1306_DisplayInit(void)$/;"	f	typeref:typename:int
+ETX_SSD1306_GoToNextLine	ssd1306.c	/^void ETX_SSD1306_GoToNextLine( void )$/;"	f	typeref:typename:void
+ETX_SSD1306_InvertDisplay	ssd1306.c	/^void ETX_SSD1306_InvertDisplay(bool need_to_invert)$/;"	f	typeref:typename:void
+ETX_SSD1306_PrintChar	ssd1306.c	/^void ETX_SSD1306_PrintChar( unsigned char c )$/;"	f	typeref:typename:void
+ETX_SSD1306_PrintLogo	ssd1306.c	/^void ETX_SSD1306_PrintLogo( void )$/;"	f	typeref:typename:void
+ETX_SSD1306_ResetDcDeInit	ssd1306.c	/^static void ETX_SSD1306_ResetDcDeInit( void )$/;"	f	typeref:typename:void	file:
+ETX_SSD1306_ResetDcInit	ssd1306.c	/^static int ETX_SSD1306_ResetDcInit( void )$/;"	f	typeref:typename:int	file:
+ETX_SSD1306_SetBrightness	ssd1306.c	/^void ETX_SSD1306_SetBrightness(uint8_t brightnessValue)$/;"	f	typeref:typename:void
+ETX_SSD1306_SetCursor	ssd1306.c	/^void ETX_SSD1306_SetCursor( uint8_t lineNo, uint8_t cursorPos )$/;"	f	typeref:typename:void
+ETX_SSD1306_StartScrollHorizontal	ssd1306.c	/^void ETX_SSD1306_StartScrollHorizontal( bool is_left_scroll,$/;"	f	typeref:typename:void
+ETX_SSD1306_StartScrollVerticalHorizontal	ssd1306.c	/^void ETX_SSD1306_StartScrollVerticalHorizontal( $/;"	f	typeref:typename:void
+ETX_SSD1306_String	ssd1306.c	/^void ETX_SSD1306_String(char *str)$/;"	f	typeref:typename:void
+ETX_SSD1306_Write	ssd1306.c	/^static int ETX_SSD1306_Write( bool is_cmd, uint8_t data )$/;"	f	typeref:typename:int	file:
+ETX_SSD1306_fill	ssd1306.c	/^void ETX_SSD1306_fill( uint8_t data )$/;"	f	typeref:typename:void
+ETX_SSD1306_setDc	ssd1306.c	/^static void ETX_SSD1306_setDc( uint8_t value )$/;"	f	typeref:typename:void	file:
+ETX_SSD1306_setRst	ssd1306.c	/^static void ETX_SSD1306_setRst( uint8_t value )$/;"	f	typeref:typename:void	file:
+KDIR	Makefile	/^KDIR = \/lib\/modules\/$(shell uname -r)\/build$/;"	m
+SPI_BUS_NUM	ssd1306.h	/^#define SPI_BUS_NUM /;"	d
+SSD1306_CursorPos	ssd1306.c	/^static uint8_t SSD1306_CursorPos = 0;$/;"	v	typeref:typename:uint8_t	file:
+SSD1306_DC_PIN	ssd1306.h	/^#define SSD1306_DC_PIN /;"	d
+SSD1306_DEF_FONT_SIZE	ssd1306.h	/^#define SSD1306_DEF_FONT_SIZE /;"	d
+SSD1306_FontSize	ssd1306.c	/^static uint8_t SSD1306_FontSize  = SSD1306_DEF_FONT_SIZE;$/;"	v	typeref:typename:uint8_t	file:
+SSD1306_LineNum	ssd1306.c	/^static uint8_t SSD1306_LineNum   = 0;$/;"	v	typeref:typename:uint8_t	file:
+SSD1306_MAX_LINE	ssd1306.h	/^#define SSD1306_MAX_LINE /;"	d
+SSD1306_MAX_SEG	ssd1306.h	/^#define SSD1306_MAX_SEG /;"	d
+SSD1306_RST_PIN	ssd1306.h	/^#define SSD1306_RST_PIN /;"	d
+SSD1306_font	ssd1306.c	/^static const unsigned char SSD1306_font[][SSD1306_DEF_FONT_SIZE]= $/;"	v	typeref:typename:const unsigned char[][]	file:
+all	Makefile	/^all:$/;"	t
+clean	Makefile	/^clean:$/;"	t
+etx_logo	ssd1306.c	/^static const uint8_t etx_logo[1024] = {$/;"	v	typeref:typename:const uint8_t[1024]	file:
+etx_spi_device	spi_ssd1306_driver.c	/^static struct spi_device *etx_spi_device;$/;"	v	typeref:struct:spi_device *	file:
+etx_spi_device_info	spi_ssd1306_driver.c	/^struct spi_board_info etx_spi_device_info = $/;"	v	typeref:struct:spi_board_info
+etx_spi_exit	spi_ssd1306_driver.c	/^static void __exit etx_spi_exit(void)$/;"	f	typeref:typename:void __exit	file:
+etx_spi_init	spi_ssd1306_driver.c	/^static int __init etx_spi_init(void)$/;"	f	typeref:typename:int __init	file:
+etx_spi_write	spi_ssd1306_driver.c	/^int etx_spi_write( uint8_t data )$/;"	f	typeref:typename:int
+spissd1306-objs	Makefile	/^spissd1306-objs := spi_ssd1306_driver.o ssd1306.o$/;"	m

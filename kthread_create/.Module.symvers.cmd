@@ -1,0 +1,1 @@
+savedcmd_/home/rama/Downloads/Manipal/kernel_space/kthread_create/Module.symvers :=  scripts/mod/modpost -M -m -a      -o /home/rama/Downloads/Manipal/kernel_space/kthread_create/Module.symvers -T /home/rama/Downloads/Manipal/kernel_space/kthread_create/modules.order -i Module.symvers -e 

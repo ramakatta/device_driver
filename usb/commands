@@ -1,0 +1,17 @@
+ grep -l 002/002 /sys/bus/usb/devices/*/uevent
+ lsusb
+ lsblk
+ mount | grep sdb
+ dmesg
+ echo '2-2' > /sys/bus/usb/drivers/usb/unbind
+ lsblk
+ lsusb
+ lsmod | head -5
+ rmmod uas
+ rmmod usb_storage
+ insmod usb_kernel.ko
+ echo '2-2' > /sys/bus/usb/drivers/usb/bind #ON
+ 
+ 
+ sudo apt-get install libusb-1.0-0-dev
+g++ test.cpp -lpthread -I/usr/local/include/libusb-1.0 -lusb-1.0

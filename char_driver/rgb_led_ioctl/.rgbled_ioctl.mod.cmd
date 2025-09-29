@@ -1,0 +1,1 @@
+savedcmd_/home/vector/rama/Vector_DD/Vector_DD/char_driver/rgb_led_ioctl/rgbled_ioctl.mod := printf '%s\n'   rgbled_ioctl.o | awk '!x[$$0]++ { print("/home/vector/rama/Vector_DD/Vector_DD/char_driver/rgb_led_ioctl/"$$0) }' > /home/vector/rama/Vector_DD/Vector_DD/char_driver/rgb_led_ioctl/rgbled_ioctl.mod

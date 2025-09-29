@@ -1,0 +1,14 @@
+cd /sys/kernel/debug/tracing
+mount | grep tracefs
+
+echo 0 > tracing_on
+echo function_graph > current_tracer
+echo 'sd_*' >> set_trace_filter
+echo > trace
+echo 1 > tracing_on
+cat trace_pipe
+
+
+hdparm -I /dev/sda
+strace -e ioctl -o /tmp/log hdparm -I /dev/sda
+grep ioctl /tmp/log

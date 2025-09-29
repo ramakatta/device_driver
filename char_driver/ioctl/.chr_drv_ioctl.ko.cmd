@@ -1,0 +1,1 @@
+savedcmd_chr_drv_ioctl.ko := ld -r -m elf_x86_64 -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T /usr/src/linux-headers-6.14.0-28-generic/scripts/module.lds -o chr_drv_ioctl.ko chr_drv_ioctl.o chr_drv_ioctl.mod.o .module-common.o

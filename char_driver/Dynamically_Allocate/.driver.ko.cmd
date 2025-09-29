@@ -1,0 +1,1 @@
+cmd_/home/rama/Downloads/Vector_DD/char_driver/Dynamically_Allocate/driver.ko := ld -r  -m elf_x86_64  --build-id=sha1  -T scripts/module.lds -o /home/rama/Downloads/Vector_DD/char_driver/Dynamically_Allocate/driver.ko /home/rama/Downloads/Vector_DD/char_driver/Dynamically_Allocate/driver.o /home/rama/Downloads/Vector_DD/char_driver/Dynamically_Allocate/driver.mod.o;  true

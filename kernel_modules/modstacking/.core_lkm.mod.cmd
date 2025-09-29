@@ -1,1 +1,1 @@
-cmd_/home/rama/Downloads/Vector/kernel_modules/modstacking/core_lkm.mod := { echo  /home/rama/Downloads/Vector/kernel_modules/modstacking/core_lkm.o;  echo; } > /home/rama/Downloads/Vector/kernel_modules/modstacking/core_lkm.mod
+savedcmd_core_lkm.mod := printf '%s\n'   core_lkm.o | awk '!x[$$0]++ { print("./"$$0) }' > core_lkm.mod

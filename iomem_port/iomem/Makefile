@@ -1,11 +1,12 @@
-obj-m := iomem.o
-#obj-m += ioresource.o
-#obj-m += iomap.o
+obj-m += iomem.o
 
-KDIR= /lib/modules/$(shell uname -r)/build
+CCPREFIX := arm-linux-gnueabihf-
+
+KDIR = /home/rama/Downloads/linux
 
 all:
-	$(MAKE) -C $(KDIR) M=$(PWD) modules
+	make ARCH=arm CROSS_COMPILE=${CCPREFIX} -C $(KDIR)  M=$(shell pwd) modules
 
 clean:
-	rm -rf $(wildcard *.o *.ko mo* Mo* *.mod.c )
+	make ARCH=arm CROSS_COMPILE=${CCPREFIX} -C $(KDIR)  M=$(shell pwd) clean
+

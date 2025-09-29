@@ -1,6 +1,8 @@
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/sched.h>
+#include <linux/ioport.h>
+#include <asm/io.h>
 //char *p = NULL;
 
     volatile unsigned char *vaddr = NULL;

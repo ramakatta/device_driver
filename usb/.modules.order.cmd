@@ -1,0 +1,1 @@
+savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/usb/modules.order := {   echo /home/rama/Downloads/Vector_DD/Vector_DD/usb/usb_kernel.o; :; } > /home/rama/Downloads/Vector_DD/Vector_DD/usb/modules.order

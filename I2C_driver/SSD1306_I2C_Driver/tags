@@ -1,0 +1,44 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	//
+CCPREFIX	Makefile	/^CCPREFIX := arm-linux-gnueabihf-$/;"	m
+I2C_BUS_AVAILABLE	driver.c	/^#define I2C_BUS_AVAILABLE /;"	d	file:
+I2C_Read	driver.c	/^static int I2C_Read(unsigned char *out_buf, unsigned int len)$/;"	f	typeref:typename:int	file:
+I2C_Write	driver.c	/^static int I2C_Write(unsigned char *buf, unsigned int len)$/;"	f	typeref:typename:int	file:
+KDIR	Makefile	/^KDIR = \/home\/rama\/linux$/;"	m
+PWD	Makefile	/^PWD := $(shell pwd)$/;"	m
+SLAVE_DEVICE_NAME	driver.c	/^#define SLAVE_DEVICE_NAME /;"	d	file:
+SSD1306_CursorPos	driver.c	/^static uint8_t SSD1306_CursorPos = 0;$/;"	v	typeref:typename:uint8_t	file:
+SSD1306_DEF_FONT_SIZE	driver.c	/^#define SSD1306_DEF_FONT_SIZE /;"	d	file:
+SSD1306_DisplayInit	driver.c	/^static int SSD1306_DisplayInit(void)$/;"	f	typeref:typename:int	file:
+SSD1306_Fill	driver.c	/^static void SSD1306_Fill(unsigned char data)$/;"	f	typeref:typename:void	file:
+SSD1306_FontSize	driver.c	/^static uint8_t SSD1306_FontSize  = SSD1306_DEF_FONT_SIZE;$/;"	v	typeref:typename:uint8_t	file:
+SSD1306_GoToNextLine	driver.c	/^static void  SSD1306_GoToNextLine( void )$/;"	f	typeref:typename:void	file:
+SSD1306_InvertDisplay	driver.c	/^static void SSD1306_InvertDisplay(bool need_to_invert)$/;"	f	typeref:typename:void	file:
+SSD1306_LineNum	driver.c	/^static uint8_t SSD1306_LineNum   = 0;$/;"	v	typeref:typename:uint8_t	file:
+SSD1306_MAX_LINE	driver.c	/^#define SSD1306_MAX_LINE /;"	d	file:
+SSD1306_MAX_SEG	driver.c	/^#define SSD1306_MAX_SEG /;"	d	file:
+SSD1306_PrintChar	driver.c	/^static void SSD1306_PrintChar(unsigned char c)$/;"	f	typeref:typename:void	file:
+SSD1306_SLAVE_ADDR	driver.c	/^#define SSD1306_SLAVE_ADDR /;"	d	file:
+SSD1306_SetBrightness	driver.c	/^static void SSD1306_SetBrightness(uint8_t brightnessValue)$/;"	f	typeref:typename:void	file:
+SSD1306_SetCursor	driver.c	/^static void SSD1306_SetCursor( uint8_t lineNo, uint8_t cursorPos )$/;"	f	typeref:typename:void	file:
+SSD1306_StartScrollHorizontal	driver.c	/^static void SSD1306_StartScrollHorizontal( bool is_left_scroll,$/;"	f	typeref:typename:void	file:
+SSD1306_StartScrollVerticalHorizontal	driver.c	/^static void SSD1306_StartScrollVerticalHorizontal( bool is_vertical_left_scroll,$/;"	f	typeref:typename:void	file:
+SSD1306_String	driver.c	/^static void SSD1306_String(unsigned char *str)$/;"	f	typeref:typename:void	file:
+SSD1306_Write	driver.c	/^static void SSD1306_Write(bool is_cmd, unsigned char data)$/;"	f	typeref:typename:void	file:
+SSD1306_font	driver.c	/^static const unsigned char SSD1306_font[][SSD1306_DEF_FONT_SIZE]= $/;"	v	typeref:typename:const unsigned char[][]	file:
+all	Makefile	/^all:$/;"	t
+clean	Makefile	/^clean:$/;"	t
+etx_driver_exit	driver.c	/^static void __exit etx_driver_exit(void)$/;"	f	typeref:typename:void __exit	file:
+etx_driver_init	driver.c	/^static int __init etx_driver_init(void)$/;"	f	typeref:typename:int __init	file:
+etx_i2c_adapter	driver.c	/^static struct i2c_adapter *etx_i2c_adapter     = NULL;  \/\/ I2C Adapter Structure$/;"	v	typeref:struct:i2c_adapter *	file:
+etx_i2c_client_oled	driver.c	/^static struct i2c_client  *etx_i2c_client_oled = NULL;  \/\/ I2C Cient Structure (In our case it/;"	v	typeref:struct:i2c_client *	file:
+etx_oled_driver	driver.c	/^static struct i2c_driver etx_oled_driver = {$/;"	v	typeref:struct:i2c_driver	file:
+etx_oled_id	driver.c	/^static const struct i2c_device_id etx_oled_id[] = {$/;"	v	typeref:typename:const struct i2c_device_id[]	file:
+etx_oled_probe	driver.c	/^static int etx_oled_probe(struct i2c_client *client,$/;"	f	typeref:typename:int	file:
+etx_oled_remove	driver.c	/^static void etx_oled_remove(struct i2c_client *client)$/;"	f	typeref:typename:void	file:
+oled_i2c_board_info	driver.c	/^static struct i2c_board_info oled_i2c_board_info = {$/;"	v	typeref:struct:i2c_board_info	file:

@@ -1,0 +1,1 @@
+savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/Debugging/oops_crash/debugfs.ko := ld -r -m elf_x86_64 -z noexecstack --build-id=sha1  -T scripts/module.lds -o /home/rama/Downloads/Vector_DD/Vector_DD/Debugging/oops_crash/debugfs.ko /home/rama/Downloads/Vector_DD/Vector_DD/Debugging/oops_crash/debugfs.o /home/rama/Downloads/Vector_DD/Vector_DD/Debugging/oops_crash/debugfs.mod.o

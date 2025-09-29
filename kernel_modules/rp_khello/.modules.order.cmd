@@ -1,0 +1,1 @@
+savedcmd_/home/vector/rama/Vector_DD/Vector_DD/kernel_modules/rp_khello/modules.order := {   echo /home/vector/rama/Vector_DD/Vector_DD/kernel_modules/rp_khello/khello.o; :; } > /home/vector/rama/Vector_DD/Vector_DD/kernel_modules/rp_khello/modules.order

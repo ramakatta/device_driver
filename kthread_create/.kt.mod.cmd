@@ -1,0 +1,1 @@
+savedcmd_/home/rama/Downloads/Manipal/kernel_space/kthread_create/kt.mod := printf '%s\n'   kt.o | awk '!x[$$0]++ { print("/home/rama/Downloads/Manipal/kernel_space/kthread_create/"$$0) }' > /home/rama/Downloads/Manipal/kernel_space/kthread_create/kt.mod

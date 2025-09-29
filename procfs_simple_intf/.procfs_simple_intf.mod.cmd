@@ -1,0 +1,1 @@
+savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/procfs_simple_intf/procfs_simple_intf.mod := printf '%s\n'   procfs_simple_intf.o | awk '!x[$$0]++ { print("/home/rama/Downloads/Vector_DD/Vector_DD/procfs_simple_intf/"$$0) }' > /home/rama/Downloads/Vector_DD/Vector_DD/procfs_simple_intf/procfs_simple_intf.mod

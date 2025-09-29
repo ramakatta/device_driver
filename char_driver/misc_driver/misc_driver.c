@@ -61,12 +61,11 @@ static const struct file_operations fops = {
     .read           = etx_misc_read,
     .open           = etx_misc_open,
     .release        = etx_misc_close,
-    .llseek         = no_llseek,
 };
 
 //Misc device structure
 struct miscdevice etx_misc_device = {
-    .minor = MISC_DYNAMIC_MINOR,
+    .minor = MISC_DYNAMIC_MINOR, MISC_DYNAMIC_MINOR + 1,
     .name = "simple_etx_misc",
     .fops = &fops,
 };

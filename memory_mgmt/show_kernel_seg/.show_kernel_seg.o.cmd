@@ -1,0 +1,1 @@
+savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/memory_mgmt/show_kernel_seg/show_kernel_seg.o := arm-linux-gnueabihf-ld -EL -z noexecstack   -r -o /home/rama/Downloads/Vector_DD/Vector_DD/memory_mgmt/show_kernel_seg/show_kernel_seg.o @/home/rama/Downloads/Vector_DD/Vector_DD/memory_mgmt/show_kernel_seg/show_kernel_seg.mod 

@@ -10,6 +10,7 @@ static void __iomem *iobase;
 
 static int gpio_init(void)
 {
+	int i;
 	if (!request_mem_region(GPIO_REG_BASE, GPIO_REG_LEN, "mydriver")) {
 		printk("couldn't get region for MMIO, aborting\n");
 		return -EBUSY; // or -EINVAL, as appropriate
@@ -19,7 +20,13 @@ static int gpio_init(void)
         	//iounmap(iobase);
 		release_mem_region(GPIO_REG_BASE, GPIO_REG_LEN);
 	}
-	printk("iobase:%x\n",*(char*)(iobase+18));
+	   printk("iobase address:0x%x\n",iobase);
+	for(i=0;i<10;i++)
+	{
+	   *(char*)(iobase+i)=i+1;
+	   printk("iobase:%x\n",*(char*)(iobase+i));
+	}
+	   printk("iobase:%x\n",*(char*)(iobase+4));
 	return 0;
 }
 

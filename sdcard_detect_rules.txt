@@ -1,0 +1,17 @@
+sudo mkdir -p /usr/local/bin/sdcard-scripts
+sudo nano /usr/local/bin/sdcard-scripts/mount.sh 
+  -- Add content 
+  #!/bin/bash
+  echo "SD card mounted at $MOUNTPOINT" >> /var/log/sdcard.log
+sudo chmod +x /usr/local/bin/sdcard-scripts/mount.sh
+sudo nano /usr/local/bin/sdcard-scripts/unmount.sh
+  #!/bin/bash
+  echo "SD card unmounted from $MOUNTPOINT" >> /var/log/sdcard.log
+
+ sudo nano /etc/udev/rules.d/99-sdcard.rules
+  KERNEL=="sd[a-z][0-9]", SUBSYSTEM=="block", ACTION=="add", RUN+="/usr/local/bin/sdcard-scripts/mount.sh"
+  KERNEL=="sd[a-z][0-9]", SUBSYSTEM=="block", ACTION=="remove", RUN+="/usr/local/bin/sdcard-scripts/unmount.sh"
+
+ sudo udevadm control --reload-rules
+ sudo udevadm trigger
+ cat /var/log/sdcard.log

@@ -7,7 +7,7 @@ $ mkdir yocto
 $ cd yocto
 $ git clone git://git.yoctoproject.org/poky
 $ cd poky
-$ git checkout -b dunfell origin/dunfell
+$ git checkout -b styhead origin/styhead
 $ source oe-init-build-env <name of your build directory>
 $ bitbake core-image-sato --runall=fetch
 $ bitbake core-image-sato

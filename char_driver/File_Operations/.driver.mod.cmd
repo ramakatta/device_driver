@@ -1,0 +1,1 @@
+cmd_/home/rama/Downloads/Vector_DD/char_driver/File_Operations/driver.mod := { echo  /home/rama/Downloads/Vector_DD/char_driver/File_Operations/driver.o;  echo; } > /home/rama/Downloads/Vector_DD/char_driver/File_Operations/driver.mod

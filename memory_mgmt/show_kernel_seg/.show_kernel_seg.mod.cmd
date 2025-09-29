@@ -1,0 +1,1 @@
+savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/memory_mgmt/show_kernel_seg/show_kernel_seg.mod := printf '%s\n'   kernel_seg.o klib_llkd.o | awk '!x[$$0]++ { print("/home/rama/Downloads/Vector_DD/Vector_DD/memory_mgmt/show_kernel_seg/"$$0) }' > /home/rama/Downloads/Vector_DD/Vector_DD/memory_mgmt/show_kernel_seg/show_kernel_seg.mod

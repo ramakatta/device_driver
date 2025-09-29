@@ -2,7 +2,7 @@ obj-m += rgbled_ioctl.o
 PWD := $(shell pwd)
 CCPREFIX := arm-linux-gnueabihf-
 
-KDIR = /home/rama/linux
+KDIR = /home/vector/Downloads/linux
 
 all:
 	make ARCH=arm CROSS_COMPILE=${CCPREFIX} -C $(KDIR)  M=$(shell pwd) modules

@@ -1,14 +1,7 @@
 #include <linux/module.h>
-#define INCLUDE_VERMAGIC
-#include <linux/build-salt.h>
-#include <linux/elfnote-lto.h>
-#include <linux/vermagic.h>
+#include <linux/export-internal.h>
 #include <linux/compiler.h>
 
-BUILD_SALT;
-BUILD_LTO_INFO;
-
-MODULE_INFO(vermagic, VERMAGIC_STRING);
 MODULE_INFO(name, KBUILD_MODNAME);
 
 __visible struct module __this_module
@@ -21,20 +14,42 @@ __section(".gnu.linkonce.this_module") = {
 	.arch = MODULE_ARCH_INIT,
 };
 
-#ifdef CONFIG_RETPOLINE
-MODULE_INFO(retpoline, "Y");
-#endif
+
 
 static const struct modversion_info ____versions[]
 __used __section("__versions") = {
-	{ 0x27126e5a, "module_layout" },
-	{ 0x64984b51, "llkd_sysinfo2" },
-	{ 0x33682d58, "exp_int" },
-	{ 0x837b7b09, "__dynamic_pr_debug" },
-	{ 0xef58397f, "get_skey" },
-	{ 0xc5850110, "printk" },
-	{ 0xbdfb6dbb, "__fentry__" },
+	{ 0xd272d446, "__fentry__" },
+	{ 0xacae9bb1, "get_skey" },
+	{ 0x23f25c0a, "__dynamic_pr_debug" },
+	{ 0x7ec472ba, "exp_int" },
+	{ 0xd272d446, "llkd_sysinfo2" },
+	{ 0xe8213e80, "_printk" },
+	{ 0xd272d446, "__x86_return_thunk" },
+	{ 0x70eca2ca, "module_layout" },
 };
+
+static const u32 ____version_ext_crcs[]
+__used __section("__version_ext_crcs") = {
+	0xd272d446,
+	0xacae9bb1,
+	0x23f25c0a,
+	0x7ec472ba,
+	0xd272d446,
+	0xe8213e80,
+	0xd272d446,
+	0x70eca2ca,
+};
+static const char ____version_ext_names[]
+__used __section("__version_ext_names") =
+	"__fentry__\0"
+	"get_skey\0"
+	"__dynamic_pr_debug\0"
+	"exp_int\0"
+	"llkd_sysinfo2\0"
+	"_printk\0"
+	"__x86_return_thunk\0"
+	"module_layout\0"
+;
 
 MODULE_INFO(depends, "core_lkm");
 

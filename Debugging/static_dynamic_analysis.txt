@@ -1,0 +1,35 @@
+clang-format***********************************************************Static  analysis tools:gcc:$gcc -Wall -Wextra -Wshadow -Wconversion -Wstrict-overflow  -fanalyzer gcc_static.c$clang -Weverything -Wno-padded -Wno-sign-conversion   gcc_static.cClang-tidy:$clang-tidy clang_tidy.c -- -Wall -WextraCppcheck:
+$cppcheck cpp_check_ex.c --enable=allFlawfinder:$flawfinder flawfind.c$scan-build (clang static analyser)
+Dynamic analysis tools:$gdb, $valgrind, $asan,ubsangcc -fsanitize=address,undefined -g aubsan.c ********************************************************************************************************CONFIG_DEBUG_INFO
+CONFIG_DEBUG_FS (the debugfs pseudo filesystem)
+CONFIG_MAGIC_SYSRQ (the Magic SysRq hotkeys feature)
+CONFIG_DEBUG_KERNEL
+CONFIG_DEBUG_MISC
+Memory debugging:
+CONFIG_SLUB_DEBUG.
+CONFIG_DEBUG_MEMORY_INIT.CONFIG_KASAN: this is the Kernel Address Sanitizer port;
+however, as of the time of writing, it only works on 64-bit
+systems.
+CONFIG_DEBUG_SHIRQ
+CONFIG_SCHED_STACK_END_CHECK
+Lock debugging:
+CONFIG_PROVE_LOCKING: the very powerful lockdep feature to catch
+locking bugs! This turns on several other lock debug configs as well,
+explained in Chapter 13, Kernel Synchronization - Part 2.
+CONFIG_LOCK_STAT
+CONFIG_DEBUG_ATOMIC_SLEEP
+CONFIG_STACKTRACE
+CONFIG_DEBUG_BUGVERBOSE
+CONFIG_FTRACE (ftrace: within its sub-menu, turn on at least a couple of
+"tracers")
+CONFIG_BUG_ON_DATA_CORRUPTION
+CONFIG_KGDB (kernel GDB; optional)
+CONFIG_UBSAN
+CONFIG_EARLY_PRINTK
+CONFIG_DEBUG_BOOT_PARAMS
+CONFIG_UNWINDER_FRAME_POINTER (selects FRAME_POINTER and CONFIG_STACK_VALIDATION)
+*********************************************************************************************************Performance penalty********************************************************************************************************
+Actions:
+1. Each component need to identify the necessary required tools, identify the gaps with current build parameters
+2. As it impacts perforamcne need to build one time explciitly.
+3. CI team should provide separate framework to execute with these listed tools

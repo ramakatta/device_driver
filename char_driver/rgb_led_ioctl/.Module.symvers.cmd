@@ -1,0 +1,1 @@
+savedcmd_/home/vector/rama/Vector_DD/Vector_DD/char_driver/rgb_led_ioctl/Module.symvers :=  scripts/mod/modpost -m -a      -o /home/vector/rama/Vector_DD/Vector_DD/char_driver/rgb_led_ioctl/Module.symvers -T /home/vector/rama/Vector_DD/Vector_DD/char_driver/rgb_led_ioctl/modules.order -i Module.symvers -e 

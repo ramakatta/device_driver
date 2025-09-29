@@ -1,0 +1,1 @@
+savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/usb/usb_kernel.mod := printf '%s\n'   usb_kernel.o | awk '!x[$$0]++ { print("/home/rama/Downloads/Vector_DD/Vector_DD/usb/"$$0) }' > /home/rama/Downloads/Vector_DD/Vector_DD/usb/usb_kernel.mod

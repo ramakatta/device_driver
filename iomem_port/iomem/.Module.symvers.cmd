@@ -1,1 +1,1 @@
-cmd_/home/rama/Downloads/Vector/iomem_port/iomem/Module.symvers := sed 's/\.ko$$/\.o/' /home/rama/Downloads/Vector/iomem_port/iomem/modules.order | scripts/mod/modpost -m -a  -o /home/rama/Downloads/Vector/iomem_port/iomem/Module.symvers -e -i Module.symvers   -T -
+savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/iomem_port/iomem/Module.symvers :=  scripts/mod/modpost -m -a      -o /home/rama/Downloads/Vector_DD/Vector_DD/iomem_port/iomem/Module.symvers -T /home/rama/Downloads/Vector_DD/Vector_DD/iomem_port/iomem/modules.order -i Module.symvers -e 

@@ -1,1 +1,1 @@
-cmd_/home/rama/Downloads/Vector/kernel_modules/modstacking/user_lkm.mod := { echo  /home/rama/Downloads/Vector/kernel_modules/modstacking/user_lkm.o;  echo; } > /home/rama/Downloads/Vector/kernel_modules/modstacking/user_lkm.mod
+savedcmd_user_lkm.mod := printf '%s\n'   user_lkm.o | awk '!x[$$0]++ { print("./"$$0) }' > user_lkm.mod

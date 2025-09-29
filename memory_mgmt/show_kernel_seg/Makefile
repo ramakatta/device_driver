@@ -29,7 +29,7 @@
 #  make ARCH=<arch> CROSS_COMPILE=<cross-compiler-prefix>
 ifeq ($(ARCH),arm)
   # *UPDATE* 'KDIR' below to point to the ARM Linux kernel source tree on your box
-  KDIR ?= ~/rpi_work/kernel_rpi/linux
+  KDIR ?= /home/rama/Downloads/linux
 else ifeq ($(ARCH),arm64)
   # *UPDATE* 'KDIR' below to point to the ARM64 (Aarch64) Linux kernel source
   # tree on your box
@@ -48,12 +48,15 @@ PWD                   := $(shell pwd)
 obj-m                 += show_kernel_seg.o
 show_kernel_seg-objs  += kernel_seg.o klib_llkd.o
 EXTRA_CFLAGS          += -DDEBUG -Wformat=0
+CROSS_COMPILE := arm-linux-gnueabihf-
+ARCH := arm
+KDIR = /home/rama/Downloads/linux
 
 all:
 	@echo
 	@echo '--- Building : KDIR=${KDIR} ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} EXTRA_CFLAGS=${EXTRA_CFLAGS} ---'
 	@echo
-	make -C $(KDIR) M=$(PWD) modules
+	make  ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} -C $(KDIR) M=$(PWD) modules
 install:
 	@echo
 	@echo "--- installing ---"

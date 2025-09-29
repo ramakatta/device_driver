@@ -1,0 +1,1 @@
+savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/Kernel_Sync/Atomic/atomic.ko := ld -r -m elf_x86_64 -z noexecstack --build-id=sha1  -T scripts/module.lds -o /home/rama/Downloads/Vector_DD/Vector_DD/Kernel_Sync/Atomic/atomic.ko /home/rama/Downloads/Vector_DD/Vector_DD/Kernel_Sync/Atomic/atomic.o /home/rama/Downloads/Vector_DD/Vector_DD/Kernel_Sync/Atomic/atomic.mod.o
