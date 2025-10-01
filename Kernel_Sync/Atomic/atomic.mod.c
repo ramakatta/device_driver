@@ -1,20 +1,7 @@
 #include <linux/module.h>
-#define INCLUDE_VERMAGIC
-#include <linux/build-salt.h>
-#include <linux/elfnote-lto.h>
 #include <linux/export-internal.h>
-#include <linux/vermagic.h>
 #include <linux/compiler.h>
 
-#ifdef CONFIG_UNWINDER_ORC
-#include <asm/orc_header.h>
-ORC_HEADER;
-#endif
-
-BUILD_SALT;
-BUILD_LTO_INFO;
-
-MODULE_INFO(vermagic, VERMAGIC_STRING);
 MODULE_INFO(name, KBUILD_MODNAME);
 
 __visible struct module __this_module
@@ -27,34 +14,74 @@ __section(".gnu.linkonce.this_module") = {
 	.arch = MODULE_ARCH_INIT,
 };
 
-#ifdef CONFIG_RETPOLINE
-MODULE_INFO(retpoline, "Y");
-#endif
-
 
 
 static const struct modversion_info ____versions[]
 __used __section("__versions") = {
-	{ 0xf9a482f9, "msleep" },
-	{ 0xb3f7646e, "kthread_should_stop" },
-	{ 0xe3ec2f2b, "alloc_chrdev_region" },
-	{ 0xa304a8e0, "cdev_init" },
-	{ 0xb51d50, "cdev_add" },
-	{ 0x33c47e0e, "class_create" },
-	{ 0xf641a686, "device_create" },
-	{ 0x41d3957, "kthread_create_on_node" },
-	{ 0x8ef6d02c, "wake_up_process" },
-	{ 0x6091b333, "unregister_chrdev_region" },
-	{ 0xc5442e07, "cdev_del" },
-	{ 0xfa5cdaeb, "class_destroy" },
-	{ 0xc21bdf9, "device_destroy" },
-	{ 0xbdfb6dbb, "__fentry__" },
-	{ 0x122c3a7e, "_printk" },
-	{ 0x5b8239ca, "__x86_return_thunk" },
-	{ 0xb2b23fc2, "module_layout" },
+	{ 0x67628f51, "msleep" },
+	{ 0x5e505530, "kthread_should_stop" },
+	{ 0x9f222e1e, "alloc_chrdev_region" },
+	{ 0xb06a91bd, "cdev_init" },
+	{ 0x7db91808, "cdev_add" },
+	{ 0x3d568d84, "class_create" },
+	{ 0xa2e1228b, "device_create" },
+	{ 0xb53b9c09, "kthread_create_on_node" },
+	{ 0x32ba21a0, "wake_up_process" },
+	{ 0x0bc5fb0d, "unregister_chrdev_region" },
+	{ 0x6ce3748e, "cdev_del" },
+	{ 0xfbc10eaa, "class_destroy" },
+	{ 0xb0724fd3, "kthread_stop" },
+	{ 0x88b4fdc1, "device_destroy" },
+	{ 0xd272d446, "__fentry__" },
+	{ 0xe8213e80, "_printk" },
+	{ 0xd272d446, "__x86_return_thunk" },
+	{ 0x70eca2ca, "module_layout" },
 };
+
+static const u32 ____version_ext_crcs[]
+__used __section("__version_ext_crcs") = {
+	0x67628f51,
+	0x5e505530,
+	0x9f222e1e,
+	0xb06a91bd,
+	0x7db91808,
+	0x3d568d84,
+	0xa2e1228b,
+	0xb53b9c09,
+	0x32ba21a0,
+	0x0bc5fb0d,
+	0x6ce3748e,
+	0xfbc10eaa,
+	0xb0724fd3,
+	0x88b4fdc1,
+	0xd272d446,
+	0xe8213e80,
+	0xd272d446,
+	0x70eca2ca,
+};
+static const char ____version_ext_names[]
+__used __section("__version_ext_names") =
+	"msleep\0"
+	"kthread_should_stop\0"
+	"alloc_chrdev_region\0"
+	"cdev_init\0"
+	"cdev_add\0"
+	"class_create\0"
+	"device_create\0"
+	"kthread_create_on_node\0"
+	"wake_up_process\0"
+	"unregister_chrdev_region\0"
+	"cdev_del\0"
+	"class_destroy\0"
+	"kthread_stop\0"
+	"device_destroy\0"
+	"__fentry__\0"
+	"_printk\0"
+	"__x86_return_thunk\0"
+	"module_layout\0"
+;
 
 MODULE_INFO(depends, "");
 
 
-MODULE_INFO(srcversion, "47B08015CA0C24FC7A7121E");
+MODULE_INFO(srcversion, "930F19A36C6B7CD384194A5");

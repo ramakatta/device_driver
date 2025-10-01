@@ -1,20 +1,7 @@
 #include <linux/module.h>
-#define INCLUDE_VERMAGIC
-#include <linux/build-salt.h>
-#include <linux/elfnote-lto.h>
 #include <linux/export-internal.h>
-#include <linux/vermagic.h>
 #include <linux/compiler.h>
 
-#ifdef CONFIG_UNWINDER_ORC
-#include <asm/orc_header.h>
-ORC_HEADER;
-#endif
-
-BUILD_SALT;
-BUILD_LTO_INFO;
-
-MODULE_INFO(vermagic, VERMAGIC_STRING);
 MODULE_INFO(name, KBUILD_MODNAME);
 
 __visible struct module __this_module
@@ -27,39 +14,92 @@ __section(".gnu.linkonce.this_module") = {
 	.arch = MODULE_ARCH_INIT,
 };
 
-#ifdef CONFIG_RETPOLINE
-MODULE_INFO(retpoline, "Y");
-#endif
-
 
 
 static const struct modversion_info ____versions[]
 __used __section("__versions") = {
-	{ 0x87a21cb3, "__ubsan_handle_out_of_bounds" },
-	{ 0x2d57e435, "pcpu_hot" },
-	{ 0x53569707, "this_cpu_off" },
-	{ 0xf9a482f9, "msleep" },
-	{ 0xb3f7646e, "kthread_should_stop" },
-	{ 0x656e4a6e, "snprintf" },
-	{ 0xbddfea60, "kthread_create_on_cpu" },
-	{ 0x8ef6d02c, "wake_up_process" },
-	{ 0xf0fdf6cb, "__stack_chk_fail" },
-	{ 0x2aadffd3, "__cpuhp_setup_state" },
-	{ 0x568c36f3, "misc_register" },
-	{ 0x875e9ebe, "__cpuhp_remove_state" },
-	{ 0x17de3d5, "nr_cpu_ids" },
-	{ 0x5a5a2271, "__cpu_online_mask" },
-	{ 0x53a1e8d9, "_find_next_bit" },
-	{ 0xef9ac92d, "misc_deregister" },
-	{ 0xbdfb6dbb, "__fentry__" },
-	{ 0xb19a5453, "__per_cpu_offset" },
-	{ 0x68bdb9a6, "kthread_stop" },
-	{ 0x122c3a7e, "_printk" },
-	{ 0x5b8239ca, "__x86_return_thunk" },
-	{ 0xb2b23fc2, "module_layout" },
+	{ 0x90a48d82, "__ubsan_handle_out_of_bounds" },
+	{ 0xbd03ed67, "this_cpu_off" },
+	{ 0x7ec472ba, "cpu_number" },
+	{ 0x67628f51, "msleep" },
+	{ 0x5e505530, "kthread_should_stop" },
+	{ 0xbd03ed67, "__ref_stack_chk_guard" },
+	{ 0x40a621c5, "snprintf" },
+	{ 0x6e1d36be, "kthread_create_on_cpu" },
+	{ 0x630dad60, "wake_up_process" },
+	{ 0xd272d446, "__stack_chk_fail" },
+	{ 0xd3e9a166, "__cpuhp_setup_state" },
+	{ 0xaca12394, "misc_register" },
+	{ 0xf296206e, "nr_cpu_ids" },
+	{ 0xb5c51982, "__cpu_online_mask" },
+	{ 0x86632fd6, "_find_next_bit" },
+	{ 0x9f1ccb41, "__cpuhp_remove_state" },
+	{ 0xb5c51982, "__cpu_possible_mask" },
+	{ 0xd5ad82a1, "misc_deregister" },
+	{ 0xd272d446, "__fentry__" },
+	{ 0x5ae9ee26, "__per_cpu_offset" },
+	{ 0xe8213e80, "_printk" },
+	{ 0x0571dc46, "kthread_stop" },
+	{ 0xd272d446, "__x86_return_thunk" },
+	{ 0xbebe66ff, "module_layout" },
 };
+
+static const u32 ____version_ext_crcs[]
+__used __section("__version_ext_crcs") = {
+	0x90a48d82,
+	0xbd03ed67,
+	0x7ec472ba,
+	0x67628f51,
+	0x5e505530,
+	0xbd03ed67,
+	0x40a621c5,
+	0x6e1d36be,
+	0x630dad60,
+	0xd272d446,
+	0xd3e9a166,
+	0xaca12394,
+	0xf296206e,
+	0xb5c51982,
+	0x86632fd6,
+	0x9f1ccb41,
+	0xb5c51982,
+	0xd5ad82a1,
+	0xd272d446,
+	0x5ae9ee26,
+	0xe8213e80,
+	0x0571dc46,
+	0xd272d446,
+	0xbebe66ff,
+};
+static const char ____version_ext_names[]
+__used __section("__version_ext_names") =
+	"__ubsan_handle_out_of_bounds\0"
+	"this_cpu_off\0"
+	"cpu_number\0"
+	"msleep\0"
+	"kthread_should_stop\0"
+	"__ref_stack_chk_guard\0"
+	"snprintf\0"
+	"kthread_create_on_cpu\0"
+	"wake_up_process\0"
+	"__stack_chk_fail\0"
+	"__cpuhp_setup_state\0"
+	"misc_register\0"
+	"nr_cpu_ids\0"
+	"__cpu_online_mask\0"
+	"_find_next_bit\0"
+	"__cpuhp_remove_state\0"
+	"__cpu_possible_mask\0"
+	"misc_deregister\0"
+	"__fentry__\0"
+	"__per_cpu_offset\0"
+	"_printk\0"
+	"kthread_stop\0"
+	"__x86_return_thunk\0"
+	"module_layout\0"
+;
 
 MODULE_INFO(depends, "");
 
 
-MODULE_INFO(srcversion, "B1551F1EF37E4E385C343A6");
+MODULE_INFO(srcversion, "01131AB70E3BD1F451FCA2A");

@@ -1,1 +1,1 @@
-savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/memory_mgmt/show_kernel_seg/modules.order := {   echo /home/rama/Downloads/Vector_DD/Vector_DD/memory_mgmt/show_kernel_seg/show_kernel_seg.o; :; } > /home/rama/Downloads/Vector_DD/Vector_DD/memory_mgmt/show_kernel_seg/modules.order
+savedcmd_/home/vector/rama/Vector_DD/Vector_DD/memory_mgmt/show_kernel_seg/modules.order := {   echo /home/vector/rama/Vector_DD/Vector_DD/memory_mgmt/show_kernel_seg/show_kernel_seg.o; :; } > /home/vector/rama/Vector_DD/Vector_DD/memory_mgmt/show_kernel_seg/modules.order

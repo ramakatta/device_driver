@@ -1,1 +1,0 @@
-cmd_/home/rama/Downloads/Vector_DD/char_driver/Dynamically_Allocate/modules.order := {   echo /home/rama/Downloads/Vector_DD/char_driver/Dynamically_Allocate/driver.ko; :; } | awk '!x[$$0]++' - > /home/rama/Downloads/Vector_DD/char_driver/Dynamically_Allocate/modules.order

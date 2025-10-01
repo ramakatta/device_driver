@@ -1,0 +1,7 @@
+/home/vector/Downloads/Corporate_trainings/siemen/Linux_userspace/3-Make-CMAKE/CMAKE/pthread_lib/build/CMakeFiles/pthread_task.dir
+/home/vector/Downloads/Corporate_trainings/siemen/Linux_userspace/3-Make-CMAKE/CMAKE/pthread_lib/build/CMakeFiles/edit_cache.dir
+/home/vector/Downloads/Corporate_trainings/siemen/Linux_userspace/3-Make-CMAKE/CMAKE/pthread_lib/build/CMakeFiles/rebuild_cache.dir
+/home/vector/Downloads/Corporate_trainings/siemen/Linux_userspace/3-Make-CMAKE/CMAKE/pthread_lib/build/CMakeFiles/list_install_components.dir
+/home/vector/Downloads/Corporate_trainings/siemen/Linux_userspace/3-Make-CMAKE/CMAKE/pthread_lib/build/CMakeFiles/install.dir
+/home/vector/Downloads/Corporate_trainings/siemen/Linux_userspace/3-Make-CMAKE/CMAKE/pthread_lib/build/CMakeFiles/install/local.dir
+/home/vector/Downloads/Corporate_trainings/siemen/Linux_userspace/3-Make-CMAKE/CMAKE/pthread_lib/build/CMakeFiles/install/strip.dir

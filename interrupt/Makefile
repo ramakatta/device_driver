@@ -1,5 +1,5 @@
-obj-m := test.o
-#obj-m := irq_thread.o
+#obj-m := irq_bf.o
+obj-m := irq_thread_shot.o
 KDIR := /lib/modules/$(shell uname -r)/build
 #KDIR  := /home/asr907/SDK/QorIQ-SDK-T1040-BSP0.2-20140310-yocto/build_t1040qds_release/tmp/sysroots/t1040qds/usr/src/kernel
 PWD := $(shell pwd)

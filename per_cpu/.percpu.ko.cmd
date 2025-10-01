@@ -1,1 +1,1 @@
-savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/per_cpu/percpu.ko := ld -r -m elf_x86_64 -z noexecstack --build-id=sha1  -T scripts/module.lds -o /home/rama/Downloads/Vector_DD/Vector_DD/per_cpu/percpu.ko /home/rama/Downloads/Vector_DD/Vector_DD/per_cpu/percpu.o /home/rama/Downloads/Vector_DD/Vector_DD/per_cpu/percpu.mod.o
+savedcmd_percpu.ko := ld -r -m elf_x86_64 -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T /usr/src/linux-headers-6.17.0-14-generic/scripts/module.lds -o percpu.ko percpu.o percpu.mod.o .module-common.o

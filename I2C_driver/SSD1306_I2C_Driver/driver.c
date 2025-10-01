@@ -660,3 +660,41 @@ MODULE_LICENSE("GPL");
 MODULE_AUTHOR("OpenSource");
 MODULE_DESCRIPTION("SSD1306 I2C Driver");
 MODULE_VERSION("1.40");
+
+/* if you want use via device tree
+&i2c1 {
+    status = "okay";
+
+    oled@3c {
+        compatible = "etx,ssd1306";
+        reg = <0x3c>;
+    };
+};
+static const struct of_device_id etx_oled_of_match[] = {
+    { .compatible = "etx,ssd1306" },
+    { }
+};
+MODULE_DEVICE_TABLE(of, etx_oled_of_match);
+static struct i2c_driver etx_oled_driver = {
+  .driver = {
+    .name   = SLAVE_DEVICE_NAME,
+    .owner  = THIS_MODULE,
+    .of_match_table = etx_oled_of_match,
+  },
+  .probe    = etx_oled_probe,
+  .remove   = etx_oled_remove,
+  .id_table = etx_oled_id,   // optional but good fallback
+};
+static int __init etx_driver_init(void)
+{
+  int ret;
+
+  ret = i2c_add_driver(&etx_oled_driver);
+  if (ret)
+    pr_err("Failed to add driver\n");
+  else
+    pr_info("Driver Added!!!\n");
+
+  return ret;
+}
+*/

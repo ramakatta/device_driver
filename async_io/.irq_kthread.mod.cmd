@@ -1,1 +1,1 @@
-savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/async_io/irq_kthread.mod := printf '%s\n'   irq_kthread.o | awk '!x[$$0]++ { print("/home/rama/Downloads/Vector_DD/Vector_DD/async_io/"$$0) }' > /home/rama/Downloads/Vector_DD/Vector_DD/async_io/irq_kthread.mod
+savedcmd_irq_kthread.mod := printf '%s\n'   irq_kthread.o | awk '!x[$$0]++ { print("./"$$0) }' > irq_kthread.mod

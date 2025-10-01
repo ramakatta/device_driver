@@ -1,0 +1,7 @@
+/home/rama/Downloads/Day_1-20230508T073114Z-001/Day_1/3-Make/CMAKE/dyncamic_lib/CMakeFiles/install/strip.dir
+/home/rama/Downloads/Day_1-20230508T073114Z-001/Day_1/3-Make/CMAKE/dyncamic_lib/CMakeFiles/install/local.dir
+/home/rama/Downloads/Day_1-20230508T073114Z-001/Day_1/3-Make/CMAKE/dyncamic_lib/CMakeFiles/install.dir
+/home/rama/Downloads/Day_1-20230508T073114Z-001/Day_1/3-Make/CMAKE/dyncamic_lib/CMakeFiles/list_install_components.dir
+/home/rama/Downloads/Day_1-20230508T073114Z-001/Day_1/3-Make/CMAKE/dyncamic_lib/CMakeFiles/rebuild_cache.dir
+/home/rama/Downloads/Day_1-20230508T073114Z-001/Day_1/3-Make/CMAKE/dyncamic_lib/CMakeFiles/edit_cache.dir
+/home/rama/Downloads/Day_1-20230508T073114Z-001/Day_1/3-Make/CMAKE/dyncamic_lib/CMakeFiles/dynamictest.dir

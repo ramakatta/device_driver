@@ -1,1 +1,1 @@
-savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/Debugging/oops_crash/modules.order := {   echo /home/rama/Downloads/Vector_DD/Vector_DD/Debugging/oops_crash/debugfs.o; :; } > /home/rama/Downloads/Vector_DD/Vector_DD/Debugging/oops_crash/modules.order
+savedcmd_modules.order := {   echo debugfs.o; :; } > modules.order

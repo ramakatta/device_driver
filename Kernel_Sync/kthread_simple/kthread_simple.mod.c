@@ -1,20 +1,7 @@
 #include <linux/module.h>
-#define INCLUDE_VERMAGIC
-#include <linux/build-salt.h>
-#include <linux/elfnote-lto.h>
 #include <linux/export-internal.h>
-#include <linux/vermagic.h>
 #include <linux/compiler.h>
 
-#ifdef CONFIG_UNWINDER_ORC
-#include <asm/orc_header.h>
-ORC_HEADER;
-#endif
-
-BUILD_SALT;
-BUILD_LTO_INFO;
-
-MODULE_INFO(vermagic, VERMAGIC_STRING);
 MODULE_INFO(name, KBUILD_MODNAME);
 
 __visible struct module __this_module
@@ -27,27 +14,60 @@ __section(".gnu.linkonce.this_module") = {
 	.arch = MODULE_ARCH_INIT,
 };
 
-#ifdef CONFIG_RETPOLINE
-MODULE_INFO(retpoline, "Y");
-#endif
-
 
 
 static const struct modversion_info ____versions[]
 __used __section("__versions") = {
-	{ 0x5b8239ca, "__x86_return_thunk" },
-	{ 0x41d3957, "kthread_create_on_node" },
-	{ 0x8ef6d02c, "wake_up_process" },
-	{ 0x296695f, "refcount_warn_saturate" },
-	{ 0x2d57e435, "pcpu_hot" },
-	{ 0x6df1aaf1, "kernel_sigaction" },
-	{ 0xb3f7646e, "kthread_should_stop" },
-	{ 0x1000e51, "schedule" },
-	{ 0xbdfb6dbb, "__fentry__" },
-	{ 0x68bdb9a6, "kthread_stop" },
-	{ 0x122c3a7e, "_printk" },
-	{ 0xb2b23fc2, "module_layout" },
+	{ 0xd272d446, "__x86_return_thunk" },
+	{ 0x7f79e79a, "kthread_create_on_node" },
+	{ 0x630dad60, "wake_up_process" },
+	{ 0x2520ea93, "refcount_warn_saturate" },
+	{ 0x2719b9fa, "const_current_task" },
+	{ 0xb2fa43dd, "kernel_sigaction" },
+	{ 0x5e505530, "kthread_should_stop" },
+	{ 0x5a8347fe, "__tracepoint_sched_set_state_tp" },
+	{ 0xd272d446, "schedule" },
+	{ 0xb2e62cba, "__trace_set_current_state" },
+	{ 0xd272d446, "__fentry__" },
+	{ 0x0571dc46, "kthread_stop" },
+	{ 0xe8213e80, "_printk" },
+	{ 0xbebe66ff, "module_layout" },
 };
+
+static const u32 ____version_ext_crcs[]
+__used __section("__version_ext_crcs") = {
+	0xd272d446,
+	0x7f79e79a,
+	0x630dad60,
+	0x2520ea93,
+	0x2719b9fa,
+	0xb2fa43dd,
+	0x5e505530,
+	0x5a8347fe,
+	0xd272d446,
+	0xb2e62cba,
+	0xd272d446,
+	0x0571dc46,
+	0xe8213e80,
+	0xbebe66ff,
+};
+static const char ____version_ext_names[]
+__used __section("__version_ext_names") =
+	"__x86_return_thunk\0"
+	"kthread_create_on_node\0"
+	"wake_up_process\0"
+	"refcount_warn_saturate\0"
+	"const_current_task\0"
+	"kernel_sigaction\0"
+	"kthread_should_stop\0"
+	"__tracepoint_sched_set_state_tp\0"
+	"schedule\0"
+	"__trace_set_current_state\0"
+	"__fentry__\0"
+	"kthread_stop\0"
+	"_printk\0"
+	"module_layout\0"
+;
 
 MODULE_INFO(depends, "");
 

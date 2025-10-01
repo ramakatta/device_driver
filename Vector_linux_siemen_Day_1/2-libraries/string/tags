@@ -1,0 +1,30 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/vector/Downloads/Corporate_trainings/siemen/Linux_userspace/3-Make-CMAKE/string/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	//
+CC	Makefile	/^CC = gcc$/;"	m
+CFLAGS	Makefile	/^CFLAGS = -c $/;"	m
+MAIN	main.c	/^#define MAIN$/;"	d	file:
+OBJS	Makefile	/^OBJS = main.o mystrlen.o mystrcpy.o mystrcmp.o mystrrev.o $/;"	m
+clean	Makefile	/^clean:$/;"	t
+global	mystr.h	/^#define global /;"	d
+install	Makefile	/^install:$/;"	t
+main	main.c	/^int main()$/;"	f	typeref:typename:int
+main.o	Makefile	/^main.o: main.c$/;"	t
+mysrcmp.o	Makefile	/^mysrcmp.o: mystrcmp.c$/;"	t
+mystrcmp	mystrcmp.c	/^int mystrcmp()$/;"	f	typeref:typename:int
+mystrcpy	mystrcpy.c	/^void mystrcpy(char *str3)$/;"	f	typeref:typename:void
+mystrcpy.o	Makefile	/^mystrcpy.o: mystrcpy.c$/;"	t
+mystrlen	mystrlen.c	/^int mystrlen(char *str)$/;"	f	typeref:typename:int
+mystrlen.o	Makefile	/^mystrlen.o: mystrlen.c$/;"	t
+mystrrev	mystrrev.c	/^void mystrrev()$/;"	f	typeref:typename:void
+str1	main.c	/^char str1[30],str2[30];$/;"	v	typeref:typename:char[30]
+str2	main.c	/^char str1[30],str2[30];$/;"	v	typeref:typename:char[30]
+string	Makefile	/^string: $(OBJS)$/;"	t

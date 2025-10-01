@@ -1,1 +1,1 @@
-savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/Kernel_Sync/ref_count/refcount.mod := printf '%s\n'   refcount.o | awk '!x[$$0]++ { print("/home/rama/Downloads/Vector_DD/Vector_DD/Kernel_Sync/ref_count/"$$0) }' > /home/rama/Downloads/Vector_DD/Vector_DD/Kernel_Sync/ref_count/refcount.mod
+savedcmd_refcount.mod := printf '%s\n'   refcount.o | awk '!x[$$0]++ { print("./"$$0) }' > refcount.mod

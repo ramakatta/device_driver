@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/string_cmake/main.c
+stdio.h
+-
+mystr.h
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/string_cmake/mystr.h
+
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/string_cmake/mystr.h
+
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/string_cmake/mystrcmp.c
+mystr.h
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/string_cmake/mystr.h
+
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/string_cmake/mystrcpy.c
+mystr.h
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/string_cmake/mystr.h
+
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/string_cmake/mystrlen.c
+mystr.h
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/string_cmake/mystr.h
+
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/string_cmake/mystrrev.c
+mystr.h
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/string_cmake/mystr.h
+string.h
+-
+

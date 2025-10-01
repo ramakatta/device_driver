@@ -17,7 +17,7 @@ int main()
 
    struct termios options;
    //fd = open("/dev/ttyACM0",O_RDWR | O_NOCTTY);
-   fd = open("/dev/ttyUSB0",O_RDWR | O_NOCTTY);
+   fd = open("/dev/ttyUSB1",O_RDWR | O_NOCTTY);
 
    if(fd < 0)
    {

@@ -25,7 +25,7 @@ __used __section("__versions") = {
 	{ 0xd272d446, "llkd_sysinfo2" },
 	{ 0xe8213e80, "_printk" },
 	{ 0xd272d446, "__x86_return_thunk" },
-	{ 0x70eca2ca, "module_layout" },
+	{ 0xba157484, "module_layout" },
 };
 
 static const u32 ____version_ext_crcs[]
@@ -37,7 +37,7 @@ __used __section("__version_ext_crcs") = {
 	0xd272d446,
 	0xe8213e80,
 	0xd272d446,
-	0x70eca2ca,
+	0xba157484,
 };
 static const char ____version_ext_names[]
 __used __section("__version_ext_names") =

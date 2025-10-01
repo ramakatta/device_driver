@@ -1,1 +1,1 @@
-savedcmd_/home/rama/Downloads/Manipal/kernel_space/kthread_create/kt.ko := ld -r -m elf_x86_64 -z noexecstack --build-id=sha1  -T scripts/module.lds -o /home/rama/Downloads/Manipal/kernel_space/kthread_create/kt.ko /home/rama/Downloads/Manipal/kernel_space/kthread_create/kt.o /home/rama/Downloads/Manipal/kernel_space/kthread_create/kt.mod.o
+savedcmd_kt.ko := ld -r -m elf_x86_64 -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T /usr/src/linux-headers-6.17.0-14-generic/scripts/module.lds -o kt.ko kt.o kt.mod.o .module-common.o

@@ -2,7 +2,7 @@ obj-m += driver.o
 PWD := $(shell pwd)
 CCPREFIX := arm-linux-gnueabihf-
 
-KDIR = /home/rama/Downloads/linux
+KDIR = /home/vector/Downloads/linux
  
  
 all:

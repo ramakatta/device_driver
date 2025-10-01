@@ -1,0 +1,1 @@
+/usr/bin/cc -fPIC   -shared -Wl,-soname,libdynamictest.so -o libdynamictest.so CMakeFiles/dynamictest.dir/mystrcmp.c.o CMakeFiles/dynamictest.dir/mystrcpy.c.o CMakeFiles/dynamictest.dir/mystrlen.c.o CMakeFiles/dynamictest.dir/mystrrev.c.o 

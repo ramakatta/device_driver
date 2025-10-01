@@ -1,1 +1,1 @@
-savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/Kernel_Sync/kthread_even_odd/even_odd.mod := printf '%s\n'   even_odd.o | awk '!x[$$0]++ { print("/home/rama/Downloads/Vector_DD/Vector_DD/Kernel_Sync/kthread_even_odd/"$$0) }' > /home/rama/Downloads/Vector_DD/Vector_DD/Kernel_Sync/kthread_even_odd/even_odd.mod
+savedcmd_even_odd.mod := printf '%s\n'   even_odd.o | awk '!x[$$0]++ { print("./"$$0) }' > even_odd.mod

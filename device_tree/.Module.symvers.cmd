@@ -1,0 +1,1 @@
+savedcmd_/home/vector/rama/Vector_DD/Vector_DD/device_tree/Module.symvers :=  scripts/mod/modpost -M -m -a      -o /home/vector/rama/Vector_DD/Vector_DD/device_tree/Module.symvers -T /home/vector/rama/Vector_DD/Vector_DD/device_tree/modules.order -i Module.symvers -e 

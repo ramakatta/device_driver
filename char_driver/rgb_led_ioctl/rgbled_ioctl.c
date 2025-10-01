@@ -247,7 +247,7 @@ static long my_ioctl(  struct file *filp,
 		}
                 retbytes = copy_from_user(&port, (char*)arg, sizeof(char) );
 		pr_info("GPIO pin received from user space:%d\n", port);
-	 	if(gpio_is_valid(port) < 0){
+	 	if(!gpio_is_valid(port)){
 			pr_info("gpio %d is valid error \n", port);
 			return -1;
 	 	}
@@ -266,7 +266,7 @@ static long my_ioctl(  struct file *filp,
   	  	** 
   	  	** the second argument prevents the direction from being changed.
   		*/
-  		gpiod_export(port, false); 
+  		gpiod_export(desc, false); 
                 break;
 	  default:
 		pr_info("Invlaid parameter\n");

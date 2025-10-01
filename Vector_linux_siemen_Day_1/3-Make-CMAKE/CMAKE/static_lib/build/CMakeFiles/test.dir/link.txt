@@ -1,0 +1,2 @@
+/usr/bin/ar qc libtest.a CMakeFiles/test.dir/mystrcmp.c.o CMakeFiles/test.dir/mystrcpy.c.o CMakeFiles/test.dir/mystrlen.c.o CMakeFiles/test.dir/mystrrev.c.o
+/usr/bin/ranlib libtest.a

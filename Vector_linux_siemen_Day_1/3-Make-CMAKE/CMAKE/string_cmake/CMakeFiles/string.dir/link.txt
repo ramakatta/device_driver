@@ -1,0 +1,1 @@
+/usr/bin/cc   -rdynamic CMakeFiles/string.dir/main.c.o CMakeFiles/string.dir/mystrlen.c.o CMakeFiles/string.dir/mystrcmp.c.o CMakeFiles/string.dir/mystrrev.c.o CMakeFiles/string.dir/mystrcpy.c.o  -o string 

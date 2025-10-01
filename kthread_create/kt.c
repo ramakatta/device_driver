@@ -10,42 +10,42 @@ static struct task_struct *thread1;
 
 int thread_fn(void *arg) {
 
-unsigned long j0,j1;
-int delay = 60*HZ;
+        unsigned long j0,j1;
+        int delay = 60*HZ;
 
-printk(KERN_INFO "In thread1");
-j0 = jiffies;
-j1 = j0 + delay;
+        printk(KERN_INFO "In thread1");
+        j0 = jiffies;
+        j1 = j0 + delay;
 
-		if(kthread_should_stop())
-			return 0;
-while (time_before(jiffies, j1))
-        schedule();
+        if(kthread_should_stop())
+            return 0;
+    
+        while (time_before(jiffies, j1))
+                schedule();
 
-return 0;
+        return 0;
 }
 
 int thread_init (void) {
    
     char  our_thread[8]="thread1";
     printk(KERN_INFO "in init");
+#if 1
     thread1 = kthread_create(thread_fn,NULL,our_thread);
     if((thread1))
-        {
+    {
         printk(KERN_INFO "in if");
         wake_up_process(thread1);
-        }
-
+    }
+#endif
     return 0;
 }
 
-
-
 void thread_cleanup(void) {
- int ret;
- ret = kthread_stop(thread1);
- if(!ret)
-  printk(KERN_INFO "Thread stopped");
+    int ret;
+    ret = kthread_stop(thread1);
+    if(!ret)
+    printk(KERN_INFO "Thread stopped");
 
 }
 MODULE_LICENSE("GPL");   

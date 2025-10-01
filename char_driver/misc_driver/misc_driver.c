@@ -65,7 +65,7 @@ static const struct file_operations fops = {
 
 //Misc device structure
 struct miscdevice etx_misc_device = {
-    .minor = MISC_DYNAMIC_MINOR, MISC_DYNAMIC_MINOR + 1,
+    .minor = MISC_DYNAMIC_MINOR,
     .name = "simple_etx_misc",
     .fops = &fops,
 };

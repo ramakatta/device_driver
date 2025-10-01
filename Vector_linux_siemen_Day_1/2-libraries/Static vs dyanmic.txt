@@ -1,0 +1,54 @@
+Functions are blocks of code that are reusable throughout a program. Using them saves time, removing the need to rewrite code multiple times. Libraries, like functions also save time in that they make functions reusable in multiple programs.
+Static libraries, while reusable in multiple programs, are locked into a program at compile time. Dynamic, or shared libraries on the other hand, exist as separate files outside of the executable file.
+Static Library:
+1. gcc -Wall -c *.c
+2. ar cvq libstr.a *.o
+3. ar tv libstr.a
+4. gcc main.c ./libstr.a -o output  --- lib is in current directory
+
+OR
+copy file to /usr/local/lib --- lib is in /usr/lib
+gcc main.c -lstr -o out
+
+OR
+
+gcc main.c -L /path/ -lstr  --- lib is in some other folder
+
+Done at compile time, larger executable file, slower loading, diffcult to maintain
+Dynamic library:
+
+1. gcc -Wall -fPIC -c *.c
+2. gcc -shared -Wl,-soname,libctest.so -o libctest.so  *.o
+OR
+3. gcc -g -shared -o libctest.so *.o
+
+copy the libctest.so to /lib folder
+        OR
+
+3. export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/path/to/lib
+
+4. gcc main.c -lctest
+
+Done at runtime, load binaries at run time, smaller executable files, faster loading
+
+Activity:
+apt-get install libusb-1.0.0-dev
+g++ test.cpp -lpthread -I/usr/local/include/libusb-1.0 -lusb-1.0
+gcc  libusb.c  -lpthread -I/usr/local/include/libusb-1.0 -lusb-1.0
+g++ usbtest.cpp -I /usr/include/libusb-1.0 -lusb-1.0
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt install build-essential cmake clang git pkg-config
+To search any library
+sudo apt search libusb
+sudo apt install libusb-1.0-0
+/etc/apt/sources.list.d/ubuntu.sources
+pkg-config --list-all | grep libusb
+pkg-config --modversion libusb-1.0
+pkg-config --libs libusb-1.0
+pkg-config --cflags libusb-1.0
+echo $PKG_CONFIG_PATH
+ls /lib/x86_64-linux-gnu/pkgconfig
+/lib/x86_64-linux-gnu/pkgconfig/libusb-1.0.pc
+Assignment:
+1. Create shared library, invoke share library API calls using dlopen/dlsym

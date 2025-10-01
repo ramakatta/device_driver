@@ -46,7 +46,6 @@ __used __section("__versions") = {
 	{ 0xd9305ff7, "i2c_del_driver" },
 	{ 0x96455b51, "i2c_transfer_buffer_flags" },
 	{ 0xf0fdf6cb, "__stack_chk_fail" },
-	{ 0x8f678b07, "__stack_chk_guard" },
 	{ 0xf9a482f9, "msleep" },
 	{ 0x5aca0882, "module_layout" },
 };

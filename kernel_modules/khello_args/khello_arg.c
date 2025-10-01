@@ -4,12 +4,13 @@
 char *msg="rama";
 unsigned short io=5;
 unsigned short status=0;
-
+int *p=NULL;
 static int __init khello_init(void) {
 
     printk("Greeting message: %s, io address: %x\n", msg, io);
     printk("string length:%lu\n",strlen(msg));
     printk("status:%x\n",status);
+    *p=5;
     return 0;
 }
 
@@ -27,6 +28,7 @@ module_param(status, ushort, S_IRUGO);
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("RAMA");
 MODULE_DESCRIPTION("A simple Hello world module.");
+
 MODULE_PARM_DESC(msg, "Greeting message string...");
 MODULE_PARM_DESC(io, "I/O base address");
 MODULE_PARM_DESC(status, "status flag");

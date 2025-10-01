@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 	    exit(1);
     }
 
-    buffer[0]=0xf5;
+    buffer[0]=0x75;
     
     if(write(file,buffer,1)!=1){
 	printf("Failed to write register ");

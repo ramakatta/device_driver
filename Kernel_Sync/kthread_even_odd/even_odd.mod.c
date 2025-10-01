@@ -1,20 +1,7 @@
 #include <linux/module.h>
-#define INCLUDE_VERMAGIC
-#include <linux/build-salt.h>
-#include <linux/elfnote-lto.h>
 #include <linux/export-internal.h>
-#include <linux/vermagic.h>
 #include <linux/compiler.h>
 
-#ifdef CONFIG_UNWINDER_ORC
-#include <asm/orc_header.h>
-ORC_HEADER;
-#endif
-
-BUILD_SALT;
-BUILD_LTO_INFO;
-
-MODULE_INFO(vermagic, VERMAGIC_STRING);
 MODULE_INFO(name, KBUILD_MODNAME);
 
 __visible struct module __this_module
@@ -27,31 +14,69 @@ __section(".gnu.linkonce.this_module") = {
 	.arch = MODULE_ARCH_INIT,
 };
 
-#ifdef CONFIG_RETPOLINE
-MODULE_INFO(retpoline, "Y");
-#endif
-
 
 
 static const struct modversion_info ____versions[]
 __used __section("__versions") = {
-	{ 0xbdfb6dbb, "__fentry__" },
-	{ 0xe2c17b5d, "__SCT__might_resched" },
-	{ 0xb3f7646e, "kthread_should_stop" },
-	{ 0xfe487975, "init_wait_entry" },
-	{ 0x1000e51, "schedule" },
-	{ 0x8c26d495, "prepare_to_wait_event" },
-	{ 0x92540fbf, "finish_wait" },
-	{ 0xf0fdf6cb, "__stack_chk_fail" },
-	{ 0xd9a5ea54, "__init_waitqueue_head" },
-	{ 0x41d3957, "kthread_create_on_node" },
-	{ 0x8ef6d02c, "wake_up_process" },
-	{ 0x122c3a7e, "_printk" },
-	{ 0x68bdb9a6, "kthread_stop" },
-	{ 0xe2964344, "__wake_up" },
-	{ 0x5b8239ca, "__x86_return_thunk" },
-	{ 0xb2b23fc2, "module_layout" },
+	{ 0xd272d446, "__fentry__" },
+	{ 0xbd03ed67, "__ref_stack_chk_guard" },
+	{ 0x7851be11, "__SCT__might_resched" },
+	{ 0x5e505530, "kthread_should_stop" },
+	{ 0x7a5ffe84, "init_wait_entry" },
+	{ 0xd272d446, "schedule" },
+	{ 0x0db8d68d, "prepare_to_wait_event" },
+	{ 0xc87f4bab, "finish_wait" },
+	{ 0xd272d446, "__stack_chk_fail" },
+	{ 0x5403c125, "__init_waitqueue_head" },
+	{ 0x7f79e79a, "kthread_create_on_node" },
+	{ 0x630dad60, "wake_up_process" },
+	{ 0xe8213e80, "_printk" },
+	{ 0x0571dc46, "kthread_stop" },
+	{ 0x16ab4215, "__wake_up" },
+	{ 0xd272d446, "__x86_return_thunk" },
+	{ 0xbebe66ff, "module_layout" },
 };
+
+static const u32 ____version_ext_crcs[]
+__used __section("__version_ext_crcs") = {
+	0xd272d446,
+	0xbd03ed67,
+	0x7851be11,
+	0x5e505530,
+	0x7a5ffe84,
+	0xd272d446,
+	0x0db8d68d,
+	0xc87f4bab,
+	0xd272d446,
+	0x5403c125,
+	0x7f79e79a,
+	0x630dad60,
+	0xe8213e80,
+	0x0571dc46,
+	0x16ab4215,
+	0xd272d446,
+	0xbebe66ff,
+};
+static const char ____version_ext_names[]
+__used __section("__version_ext_names") =
+	"__fentry__\0"
+	"__ref_stack_chk_guard\0"
+	"__SCT__might_resched\0"
+	"kthread_should_stop\0"
+	"init_wait_entry\0"
+	"schedule\0"
+	"prepare_to_wait_event\0"
+	"finish_wait\0"
+	"__stack_chk_fail\0"
+	"__init_waitqueue_head\0"
+	"kthread_create_on_node\0"
+	"wake_up_process\0"
+	"_printk\0"
+	"kthread_stop\0"
+	"__wake_up\0"
+	"__x86_return_thunk\0"
+	"module_layout\0"
+;
 
 MODULE_INFO(depends, "");
 

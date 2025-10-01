@@ -1,1 +1,1 @@
-savedcmd_/home/vector/rama/Vector_DD/Vector_DD/Debugging/kasan/Module.symvers :=  scripts/mod/modpost -m -a     -o /home/vector/rama/Vector_DD/Vector_DD/Debugging/kasan/Module.symvers -T /home/vector/rama/Vector_DD/Vector_DD/Debugging/kasan/modules.order -i Module.symvers -e 
+savedcmd_Module.symvers :=  /usr/src/linux-headers-6.17.0-19-generic/scripts/mod/modpost -M -m -b -x -a      -o Module.symvers -T modules.order -i /usr/src/linux-headers-6.17.0-19-generic/Module.symvers -e 

@@ -3,18 +3,20 @@
 #include <linux/sched.h>
 #include <linux/slab.h>
 static int hello = 3;
+
 static int __init khello_init(void)
 {
-    printk(KERN_EMERG"Hello world1\n");
+    printk(KERN_EMERG"Hello world1 on ARM \n");
     printk("Hello world2\n");
     printk("Hello world3\n");
     hello=99;
-    printk("pid:%x comm:%s state:%d jiffies:%lu %d\n",current->pid,current->comm,current->__state,jiffies,hello);
+    printk("pid:%x comm:%s state:%d jiffies:%lu %d\n",current->pid,
+        current->comm,current->__state,jiffies,hello);
     return 0; 
 }
 static void __exit khello_exit(void)
 {
-    printk("Khello unloaded.%d\n");
+    printk("Khello unloaded.%d\n", hello);
 }
 module_init(khello_init);
 module_exit(khello_exit); 

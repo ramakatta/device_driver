@@ -1,0 +1,7 @@
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/app_static_lib/CMakeFiles/install/local.dir
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/app_static_lib/CMakeFiles/install.dir
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/app_static_lib/CMakeFiles/list_install_components.dir
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/app_static_lib/CMakeFiles/rebuild_cache.dir
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/app_static_lib/CMakeFiles/edit_cache.dir
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/app_static_lib/CMakeFiles/install/strip.dir
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/app_static_lib/CMakeFiles/myapp.dir

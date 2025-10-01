@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 2.8)
+project(dlibtest_project)
+add_library(dynamictest SHARED mystrcmp.c  mystrcpy.c  mystrlen.c  mystrrev.c)
+install(TARGETS dynamictest DESTINATION lib)
+install(FILES mystr.h DESTINATION include)

@@ -1,13 +1,31 @@
-clang-format***********************************************************Static  analysis tools:gcc:$gcc -Wall -Wextra -Wshadow -Wconversion -Wstrict-overflow  -fanalyzer gcc_static.c$clang -Weverything -Wno-padded -Wno-sign-conversion   gcc_static.cClang-tidy:$clang-tidy clang_tidy.c -- -Wall -WextraCppcheck:
-$cppcheck cpp_check_ex.c --enable=allFlawfinder:$flawfinder flawfind.c$scan-build (clang static analyser)
-Dynamic analysis tools:$gdb, $valgrind, $asan,ubsangcc -fsanitize=address,undefined -g aubsan.c ********************************************************************************************************CONFIG_DEBUG_INFO
+clang-format
+***********************************************************
+Static  analysis tools:
+gcc:$gcc -Wall -Wextra -Wshadow -Wconversion -Wstrict-overflow  -fanalyzer gcc_static.c
+
+$clang -Weverything -Wno-padded -Wno-sign-conversion   gcc_static.c
+
+Clang-tidy:$clang-tidy clang_tidy.c -- -Wall -Wextra
+
+Cppcheck:
+$cppcheck cpp_check_ex.c --enable=all
+
+Flawfinder:$flawfinder flawfind.c
+
+$scan-build (clang static analyser)
+Dynamic analysis tools:
+$gdb, $valgrind, $asan,ubsan
+gcc -fsanitize=address,undefined -g  aubsan.c
+********************************************************************************************************
+CONFIG_DEBUG_INFO
 CONFIG_DEBUG_FS (the debugfs pseudo filesystem)
 CONFIG_MAGIC_SYSRQ (the Magic SysRq hotkeys feature)
 CONFIG_DEBUG_KERNEL
 CONFIG_DEBUG_MISC
 Memory debugging:
 CONFIG_SLUB_DEBUG.
-CONFIG_DEBUG_MEMORY_INIT.CONFIG_KASAN: this is the Kernel Address Sanitizer port;
+CONFIG_DEBUG_MEMORY_INIT.
+CONFIG_KASAN: this is the Kernel Address Sanitizer port;
 however, as of the time of writing, it only works on 64-bit
 systems.
 CONFIG_DEBUG_SHIRQ

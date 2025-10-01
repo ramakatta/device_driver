@@ -1,1 +1,1 @@
-savedcmd_/home/vector/rama/Vector_DD/Vector_DD/Debugging/kasan/kasan.mod := printf '%s\n'   kasan.o | awk '!x[$$0]++ { print("/home/vector/rama/Vector_DD/Vector_DD/Debugging/kasan/"$$0) }' > /home/vector/rama/Vector_DD/Vector_DD/Debugging/kasan/kasan.mod
+savedcmd_kasan.mod := printf '%s\n'   kasan.o | awk '!x[$$0]++ { print("./"$$0) }' > kasan.mod

@@ -1,1 +1,1 @@
-savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/Kernel_Sync/kthread/modules.order := {   echo /home/rama/Downloads/Vector_DD/Vector_DD/Kernel_Sync/kthread/kthread_sync.o; :; } > /home/rama/Downloads/Vector_DD/Vector_DD/Kernel_Sync/kthread/modules.order
+savedcmd_modules.order := {   echo kthread_sync.o; :; } > modules.order

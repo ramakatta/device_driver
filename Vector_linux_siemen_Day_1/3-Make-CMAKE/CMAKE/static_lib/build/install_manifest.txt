@@ -1,0 +1,2 @@
+/usr/local/lib/libtest.a
+/usr/local/include/mystr.h

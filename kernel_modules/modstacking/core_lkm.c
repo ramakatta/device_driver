@@ -10,6 +10,8 @@ MODULE_LICENSE("Dual MIT/GPL");
 
 int exp_int = 200;
 EXPORT_SYMBOL_GPL(exp_int);
+void llkd_sysinfo2(void);
+u64 get_skey(int p);
 
 /* Functions to be called from other LKMs */
 

@@ -1,1 +1,1 @@
-savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/Kernel_Sync/kthread_even_odd/modules.order := {   echo /home/rama/Downloads/Vector_DD/Vector_DD/Kernel_Sync/kthread_even_odd/even_odd.o; :; } > /home/rama/Downloads/Vector_DD/Vector_DD/Kernel_Sync/kthread_even_odd/modules.order
+savedcmd_modules.order := {   echo even_odd.o; :; } > modules.order

@@ -1,0 +1,42 @@
+/home/vector/yocto/poky/build/tmp/work/x86_64-linux/qemu-helper-native/1.0/recipe-sysroot-native/usr/bin/qemu-system-x86_64   -machine q35   -cpu qemu64   -smp 4   -m 256   -nographic   -serial mon:stdio -device edu  -drive file=/home/vector/yocto/poky/build/tmp/deploy/images/qemux86-64/core-image-minimal-qemux86-64.rootfs-20260103203411.ext4,if=virtio,format=raw   -kernel /home/vector/yocto/poky/build/tmp/deploy/images/qemux86-64/bzImage -append "root=/dev/vda rw console=ttyS0 earlyprintk swiotlb=force"
+
+ qemu-system-x86_64 -> Runs the x86-64 system emulator.
+   -machine q35 -> Uses the Intel Q35 chipset (modern PCIe-style layout).
+                   Required for many modern PCI devices.EDU works on both pc and q35, but q35 is preferred
+    -cpu qemu64 -> Uses QEMU’s generic 64-bit CPU model. Most stable choice for Yocto + emulation
+    -smp 4 -> Creates 4 virtual CPUs.
+    -m 256 -> Allocates 256 MB of RAM to the guest.
+    -nographic -> Disables graphical output. Redirects VGA to serial
+    -serial mon:stdio -> Multiplexes: QEMU monitor guest serial port (ttyS0)
+    -device edu  -> PCI device
+    -drive file=core-image-minimal-qemux86-64.rootfs-20260103203411.ext4,if=virtio,format=raw 
+          -> if=virtio → fast paravirtualized disk
+          -> format=raw → raw disk image Appears as /dev/vda
+    -kernel bzImage
+    -append "root=/dev/vda rw console=ttyS0 earlyprintk swiotlb=force"
+          -> Kernel command line:
+            root=/dev/vda → mount virtio disk as root
+            rw → read/write root filesystem
+            console=ttyS0 → primary console on serial
+            earlyprintk → early boot debug output (very useful)
+
+          -> Why swiotlb=force matters (EDU-specific)
+             EDU uses 32-bit DMA
+             Your guest RAM is above 4 GB physical addressing internally
+             swiotlb=force ensures DMA buffers are reachable
+
+https://www.qemu.org/docs/master/specs/edu.html
+
+$lspci
+00:03.0 Unclassified device [00ff]: Device 1234:11e8 (rev 10)
+root@qemux86-64:~# lspci -vvv -s 00:03.0
+00:03.0 Unclassified device [00ff]: Device 1234:11e8 (rev 10)
+	Subsystem: Red Hat, Inc. Device 1100
+	Control: I/O+ Mem+ BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR+ FastB2B- DisINT-
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Interrupt: pin A routed to IRQ 11
+	Region 0: Memory at fea00000 (32-bit, non-prefetchable) [size=1M]
+	Capabilities: [40] MSI: Enable- Count=1/1 Maskable- 64bit+
+		Address: 0000000000000000  Data: 0000
+
+

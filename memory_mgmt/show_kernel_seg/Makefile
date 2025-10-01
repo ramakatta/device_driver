@@ -29,7 +29,7 @@
 #  make ARCH=<arch> CROSS_COMPILE=<cross-compiler-prefix>
 ifeq ($(ARCH),arm)
   # *UPDATE* 'KDIR' below to point to the ARM Linux kernel source tree on your box
-  KDIR ?= /home/rama/Downloads/linux
+  KDIR ?= /home/vector/Downloads/linux
 else ifeq ($(ARCH),arm64)
   # *UPDATE* 'KDIR' below to point to the ARM64 (Aarch64) Linux kernel source
   # tree on your box
@@ -48,9 +48,9 @@ PWD                   := $(shell pwd)
 obj-m                 += show_kernel_seg.o
 show_kernel_seg-objs  += kernel_seg.o klib_llkd.o
 EXTRA_CFLAGS          += -DDEBUG -Wformat=0
-CROSS_COMPILE := arm-linux-gnueabihf-
-ARCH := arm
-KDIR = /home/rama/Downloads/linux
+#CROSS_COMPILE := arm-linux-gnueabihf-
+#ARCH := arm
+#KDIR = /home/rama/Downloads/linux
 
 all:
 	@echo

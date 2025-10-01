@@ -1,0 +1,7 @@
+/home/rama/Downloads/Corporate_trainings/siemen/Linux_userspace/3-Make-CMAKE/CMAKE/hello_cmake/build/CMakeFiles/myapp.dir
+/home/rama/Downloads/Corporate_trainings/siemen/Linux_userspace/3-Make-CMAKE/CMAKE/hello_cmake/build/CMakeFiles/edit_cache.dir
+/home/rama/Downloads/Corporate_trainings/siemen/Linux_userspace/3-Make-CMAKE/CMAKE/hello_cmake/build/CMakeFiles/rebuild_cache.dir
+/home/rama/Downloads/Corporate_trainings/siemen/Linux_userspace/3-Make-CMAKE/CMAKE/hello_cmake/build/CMakeFiles/list_install_components.dir
+/home/rama/Downloads/Corporate_trainings/siemen/Linux_userspace/3-Make-CMAKE/CMAKE/hello_cmake/build/CMakeFiles/install.dir
+/home/rama/Downloads/Corporate_trainings/siemen/Linux_userspace/3-Make-CMAKE/CMAKE/hello_cmake/build/CMakeFiles/install/local.dir
+/home/rama/Downloads/Corporate_trainings/siemen/Linux_userspace/3-Make-CMAKE/CMAKE/hello_cmake/build/CMakeFiles/install/strip.dir

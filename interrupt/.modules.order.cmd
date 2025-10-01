@@ -1,1 +1,1 @@
-savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/interrupt/modules.order := {   echo /home/rama/Downloads/Vector_DD/Vector_DD/interrupt/test.o; :; } > /home/rama/Downloads/Vector_DD/Vector_DD/interrupt/modules.order
+savedcmd_modules.order := {   echo irq_thread_shot.o; :; } > modules.order

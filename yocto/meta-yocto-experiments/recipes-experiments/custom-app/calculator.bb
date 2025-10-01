@@ -4,7 +4,7 @@ DEPENDS = ""
 LICENSE = "CLOSED"
 FILESEXTRAPATHS_prepend := "${THISDIR}/src:"
 
-SRC_URI = "file://calculator.c"
+SRC_URI:append = "file://calculator.c"
 
 S = "${WORKDIR}"
 

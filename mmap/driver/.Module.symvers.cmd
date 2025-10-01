@@ -1,1 +1,1 @@
-savedcmd_/home/vector/rama/Vector_DD/Vector_DD/mmap/driver/Module.symvers :=  scripts/mod/modpost -m -a      -o /home/vector/rama/Vector_DD/Vector_DD/mmap/driver/Module.symvers -T /home/vector/rama/Vector_DD/Vector_DD/mmap/driver/modules.order -i Module.symvers -e 
+savedcmd_/home/vector/rama/Vector_DD/Vector_DD/mmap/driver/Module.symvers :=  scripts/mod/modpost -M -m -a      -o /home/vector/rama/Vector_DD/Vector_DD/mmap/driver/Module.symvers -T /home/vector/rama/Vector_DD/Vector_DD/mmap/driver/modules.order -i Module.symvers -e 

@@ -1,0 +1,1 @@
+./irq_thread_shot.o

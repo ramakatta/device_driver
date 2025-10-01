@@ -1,0 +1,6 @@
+dtc -@ -I dts -O dtb -o my-overlay.dtbo testoverlay.dts
+copy dtbo file on RP board
+On RP board
+
+dtoverlay filename.dtbo
+

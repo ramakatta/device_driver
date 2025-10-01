@@ -130,6 +130,9 @@ static int __init etx_driver_init(void)
             goto r_device;
         }
         
+        printk("in_interrupt : %d\n", in_interrupt());
+        printk("in_task : %d\n", in_task());
+        
         strcpy(kernel_buffer, "Hello_World");
         
         pr_info("Device Driver Insert...Done!!!\n");

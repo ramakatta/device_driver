@@ -116,37 +116,37 @@ static long char_dev_ioctl(  struct file *filp,
         if( _IOC_TYPE(cmd) != MY_MAGIC ) return -ENOTTY;
         if( _IOC_NR(cmd) > MY_MAX_CMDS ) return -ENOTTY;
 
-#if 0
+#if 1
         if( _IOC_DIR(cmd) & _IOC_READ )
-                if( !access_ok(VERIFY_WRITE, (void *)arg, _IOC_SIZE(cmd) ) )
+                if (!access_ok((void __user *)arg, _IOC_SIZE(cmd)))
                         return -EFAULT;
         if( _IOC_DIR(cmd) & _IOC_WRITE )
-                if( !access_ok(VERIFY_READ, (void *)arg, _IOC_SIZE(cmd) ) )
+                if (!access_ok((void __user *)arg, _IOC_SIZE(cmd)))
                         return -EFAULT;
 #endif
-	printk("Executing IOCTL\n");
-	/* implement support of commands using switch/case */
-
+	    printk("Executing IOCTL\n");
+	    /* implement support of commands using switch/case */
         /* sounds ok lets continue */
         switch(cmd) {
 
         case MY_FILL_ZERO:
                 for(i=0; i<MAX_LENGTH; i++) char_device_buf[i] = 0;
-		printk(KERN_DEBUG " FILL_ZERO config executed\n ");
+		        printk(KERN_DEBUG " FILL_ZERO config executed\n ");
                 break;
 
         case MY_FILL_CHAR:
                 retbytes = copy_from_user( &c, (char *)arg, sizeof(char) );
                 for(i=0; i<MAX_LENGTH; i++) char_device_buf[i] = c;
-		printk(KERN_DEBUG "FILL_CHAR config executed \n");
+		        printk(KERN_DEBUG "FILL_CHAR config executed \n");
                 break;
 
         case MY_SET_SIZE:
-		 if (!capable(CAP_SYS_ADMIN))
-		{
-			printk("Not ADMIN\n");
-                        return -EPERM;
-		}
+		        if (!capable(CAP_SYS_ADMIN))
+		        {
+			        printk("Not ADMIN\n");
+                    return -EPERM;
+		        }
+
                 retbytes=copy_from_user( &size, (unsigned int*)arg,
                                 sizeof(unsigned int) );
                 new_buf = (char *)kmalloc( size*sizeof(char),
@@ -157,39 +157,40 @@ static long char_dev_ioctl(  struct file *filp,
                 MAX_LENGTH = size;
                 for(i=0; i<MAX_LENGTH; i++) char_device_buf[i] = 0;
                 filp->f_pos = 0;
-		printk(KERN_DEBUG "SET_SIZE config executed\n");
+		        printk(KERN_DEBUG "SET_SIZE config executed\n");
                 break;
-	
-	case MY_GET_SIZE:
-		if (!capable(CAP_SYS_ADMIN))
-		{
-			printk("Not ADMIN\n");
-                        return -EPERM;
-		}
+	    case MY_GET_SIZE:
+		        if (!capable(CAP_SYS_ADMIN))
+		        {
+			        printk("Not ADMIN\n");
+                    return -EPERM;
+		        }
 
-		size = MAX_LENGTH;
-                retbytes=copy_to_user( (unsigned int*)arg, &size , sizeof(unsigned int) );
-		printk(KERN_DEBUG "GET_SIZE config executed \n");	
-                break;
-	case MY_ENCRYPT:
-		 if (!capable(CAP_SYS_ADMIN))
-		{
-			printk("Not ADMIN\n");
-                        return -EPERM;
-		}
+				size = MAX_LENGTH;
+				retbytes=copy_to_user( (unsigned int*)arg, &size , sizeof(unsigned int) );
+				printk(KERN_DEBUG "GET_SIZE config executed \n");	
+				break;
+	    case MY_ENCRYPT:
+				if (!capable(CAP_SYS_ADMIN))
+				{
+					printk("Not ADMIN\n");
+					return -EPERM;
+				}
                 retbytes = copy_from_user( &enc_key, (char *)arg, sizeof(char) );
                 for(i=0; i<MAX_LENGTH; i++) char_device_buf[i] += enc_key;
-		break;
-	case MY_DECRYPT:
-		 if (!capable(CAP_SYS_ADMIN))
-		{
-			printk("Not ADMIN\n");
-                        return -EPERM;
-		}
+				break;
+	    case MY_DECRYPT:
+				if (!capable(CAP_SYS_ADMIN))
+				{
+					printk("Not ADMIN\n");
+					return -EPERM;
+				}
                 retbytes = copy_from_user( &enc_key, (char *)arg, sizeof(char) );
                 for(i=0; i<MAX_LENGTH; i++) char_device_buf[i] -= enc_key;
-
-
+				break;
+		default:
+		        printk(KERN_DEBUG "Invalid IOCTL parameter \n");
+				return -EINVAL;
         }
 
         return SUCCESS;
@@ -198,7 +199,6 @@ static long char_dev_ioctl(  struct file *filp,
 
 static struct file_operations char_dev_fops = {
 	.owner = THIS_MODULE,
-//	.ioctl = char_dev_ioctl,
 	.unlocked_ioctl = char_dev_ioctl,
 	.read = char_dev_read,
 	.write = char_dev_write,
@@ -243,7 +243,7 @@ static __init int char_dev_init(void)
 static __exit void  char_dev_exit(void)
 {
 	 device_destroy (my_class, mydev);
-         class_destroy (my_class);
+     class_destroy (my_class);
 	 cdev_del(my_cdev);
 	 unregister_chrdev_region(mydev,1);
 	 kfree(char_device_buf);

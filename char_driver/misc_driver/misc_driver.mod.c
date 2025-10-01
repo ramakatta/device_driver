@@ -18,22 +18,22 @@ __section(".gnu.linkonce.this_module") = {
 
 static const struct modversion_info ____versions[]
 __used __section("__versions") = {
-	{ 0xc5e973a2, "misc_deregister" },
+	{ 0xf5270aff, "misc_deregister" },
 	{ 0xd272d446, "__fentry__" },
 	{ 0xe8213e80, "_printk" },
 	{ 0xd272d446, "__x86_return_thunk" },
-	{ 0xbf0e63c7, "misc_register" },
-	{ 0x70eca2ca, "module_layout" },
+	{ 0xd33d3223, "misc_register" },
+	{ 0xba157484, "module_layout" },
 };
 
 static const u32 ____version_ext_crcs[]
 __used __section("__version_ext_crcs") = {
-	0xc5e973a2,
+	0xf5270aff,
 	0xd272d446,
 	0xe8213e80,
 	0xd272d446,
-	0xbf0e63c7,
-	0x70eca2ca,
+	0xd33d3223,
+	0xba157484,
 };
 static const char ____version_ext_names[]
 __used __section("__version_ext_names") =
@@ -48,4 +48,4 @@ __used __section("__version_ext_names") =
 MODULE_INFO(depends, "");
 
 
-MODULE_INFO(srcversion, "5D2620659A5B846490ABD68");
+MODULE_INFO(srcversion, "B4DDA85036E889C6DA8B855");

@@ -1,0 +1,14 @@
+CC=gcc
+CFLAGS=-I.
+DEPS=mystr.h
+OBJ=main.o mystrlen.o mystrcmp.o mystrcpy.o mystrrev.o
+LDFLAGS=-lpthread
+%.o:%.c $(DEPS)
+	$(CC) -g -c -o $@ $< $(CFLAGS)
+mystring:$(OBJ)
+	$(CC) -g -o $@ $^ $(CFLAGS) $(LDFLAGS) 
+install:
+	cp mystring  /usr/local/bin
+.PHONY: clean
+clean:
+	rm *.o mystring

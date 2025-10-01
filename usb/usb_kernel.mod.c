@@ -1,20 +1,7 @@
 #include <linux/module.h>
-#define INCLUDE_VERMAGIC
-#include <linux/build-salt.h>
-#include <linux/elfnote-lto.h>
 #include <linux/export-internal.h>
-#include <linux/vermagic.h>
 #include <linux/compiler.h>
 
-#ifdef CONFIG_UNWINDER_ORC
-#include <asm/orc_header.h>
-ORC_HEADER;
-#endif
-
-BUILD_SALT;
-BUILD_LTO_INFO;
-
-MODULE_INFO(vermagic, VERMAGIC_STRING);
 MODULE_INFO(name, KBUILD_MODNAME);
 
 __visible struct module __this_module
@@ -27,22 +14,39 @@ __section(".gnu.linkonce.this_module") = {
 	.arch = MODULE_ARCH_INIT,
 };
 
-#ifdef CONFIG_RETPOLINE
-MODULE_INFO(retpoline, "Y");
-#endif
-
 
 
 static const struct modversion_info ____versions[]
 __used __section("__versions") = {
-	{ 0x128d9757, "_dev_info" },
-	{ 0x122c3a7e, "_printk" },
-	{ 0xda572df2, "usb_deregister" },
-	{ 0xbdfb6dbb, "__fentry__" },
-	{ 0x6330135d, "usb_register_driver" },
-	{ 0x5b8239ca, "__x86_return_thunk" },
-	{ 0xb2b23fc2, "module_layout" },
+	{ 0x9b1de7cb, "_dev_info" },
+	{ 0xe8213e80, "_printk" },
+	{ 0xa8f96c6e, "usb_deregister" },
+	{ 0xd272d446, "__fentry__" },
+	{ 0xadb55ac9, "usb_register_driver" },
+	{ 0xd272d446, "__x86_return_thunk" },
+	{ 0xbebe66ff, "module_layout" },
 };
+
+static const u32 ____version_ext_crcs[]
+__used __section("__version_ext_crcs") = {
+	0x9b1de7cb,
+	0xe8213e80,
+	0xa8f96c6e,
+	0xd272d446,
+	0xadb55ac9,
+	0xd272d446,
+	0xbebe66ff,
+};
+static const char ____version_ext_names[]
+__used __section("__version_ext_names") =
+	"_dev_info\0"
+	"_printk\0"
+	"usb_deregister\0"
+	"__fentry__\0"
+	"usb_register_driver\0"
+	"__x86_return_thunk\0"
+	"module_layout\0"
+;
 
 MODULE_INFO(depends, "");
 

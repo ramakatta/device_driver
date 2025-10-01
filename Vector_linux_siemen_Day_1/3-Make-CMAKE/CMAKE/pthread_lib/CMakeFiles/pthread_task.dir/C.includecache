@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/pthread_lib/main.c
+stdio.h
+-
+pthread.h
+-
+

@@ -3,6 +3,7 @@
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("RAMA");
+void say_message(void);
 
 void say_message(void) 
 {

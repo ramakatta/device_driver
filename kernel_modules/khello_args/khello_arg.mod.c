@@ -20,22 +20,22 @@ static const struct modversion_info ____versions[]
 __used __section("__versions") = {
 	{ 0xd272d446, "__fentry__" },
 	{ 0x43a349ca, "strlen" },
-	{ 0x73bebd3f, "param_ops_ushort" },
-	{ 0x73bebd3f, "param_ops_charp" },
+	{ 0x0040afbe, "param_ops_ushort" },
+	{ 0x0040afbe, "param_ops_charp" },
 	{ 0xe8213e80, "_printk" },
 	{ 0xd272d446, "__x86_return_thunk" },
-	{ 0x70eca2ca, "module_layout" },
+	{ 0xbebe66ff, "module_layout" },
 };
 
 static const u32 ____version_ext_crcs[]
 __used __section("__version_ext_crcs") = {
 	0xd272d446,
 	0x43a349ca,
-	0x73bebd3f,
-	0x73bebd3f,
+	0x0040afbe,
+	0x0040afbe,
 	0xe8213e80,
 	0xd272d446,
-	0x70eca2ca,
+	0xbebe66ff,
 };
 static const char ____version_ext_names[]
 __used __section("__version_ext_names") =
@@ -51,4 +51,4 @@ __used __section("__version_ext_names") =
 MODULE_INFO(depends, "");
 
 
-MODULE_INFO(srcversion, "236A796EDB1E57432B82FED");
+MODULE_INFO(srcversion, "4538F0127EDB5C64DF46F92");

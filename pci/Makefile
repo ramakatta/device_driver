@@ -1,4 +1,4 @@
-obj-m := real.o
+obj-m := test.o
 KDIR := /lib/modules/$(shell uname -r)/build
 PWD := $(shell pwd)
 default:

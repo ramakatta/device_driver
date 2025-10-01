@@ -1,12 +1,7 @@
 /****************************************************************************//**
 *  \file       spi_ssd1306_driver.c
-*
-*  \details    Simple linux driver (SPI Slave Protocol Driver)
-*
-*
-*  \Tested with Linux raspberrypi 5.10.27-v7l-embetronicx-custom+
-*
 *******************************************************************************/
+
 #include <linux/init.h>
 #include <linux/module.h>
 #include <linux/spi/spi.h>
@@ -16,136 +11,179 @@
 
 static struct spi_device *etx_spi_device;
 
-//Register information about your slave device
-struct spi_board_info etx_spi_device_info = 
-{
+/* SPI device info (legacy board-file style) */
+struct spi_board_info etx_spi_device_info = {
   .modalias     = "etx-spi-ssd1306-driver",
-  .max_speed_hz = 4000000,              // speed your device (slave) can handle
-  .bus_num      = SPI_BUS_NUM,          // SPI 1
-  .chip_select  = 0,                    // Use 0 Chip select (GPIO 18)
-  .mode         = SPI_MODE_0            // SPI mode 0
+  .max_speed_hz = 4000000,
+  .bus_num      = SPI_BUS_NUM,
+  .chip_select  = 0,
+  .mode         = SPI_MODE_0
 };
 
 /****************************************************************************
- * Name: etx_spi_write
- *
- * Details : This function writes the 1-byte data to the slave device using SPI.
+ * SPI Write
  ****************************************************************************/
-int etx_spi_write( uint8_t data )
+int etx_spi_write(uint8_t data)
 {
-  int     ret = -1;
-  uint8_t rx  = 0x00;
-  
-  if( etx_spi_device )
-  {    
-    struct spi_transfer	tr = 
-    {
-      .tx_buf = &data,
-      .rx_buf = &rx,
-      .len    = 1,
-    };
+  int ret;
+  uint8_t rx = 0x00;
 
-    spi_sync_transfer( etx_spi_device, &tr, 1 );
-  }
-  
-  //pr_info("Received = 0x%02X \n", rx);
-  
-  return( ret );
+  if (!etx_spi_device)
+    return -ENODEV;
+
+  struct spi_transfer tr = {
+    .tx_buf = &data,
+    .rx_buf = &rx,
+    .len    = 1,
+  };
+
+  ret = spi_sync_transfer(etx_spi_device, &tr, 1);
+  return ret;
 }
 
 /****************************************************************************
- * Name: etx_spi_init
- *
- * Details : This function Register and Initilize the SPI.
+ * SPI DEVICE ID TABLE  (IMPORTANT)
+ ****************************************************************************/
+static const struct spi_device_id etx_spi_ids[] = {
+    { "etx-spi-ssd1306-driver", 0 },
+    { }
+};
+
+/* 👉 This exposes the table for auto-loading */
+MODULE_DEVICE_TABLE(spi, etx_spi_ids);
+
+/****************************************************************************
+ * PROBE
+ ****************************************************************************/
+static int etx_probe(struct spi_device *spi)
+{
+  int ret;
+
+  pr_info("SPI OLED Probe Called\n");
+
+  etx_spi_device = spi;
+
+  spi->bits_per_word = 8;
+  spi->mode = SPI_MODE_0;
+
+  ret = spi_setup(spi);
+  if (ret) {
+    pr_err("SPI setup failed\n");
+    return ret;
+  }
+
+  /* OLED INIT */
+  ETX_SSD1306_DisplayInit();
+
+  ETX_SSD1306_SetBrightness(255);
+  ETX_SSD1306_InvertDisplay(false);
+
+  ETX_SSD1306_StartScrollHorizontal(true, 0, 2);
+
+  ETX_SSD1306_SetCursor(0, 0);
+  ETX_SSD1306_String("Welcome\nTo\nEmbeTronicX\n");
+
+  ETX_SSD1306_SetCursor(4, 35);
+  ETX_SSD1306_String("SPI Linux\n");
+
+  ETX_SSD1306_SetCursor(5, 23);
+  ETX_SSD1306_String("Device Driver\n");
+
+  ETX_SSD1306_SetCursor(6, 37);
+  ETX_SSD1306_String("Tutorial\n");
+
+  msleep(9000);
+
+  ETX_SSD1306_ClearDisplay();
+  ETX_SSD1306_DeactivateScroll();
+
+  ETX_SSD1306_PrintLogo();
+
+  pr_info("OLED Initialized\n");
+
+  return 0;
+}
+
+/****************************************************************************
+ * REMOVE
+ ****************************************************************************/
+static int etx_remove(struct spi_device *spi)
+{
+  pr_info("SPI OLED Remove Called\n");
+
+  ETX_SSD1306_ClearDisplay();
+  ETX_SSD1306_DisplayDeInit();
+
+  return 0;
+}
+
+/****************************************************************************
+ * SPI DRIVER STRUCTURE
+ ****************************************************************************/
+static struct spi_driver etx_spi_driver = {
+    .driver = {
+        .name = "etx-spi-ssd1306-driver",
+    },
+    .probe    = etx_probe,
+    .remove   = etx_remove,
+    .id_table = etx_spi_ids,
+};
+
+/****************************************************************************
+ * INIT
  ****************************************************************************/
 static int __init etx_spi_init(void)
 {
-  int     ret;
-  struct  spi_master *master;
-  
-  master = spi_busnum_to_master( etx_spi_device_info.bus_num );
-  if( master == NULL )
-  {
-    pr_err("SPI Master not found.\n");
-    return -ENODEV;
-  }
-   
-  // create a new slave device, given the master and device info
-  etx_spi_device = spi_new_device( master, &etx_spi_device_info );
-  if( etx_spi_device == NULL ) 
-  {
-    pr_err("FAILED to create slave.\n");
-    return -ENODEV;
-  }
-  
-  // 8-bits in a word
-  etx_spi_device->bits_per_word = 8;
+  int ret;
+  struct spi_master *master;
 
-  // setup the SPI slave device
-  ret = spi_setup( etx_spi_device );
-  if( ret )
-  {
-    pr_err("FAILED to setup slave.\n");
-    spi_unregister_device( etx_spi_device );
+  pr_info("SPI Init\n");
+
+  /* Register SPI driver */
+  ret = spi_register_driver(&etx_spi_driver);
+  if (ret) {
+    pr_err("Driver registration failed\n");
+    return ret;
+  }
+
+  /* Get SPI Master */
+  master = spi_busnum_to_master(etx_spi_device_info.bus_num);
+  if (!master) {
+    pr_err("SPI Master not found\n");
+    spi_unregister_driver(&etx_spi_driver);
     return -ENODEV;
   }
-  
-  //Initialize the OLED SSD1306
-  ETX_SSD1306_DisplayInit();
-  
-  /* Print the String */
-  ETX_SSD1306_SetBrightness( 255 );           // Full brightness
-  ETX_SSD1306_InvertDisplay( false );         // Invert the dispaly : OFF
-  
-  // Enable the Horizontal scroll for first 3 lines
-  ETX_SSD1306_StartScrollHorizontal( true, 0, 2);
-  
-  
-  ETX_SSD1306_SetCursor(0,0);                 // Set cursor at 0th line 0th col
-  //Write String to OLED
-  ETX_SSD1306_String("Welcome\nTo\nEmbeTronicX\n");
-  
-  ETX_SSD1306_SetCursor(4,35);                // Set cursor at 4th line 35th col
-  //Write String to OLED
-  ETX_SSD1306_String("SPI Linux\n");
-  ETX_SSD1306_SetCursor(5,23);                // Set cursor at 5th line 23rd col
-  ETX_SSD1306_String("Device Driver\n");
-  ETX_SSD1306_SetCursor(6,37);                // Set cursor at 6th line 37th col
-  ETX_SSD1306_String("Tutorial\n");
-  
-  msleep(9000);                               // 9secs delay
-  
-  ETX_SSD1306_ClearDisplay();                 // Clear Display
-  ETX_SSD1306_DeactivateScroll();             // Deactivate the scroll
-  
-  /* Print the Image */
-  ETX_SSD1306_PrintLogo();
-  
-  pr_info("SPI driver Registered\n");
+
+  /* Create SPI device */
+  etx_spi_device = spi_new_device(master, &etx_spi_device_info);
+  spi_master_put(master);
+
+  if (!etx_spi_device) {
+    pr_err("Failed to create SPI device\n");
+    spi_unregister_driver(&etx_spi_driver);
+    return -ENODEV;
+  }
+
+  pr_info("SPI device created\n");
   return 0;
 }
- 
+
 /****************************************************************************
- * Name: etx_spi_exit
- *
- * Details : This function Unregister and DeInitilize the SPI.
+ * EXIT
  ****************************************************************************/
 static void __exit etx_spi_exit(void)
-{ 
-  if( etx_spi_device )
-  {
-    // Clear the display
-    ETX_SSD1306_ClearDisplay();                 // Clear Display
-    ETX_SSD1306_DisplayDeInit();                // Deinit the SSD1306
-    spi_unregister_device( etx_spi_device );    // Unregister the SPI slave
-    pr_info("SPI driver Unregistered\n");
-  }
+{
+  pr_info("SPI Exit\n");
+
+  if (etx_spi_device)
+    spi_unregister_device(etx_spi_device);
+
+  spi_unregister_driver(&etx_spi_driver);
 }
- 
+
 module_init(etx_spi_init);
 module_exit(etx_spi_exit);
 
 MODULE_LICENSE("GPL");
-MODULE_DESCRIPTION("A simple device driver - SPI Slave Protocol Driver");
-MODULE_VERSION("1.44");
-
+MODULE_DESCRIPTION("SPI SSD1306 OLED Driver");
+MODULE_VERSION("1.0");

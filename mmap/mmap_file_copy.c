@@ -39,15 +39,14 @@ int main(int argc, char *argv[])
         error("mmap", argv[2]);
         goto close_dest;
     }
-
-
+    
     if ((dst = open(argv[2], O_RDWR | O_CREAT | O_TRUNC, 0644)) == -1) { 
         /* S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH */
         error("opening", argv[2]);
         goto close_source;
     
     }
-#if 1
+#if 0
     ftruncate(dst,info.st_size); 
     if ((buf2 = (char *)mmap(NULL, info.st_size, 
                             PROT_READ | PROT_WRITE, 
@@ -57,7 +56,7 @@ int main(int argc, char *argv[])
     }
      memcpy(buf2,buf,info.st_size);
 #endif
-#if  0
+#if  1
     if ((nwritten = write(dst, buf, info.st_size)) == -1) {
         error("reading", argv[1]);
         goto free_memory;

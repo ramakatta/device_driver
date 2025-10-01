@@ -1,1 +1,1 @@
-savedcmd_/home/rama/Downloads/Manipal/kernel_space/kthread_create/Module.symvers :=  scripts/mod/modpost -M -m -a      -o /home/rama/Downloads/Manipal/kernel_space/kthread_create/Module.symvers -T /home/rama/Downloads/Manipal/kernel_space/kthread_create/modules.order -i Module.symvers -e 
+savedcmd_Module.symvers :=  /usr/src/linux-headers-6.17.0-14-generic/scripts/mod/modpost -M -m -b -x -a      -o Module.symvers -T modules.order -i /usr/src/linux-headers-6.17.0-14-generic/Module.symvers -e 

@@ -1,0 +1,2 @@
+/usr/local/lib/libdynamictest.so
+/usr/local/include/mystr.h

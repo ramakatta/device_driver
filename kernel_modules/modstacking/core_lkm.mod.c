@@ -31,7 +31,7 @@ __used __section("__versions") = {
 	{ 0x9479a1e8, "strnlen" },
 	{ 0xe54e0a6b, "__fortify_panic" },
 	{ 0xd272d446, "__stack_chk_fail" },
-	{ 0x70eca2ca, "module_layout" },
+	{ 0xba157484, "module_layout" },
 };
 
 static const u32 ____version_ext_crcs[]
@@ -43,7 +43,7 @@ __used __section("__version_ext_crcs") = {
 	0x9479a1e8,
 	0xe54e0a6b,
 	0xd272d446,
-	0x70eca2ca,
+	0xba157484,
 };
 static const char ____version_ext_names[]
 __used __section("__version_ext_names") =
@@ -60,4 +60,4 @@ __used __section("__version_ext_names") =
 MODULE_INFO(depends, "");
 
 
-MODULE_INFO(srcversion, "5246B028628CA90005DADD9");
+MODULE_INFO(srcversion, "DBF7C41B72FD242FC95B50E");

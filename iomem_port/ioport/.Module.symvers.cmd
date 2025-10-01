@@ -1,1 +1,1 @@
-savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/iomem_port/ioport/Module.symvers :=  scripts/mod/modpost -M -m -a      -o /home/rama/Downloads/Vector_DD/Vector_DD/iomem_port/ioport/Module.symvers -T /home/rama/Downloads/Vector_DD/Vector_DD/iomem_port/ioport/modules.order -i Module.symvers -e 
+savedcmd_Module.symvers :=  /usr/src/linux-headers-6.14.0-32-generic/scripts/mod/modpost -M -m -b -x -a      -o Module.symvers -T modules.order -i /usr/src/linux-headers-6.14.0-32-generic/Module.symvers -e 

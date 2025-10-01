@@ -57,6 +57,14 @@ static dev_t sdev_dev_number;       /* Allotted device number */
 #define DEVICE_NAME                 "mysdev"
 
 /*
+** Function Prototypes
+*/
+int __init sdev_init(void);
+void __exit sdev_cleanup(void);
+int read_cirq(char *buf, int count, struct cirq *pcq);
+int write_cirq(const char *buf, int count, struct cirq *pcq);
+
+/*
  * Driver Initialization
  */
 int __init sdev_init(void)

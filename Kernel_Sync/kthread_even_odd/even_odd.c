@@ -14,6 +14,22 @@ static int done = 0;     // stop condition
 
 #define MAX_NUM 20
 
+/*
+wait_event_interruptible(wq, condition);
+Equal to
+while (!condition) {
+    set_current_state(TASK_INTERRUPTIBLE);
+    schedule();   // go to sleep
+}
+set_current_state(TASK_RUNNING);
+Does wait_event_interruptible() require wake_up_interruptible()?
+
+✔ Yes — in almost all synchronization cases.
+✔ Unless the condition is already true.
+✔ Or a signal wakes the task.
+
+*/
+
 static int even_fn(void *data)
 {
     int i = 0;

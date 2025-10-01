@@ -1,0 +1,25 @@
+#include<stdio.h>
+int main(int argc,char *argv[])
+{
+  FILE *fp1,*fp2;
+  char ch;
+  printf("argc:%d\n",argc);
+  fp1 = fopen(argv[1],"r");
+  open(argv[1],O_RDONLY,0); 
+  if(fp1==NULL)
+  {
+    printf("File not exist\n");
+    exit(1);
+  }
+  fp2= fopen(argv[2],"w");
+  open(argv[2],O_WRONLY,0); 
+  while(1)
+  {
+    ch = fgetc(fp1);
+    if(ch==EOF)
+    break;
+    fputc(ch,fp2);
+  }
+  fclose(fp1);
+  fclose(fp2);
+}  

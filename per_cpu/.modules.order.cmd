@@ -1,1 +1,1 @@
-savedcmd_/home/rama/Downloads/Vector_DD/Vector_DD/per_cpu/modules.order := {   echo /home/rama/Downloads/Vector_DD/Vector_DD/per_cpu/percpu.o; :; } > /home/rama/Downloads/Vector_DD/Vector_DD/per_cpu/modules.order
+savedcmd_modules.order := {   echo percpu.o; :; } > modules.order

@@ -1,0 +1,1 @@
+savedcmd_irq_thread_shot.ko := ld -r -m elf_x86_64 -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T /usr/src/linux-headers-6.17.0-14-generic/scripts/module.lds -o irq_thread_shot.ko irq_thread_shot.o irq_thread_shot.mod.o .module-common.o

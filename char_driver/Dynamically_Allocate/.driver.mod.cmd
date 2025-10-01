@@ -1,1 +1,0 @@
-cmd_/home/rama/Downloads/Vector_DD/char_driver/Dynamically_Allocate/driver.mod := { echo  /home/rama/Downloads/Vector_DD/char_driver/Dynamically_Allocate/driver.o;  echo; } > /home/rama/Downloads/Vector_DD/char_driver/Dynamically_Allocate/driver.mod

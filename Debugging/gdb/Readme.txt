@@ -74,7 +74,7 @@ Start running the program again on gdb.
 	( figure out the id of the breakpoint just set )
 
 	(gdb)condition <break_pt_id> (i==10)
-	(gdb)r
+	(gdb)c
 
 	On hitting the condition, programs breaks.
 	(gdb)print i

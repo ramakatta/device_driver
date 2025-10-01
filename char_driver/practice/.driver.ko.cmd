@@ -1,1 +1,0 @@
-cmd_/home/rama/Downloads/Vector_DD/char_driver/practice/driver.ko := ld -r  -m elf_x86_64  --build-id=sha1  -T scripts/module.lds -o /home/rama/Downloads/Vector_DD/char_driver/practice/driver.ko /home/rama/Downloads/Vector_DD/char_driver/practice/driver.o /home/rama/Downloads/Vector_DD/char_driver/practice/driver.mod.o;  true

@@ -18,17 +18,23 @@ MODULE_AUTHOR("Rama Krishna");
 MODULE_LICENSE("GPL");
 #define LOCAL_IRQ_NO 1
 void do_mytasklet (struct tasklet_struct *unused);
+#if 1
 void do_mywork(struct work_struct *data);
-DECLARE_TASKLET (my_tasklet, do_mytasklet);
 DECLARE_WORK(my_work, do_mywork);
+#endif
 static int isrCnt = 0;
 static int my_devid;
+
+DECLARE_TASKLET (my_tasklet, do_mytasklet);
+
 void do_mytasklet(struct tasklet_struct *unused)
 {
 printk("*************This message from tasklet****************\n");
 printk("tasklet-in_interrupt: %d\n", in_interrupt());
 printk("tasklet-in_irq : %d\n", in_irq());
+printk("in_task : %d\n", in_task());
 }
+#if 1
 /*******************************************************************************
 * Name:do_mywork
 *******************************************************************************/
@@ -37,7 +43,9 @@ void do_mywork (struct work_struct *data)
 printk("This message from work handler\n");
 printk("work-in_interrupt: %d\n", in_interrupt());
 printk("work-in_irq : %d\n", in_irq());
+printk("in_task : %d\n", in_task());
 }
+#endif
 /*******************************************************************************
 * Name:myIntHandler
 *******************************************************************************/
@@ -46,9 +54,11 @@ static irqreturn_t isr_routine(int irq, void *dev_id)
 printk("**********************FROM HARD IRQ***************\n");
 printk("in_interrupt: %d\n", in_interrupt());
 printk("in_irq : %d\n", in_irq());
+printk("in_task : %d\n", in_task());
 printk("Happy days\n");
-//tasklet_schedule(&my_tasklet);
-#if 1 
+tasklet_schedule(&my_tasklet);
+
+#if 1
 schedule_work(&my_work);
 isrCnt++;
 #endif

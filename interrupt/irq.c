@@ -26,11 +26,11 @@ static int my_devid;
 *******************************************************************************/
 static irqreturn_t isr_routine(int irq, void *dev_id)
 {
-printk("in_interrupt: %d\n", in_interrupt());
-printk("in_irq : %d\n", in_irq());
-printk("in_task: %d\n", in_task());
-printk("Happy days\n");
-return IRQ_HANDLED;
+    printk("in_interrupt: %d\n", in_interrupt());
+    printk("in_irq : %d\n", in_irq());
+    printk("in_task: %d\n", in_task());
+    printk("Happy days\n");
+    return IRQ_HANDLED;
 }
 
 
@@ -42,7 +42,7 @@ int init_module(void)
 {
    int res;
    int retval;
-    if(request_irq(LOCAL_IRQ_NO,isr_routine,IRQF_SHARED,"irq0",&my_devid))
+    if(request_irq(LOCAL_IRQ_NO,isr_routine,IRQF_SHARED | IRQF_NO_THREAD,"irq_eth",&my_devid))
     {
 	printk("can't get interrupt:%x\n",LOCAL_IRQ_NO);
 	goto fail_exit1;

@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/app_static_lib/main.c
+stdio.h
+-
+mystr.h
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/app_static_lib/mystr.h
+

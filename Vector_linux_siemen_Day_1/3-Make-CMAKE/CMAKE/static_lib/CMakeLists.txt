@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.0)
+project(libtest_project)
+add_library(test STATIC mystrcmp.c  mystrcpy.c  mystrlen.c  mystrrev.c)
+install(TARGETS test DESTINATION lib)
+install(FILES mystr.h DESTINATION include)

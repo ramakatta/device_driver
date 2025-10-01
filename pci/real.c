@@ -2,6 +2,7 @@
 #include <linux/pci.h>
 #include <linux/netdevice.h> // For networking-related APIs
 #include <linux/etherdevice.h> // For Ethernet-related functions
+#include <linux/dma-map-ops.h>
 
 #define DRV_NAME "realtek_eth"
 enum cfg_version {
@@ -53,6 +54,11 @@ static int realtek_pci_probe(struct pci_dev *pdev, const struct pci_device_id *i
     // Set the driver-managed flag
     pci_set_drvdata(pdev, ioaddr);
 
+    /* Check support for DMA coherent */
+    if (dev_is_dma_coherent(&pdev->dev))
+        dev_info(&pdev->dev, "PCI DMA is coherent\n");
+    else
+        dev_info(&pdev->dev, "PCI DMA is NOT coherent\n");
 
 
     return 0;

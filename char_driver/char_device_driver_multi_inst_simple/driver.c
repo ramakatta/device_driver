@@ -26,6 +26,8 @@ struct sdev_dev *sdev_devps[NUM_SAMP_DEV];
 
 struct class *myclass;
 
+int sdev_init(void);
+void sdev_cleanup(void);
 int sdev_open(struct inode *inode, struct file *file);
 int sdev_release(struct inode *inode, struct file *file);
 ssize_t sdev_read(struct file *file, char *buf, size_t count, loff_t *ppos);
@@ -126,8 +128,10 @@ int sdev_open(struct inode *inode, struct file *file)
     /* Easy access to sdev_devp from rest of the entry points */
     file->private_data = sdevp;
 #endif
+#if 1
     dump_stack();
     file->private_data = container_of(inode->i_cdev, struct sdev_dev, cdev);
+#endif    
     return 0;
 }
 

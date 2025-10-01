@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/dyncamic_lib/mystr.h
+
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/dyncamic_lib/mystrcmp.c
+mystr.h
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/dyncamic_lib/mystr.h
+
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/dyncamic_lib/mystrcpy.c
+mystr.h
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/dyncamic_lib/mystr.h
+
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/dyncamic_lib/mystrlen.c
+mystr.h
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/dyncamic_lib/mystr.h
+
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/dyncamic_lib/mystrrev.c
+mystr.h
+/home/rama/Downloads/Corporate_trainings/HP_training/user_space/3-Make/CMAKE/dyncamic_lib/mystr.h
+string.h
+-
+
