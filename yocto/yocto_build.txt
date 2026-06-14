@@ -1,14 +1,38 @@
-$ sudo apt update
-$ sudo apt install git git-lfs tar python3 python3-pip gcc
-$ sudo apt install gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev pylint3 xterm python3-subunit mesa-common-dev zstd liblz4-tool
-$ sudo apt install make python3-pip
-$ sudo pip3 install sphinx sphinx_rtd_theme pyyaml
-$ mkdir yocto
-$ cd yocto
-$ git clone git://git.yoctoproject.org/poky
-$ cd poky
-$ git checkout -b styhead origin/styhead
-$ source oe-init-build-env <name of your build directory>
-$ bitbake core-image-minimal --runall=fetch
-$ bitbake core-image-minimal
-$ runqemu nographic
+Ubuntu-24.04
+
+1. Prepare the Build Host
+sudo apt update
+sudo apt install gawk wget git diffstat unzip texinfo gcc multimedia-jack \
+chrpath socat cpio python3 python3-pip python3-pexpect xz-utils \
+debianutils iputils-ping python3-git python3-jinja2 python3-subunit \
+zstd liblz4-tool file locales libsdl1.2-dev xterm
+sudo locale-gen en_US.UTF-8
+
+2. Clone Poky and Checkout Walnascar
+git clone git://git.yoctoproject.org/poky
+cd poky
+git checkout -b my-walnascar origin/walnascar
+
+3. Initialize the Build Environment
+source oe-init-build-env
+
+4. Configure Your Build Target
+nano conf/local.conf
+MACHINE ??= "qemux86-64"
+
+5. Execute the BitBake Build
+bitbake core-image-minimal
+
+6. Verify and Run the Image
+runqemu qemux86-64
+
+Note:
+if you got below error
+got *at() syscall for unknown directory, fd 4 unknown base path for fd 4, path include couldn't allocate absolute path for 'include'. tar: ./usr/include/linux: Cannot mkdir: No such file or directory tar: ./usr/include/linux/qrtr.h: Cannot open: No such file or directory got *at() syscall for unknown directory, fd 4 unknown base path for fd 4, path include
+Solution:
+bitbake -c cleanall pseudo-native
+bitbake pseudo-native
+wget http://archive.ubuntu.com/ubuntu/pool/main/t/tar/tar_1.34+dfsg-1build3_amd64.deb
+sudo dpkg -i tar_1.34+dfsg-1build3_amd64.deb 
+sudo apt-mark hold tar
+bitbake core-image-minimal

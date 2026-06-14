@@ -2,7 +2,7 @@ obj-m += iomem.o
 
 CCPREFIX := arm-linux-gnueabihf-
 
-KDIR = /home/rama/Downloads/linux
+KDIR = /home/vector/Downloads/linux
 
 all:
 	make ARCH=arm CROSS_COMPILE=${CCPREFIX} -C $(KDIR)  M=$(shell pwd) modules

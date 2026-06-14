@@ -12,7 +12,7 @@
 #include <linux/errno.h>
 
 #define NUM_SAMP_DEV 4
-#define MINOR_START 60
+#define MINOR_START 0
 #define BUFFER_SIZE 1024
 
 struct sdev_dev

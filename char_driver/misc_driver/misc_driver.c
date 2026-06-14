@@ -68,6 +68,7 @@ struct miscdevice etx_misc_device = {
     .minor = MISC_DYNAMIC_MINOR,
     .name = "simple_etx_misc",
     .fops = &fops,
+    .mode = 0600,
 };
 
 /*

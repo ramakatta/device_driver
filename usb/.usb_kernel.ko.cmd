@@ -1,1 +1,0 @@
-savedcmd_usb_kernel.ko := ld -r -m elf_x86_64 -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T /usr/src/linux-headers-6.17.0-19-generic/scripts/module.lds -o usb_kernel.ko usb_kernel.o usb_kernel.mod.o .module-common.o

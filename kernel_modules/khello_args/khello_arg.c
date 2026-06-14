@@ -4,13 +4,11 @@
 char *msg="rama";
 unsigned short io=5;
 unsigned short status=0;
-int *p=NULL;
 static int __init khello_init(void) {
 
     printk("Greeting message: %s, io address: %x\n", msg, io);
     printk("string length:%lu\n",strlen(msg));
     printk("status:%x\n",status);
-    *p=5;
     return 0;
 }
 

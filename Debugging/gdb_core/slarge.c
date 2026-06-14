@@ -3,6 +3,7 @@ int main()
 {
   int a[5]={134,1,23,5,45},n=5,i,first,second;
   first=second=-1;
+  char *p = NULL;
   for(i=0;i<5;i++)
   {
      if(a[i]>first)
@@ -14,5 +15,6 @@ int main()
         second=a[i];
 
   }
+  *p=5;
   printf("first:%d seond:%d\n",first,second);
  }

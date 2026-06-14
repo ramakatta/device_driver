@@ -14,6 +14,7 @@ char *p = NULL;
 
 static int __init khello_init(void)
 {
+    unsigned int var=0x3000;
     printk(KERN_EMERG"Hello world1\n");
     pr_emerg("Hello world1\n");
 #ifdef TRIGGER_OOPS
@@ -22,6 +23,9 @@ static int __init khello_init(void)
     pr_debug("Hello world2\n");
     hello=99;
     printk("len:%lu\n",strlen("rama"));
+    printk("Printing normal way:0x%x\n",var);
+    printk("Printing normal way:%pK\n",&var);
+
     printk("pid:%x comm:%s state:%d jiffies:%lu %d %d\n",current->pid,
         current->comm,current->__state,jiffies,hello,test);
     return 0; 

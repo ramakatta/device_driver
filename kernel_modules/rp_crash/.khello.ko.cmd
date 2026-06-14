@@ -1,0 +1,1 @@
+savedcmd_khello.ko := aarch64-linux-gnu-ld -r -EL  -maarch64elf -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T /home/vector/Downloads/rp4/linux/scripts/module.lds -o khello.ko khello.o khello.mod.o .module-common.o

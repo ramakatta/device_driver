@@ -1,1 +1,0 @@
-./kthread_sync.o
