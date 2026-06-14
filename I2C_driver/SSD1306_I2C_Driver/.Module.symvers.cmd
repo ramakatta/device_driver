@@ -1,1 +1,0 @@
-savedcmd_/home/vector/rama/Vector_DD/Vector_DD/I2C_driver/SSD1306_I2C_Driver/Module.symvers :=  scripts/mod/modpost -m -a      -o /home/vector/rama/Vector_DD/Vector_DD/I2C_driver/SSD1306_I2C_Driver/Module.symvers -T /home/vector/rama/Vector_DD/Vector_DD/I2C_driver/SSD1306_I2C_Driver/modules.order -i Module.symvers -e 

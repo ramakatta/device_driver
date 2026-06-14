@@ -1,66 +1,98 @@
+// SPDX-License-Identifier: GPL-2.0
+
 #include <linux/module.h>
 #include <linux/kernel.h>
-#include <linux/fs.h>
-#include <linux/poll.h>
-#include <linux/ioport.h>
-#include <linux/errno.h>
-#include <linux/cdev.h>
-#include <linux/wait.h>
-#include <linux/sched.h>
-#include <linux/pci.h>
-#include <linux/kthread.h> 
-#include <linux/interrupt.h> 
-#include <asm/io.h>
-#include <linux/ioport.h>
+#include <linux/init.h>
 #include <linux/interrupt.h>
 
-MODULE_AUTHOR("Rama Krishna");
+#define LOCAL_IRQ_NO   1
+
 MODULE_LICENSE("GPL");
-#define LOCAL_IRQ_NO 1
+MODULE_AUTHOR("Rama Krishna");
+MODULE_DESCRIPTION("Simple Interrupt Handler Example");
 
-static int isrCnt = 0;
-static int my_devid;
+static unsigned long isr_count;
+static int irq_dev_id;
 
-/*******************************************************************************
-* Name:myIntHandler
-*******************************************************************************/
+/*
+ * Interrupt Service Routine
+ */
 static irqreturn_t isr_routine(int irq, void *dev_id)
 {
-    printk("in_interrupt: %d\n", in_interrupt());
-    printk("in_irq : %d\n", in_irq());
-    printk("in_task: %d\n", in_task());
-    printk("Happy days\n");
+    /*
+     * NOTE:
+     * Since this example uses IRQF_SHARED but does not own any hardware,
+     * it cannot determine whether this interrupt belongs to it.
+     *
+     * A real driver should check the device's interrupt status register:
+     *
+     *      if (!device_generated_interrupt())
+     *              return IRQ_NONE;
+     */
+
+    isr_count++;
+
+    pr_info("Interrupt %d received (count = %lu)\n",
+            irq, isr_count);
+
+    pr_info("in_interrupt=%d in_irq=%d in_task=%d\n",
+             in_interrupt(),
+             in_irq(),
+             in_task());
+
     return IRQ_HANDLED;
 }
 
-
-
-/*******************************************************************************
-* Name: init_module
-*******************************************************************************/
-int init_module(void)
+int my_driver_setup_irq(unsigned int irq)
 {
-   int res;
-   int retval;
-    if(request_irq(LOCAL_IRQ_NO,isr_routine,IRQF_SHARED | IRQF_NO_THREAD,"irq_eth",&my_devid))
-    {
-	printk("can't get interrupt:%x\n",LOCAL_IRQ_NO);
-	goto fail_exit1;
+    // static ensures the memory persists after this function returns
+    static struct cpumask static_cpu_mask;
+    int ret;
+
+    // 1. Clear any existing bits in the mask
+    cpumask_clear(&static_cpu_mask);
+
+    // 2. Explicitly set CPU 2 and CPU 4
+    cpumask_set_cpu(2, &static_cpu_mask);
+    cpumask_set_cpu(4, &static_cpu_mask);
+
+    // 3. Apply the hint and hardware routing safely
+    ret = irq_set_affinity_and_hint(irq, &static_cpu_mask);
+    if (ret) {
+        pr_err("Failed to set IRQ affinity for CPU 2,4: %d\n", ret);
+        return ret;
     }
 
-     printk("Interrupt installed sucessfully\n");
-     return 0;
-
-fail_exit1:
-    return -1;
+    return 0;
 }
 
-/*******************************************************************************
-* Name:cleanup_module
-*******************************************************************************/
-void cleanup_module(void)
+static int __init irq_example_init(void)
 {
-free_irq(LOCAL_IRQ_NO,&my_devid);
-printk(KERN_ALERT "intr unloaded successfully \n");
+    int ret;
+
+    ret = request_irq(LOCAL_IRQ_NO,
+                      isr_routine,
+                      IRQF_SHARED,
+                      "irq_example",
+                      &irq_dev_id);
+    if (ret) {
+        pr_err("Failed to register IRQ %d (error %d)\n",
+               LOCAL_IRQ_NO, ret);
+        return ret;
+    }
+    my_driver_setup_irq(LOCAL_IRQ_NO);
+    pr_info("IRQ %d registered successfully\n", LOCAL_IRQ_NO);
+
+    return 0;
 }
 
+static void __exit irq_example_exit(void)
+{
+    irq_set_affinity_and_hint(LOCAL_IRQ_NO, NULL);
+    free_irq(LOCAL_IRQ_NO, &irq_dev_id);
+
+    pr_info("IRQ handler unloaded\n");
+}
+
+module_init(irq_example_init);
+module_exit(irq_example_exit);

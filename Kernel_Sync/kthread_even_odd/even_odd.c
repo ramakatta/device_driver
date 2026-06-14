@@ -1,104 +1,143 @@
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/kthread.h>
-#include <linux/delay.h>
 #include <linux/wait.h>
+#include <linux/delay.h>
 #include <linux/sched.h>
+#include <linux/compiler.h>
+
+#define MAX_NUM 20
 
 static struct task_struct *even_thread;
 static struct task_struct *odd_thread;
 
 static wait_queue_head_t wq;
-static int flag = 0;  // 0 = even's turn, 1 = odd's turn
-static int done = 0;     // stop condition
 
-#define MAX_NUM 20
+/* 0 = even thread's turn, 1 = odd thread's turn */
+static int flag = 0;
 
-/*
-wait_event_interruptible(wq, condition);
-Equal to
-while (!condition) {
-    set_current_state(TASK_INTERRUPTIBLE);
-    schedule();   // go to sleep
-}
-set_current_state(TASK_RUNNING);
-Does wait_event_interruptible() require wake_up_interruptible()?
-
-✔ Yes — in almost all synchronization cases.
-✔ Unless the condition is already true.
-✔ Or a signal wakes the task.
-
-*/
-
+/*------------------------------------------------------------------*/
+/* Even Thread                                                      */
+/*------------------------------------------------------------------*/
 static int even_fn(void *data)
 {
     int i = 0;
-    while (i < MAX_NUM) {
-        wait_event_interruptible(wq, (flag == 0 || kthread_should_stop()));
+    int ret;
+
+    while (!kthread_should_stop() && i < MAX_NUM) {
+
+        ret = wait_event_interruptible(
+                wq,
+                READ_ONCE(flag) == 0 || kthread_should_stop());
+
         if (kthread_should_stop())
             break;
-        if (i % 2 == 0) {
-            printk(KERN_INFO "Even: %d\n", i);
-            i += 2;
-            flag = 1;
-            wake_up_interruptible(&wq);
-        }
+
+        if (ret)
+            continue;   /* interrupted by signal */
+
+        pr_info("Even: %d\n", i);
+
+        i += 2;
+
+        WRITE_ONCE(flag, 1);
+
+        wake_up_interruptible(&wq);
     }
+
+    pr_info("Even thread exiting\n");
     return 0;
 }
 
+/*------------------------------------------------------------------*/
+/* Odd Thread                                                       */
+/*------------------------------------------------------------------*/
 static int odd_fn(void *data)
 {
     int i = 1;
-    while (i < MAX_NUM) {
-        wait_event_interruptible(wq, (flag == 1 || kthread_should_stop()));
+    int ret;
+
+    while (!kthread_should_stop() && i < MAX_NUM) {
+
+        ret = wait_event_interruptible(
+                wq,
+                READ_ONCE(flag) == 1 || kthread_should_stop());
+
         if (kthread_should_stop())
             break;
-        if (i % 2 == 1) {
-            printk(KERN_INFO "Odd: %d\n", i);
-            i += 2;
-            flag = 0;
-            wake_up_interruptible(&wq);
-        }
+
+        if (ret)
+            continue;
+
+        pr_info("Odd : %d\n", i);
+
+        i += 2;
+
+        WRITE_ONCE(flag, 0);
+
+        wake_up_interruptible(&wq);
     }
+
+    pr_info("Odd thread exiting\n");
     return 0;
 }
 
+/*------------------------------------------------------------------*/
+/* Module Init                                                      */
+/*------------------------------------------------------------------*/
 static int __init thread_init(void)
 {
-    printk(KERN_INFO "Loading even/odd synchronized kernel threads...\n");
+    pr_info("Loading synchronized kernel threads...\n");
+
     init_waitqueue_head(&wq);
 
     even_thread = kthread_run(even_fn, NULL, "even_thread");
     if (IS_ERR(even_thread)) {
-        printk(KERN_ERR "Failed to create even thread\n");
+        pr_err("Failed to create even thread\n");
         return PTR_ERR(even_thread);
     }
 
     odd_thread = kthread_run(odd_fn, NULL, "odd_thread");
     if (IS_ERR(odd_thread)) {
-        printk(KERN_ERR "Failed to create odd thread\n");
+        pr_err("Failed to create odd thread\n");
+
+        /*
+         * Wake the even thread (if sleeping), then stop it.
+         */
+        wake_up_interruptible(&wq);
         kthread_stop(even_thread);
+
         return PTR_ERR(odd_thread);
     }
 
     return 0;
 }
 
+/*------------------------------------------------------------------*/
+/* Module Exit                                                      */
+/*------------------------------------------------------------------*/
 static void __exit thread_exit(void)
 {
-    printk(KERN_INFO "Stopping threads...\n");
+    pr_info("Stopping threads...\n");
+
+    /*
+     * Wake sleeping threads so they can observe
+     * kthread_should_stop().
+     */
+    wake_up_interruptible(&wq);
+
     if (even_thread)
         kthread_stop(even_thread);
+
     if (odd_thread)
         kthread_stop(odd_thread);
-    wake_up_interruptible(&wq);  // in case threads are sleeping
+
+    pr_info("Module unloaded\n");
 }
 
 module_init(thread_init);
 module_exit(thread_exit);
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Open source");
-MODULE_DESCRIPTION("Synchronized Even/Odd Kernel Threads");
-
+MODULE_AUTHOR("Open Source");
+MODULE_DESCRIPTION("Synchronized Even/Odd Kernel Threads using Wait Queue");

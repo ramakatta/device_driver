@@ -661,6 +661,7 @@ MODULE_AUTHOR("OpenSource");
 MODULE_DESCRIPTION("SSD1306 I2C Driver");
 MODULE_VERSION("1.40");
 
+#if 0
 /* if you want use via device tree
 &i2c1 {
     status = "okay";
@@ -670,31 +671,66 @@ MODULE_VERSION("1.40");
         reg = <0x3c>;
     };
 };
-static const struct of_device_id etx_oled_of_match[] = {
-    { .compatible = "etx,ssd1306" },
+static const struct i2c_device_id etx_oled_id[] = {
+    { SLAVE_DEVICE_NAME, 0 },
     { }
 };
-MODULE_DEVICE_TABLE(of, etx_oled_of_match);
-static struct i2c_driver etx_oled_driver = {
-  .driver = {
-    .name   = SLAVE_DEVICE_NAME,
-    .owner  = THIS_MODULE,
-    .of_match_table = etx_oled_of_match,
-  },
-  .probe    = etx_oled_probe,
-  .remove   = etx_oled_remove,
-  .id_table = etx_oled_id,   // optional but good fallback
+
+MODULE_DEVICE_TABLE(i2c, etx_oled_id);
+
+
+static const struct of_device_id etx_oled_of_match[] = {
+    {
+        .compatible = "etx,ssd1306",
+    },
+    { }
 };
+
+MODULE_DEVICE_TABLE(of, etx_oled_of_match);
+
+
+static struct i2c_driver etx_oled_driver = {
+    .driver = {
+        .name = SLAVE_DEVICE_NAME,
+        .of_match_table = etx_oled_of_match,
+    },
+
+    .probe = etx_oled_probe,
+    .remove = etx_oled_remove,
+    .id_table = etx_oled_id,
+};
+
+
 static int __init etx_driver_init(void)
 {
-  int ret;
+    int ret;
 
-  ret = i2c_add_driver(&etx_oled_driver);
-  if (ret)
-    pr_err("Failed to add driver\n");
-  else
-    pr_info("Driver Added!!!\n");
+    ret = i2c_add_driver(&etx_oled_driver);
 
-  return ret;
+    if (ret) {
+        pr_err("Failed to register SSD1306 I2C driver\n");
+        return ret;
+    }
+
+    pr_info("SSD1306 I2C driver registered\n");
+
+    return 0;
 }
-*/
+
+
+static void __exit etx_driver_exit(void)
+{
+    i2c_del_driver(&etx_oled_driver);
+
+    pr_info("SSD1306 I2C driver removed\n");
+}
+
+
+module_init(etx_driver_init);
+module_exit(etx_driver_exit);
+
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("OpenSource");
+MODULE_DESCRIPTION("SSD1306 I2C Driver");
+MODULE_VERSION("1.40");
+#endif

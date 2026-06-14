@@ -1,1 +1,0 @@
-savedcmd_irq_kthread.ko := ld -r -m elf_x86_64 -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T /usr/src/linux-headers-6.17.0-14-generic/scripts/module.lds -o irq_kthread.ko irq_kthread.o irq_kthread.mod.o .module-common.o

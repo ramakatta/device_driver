@@ -1,257 +1,307 @@
 #include <linux/module.h>
 #include <linux/fs.h>
-#include <asm/uaccess.h>
 #include <linux/init.h>
 #include <linux/cdev.h>
 #include <linux/sched.h>
 #include <linux/errno.h>
-#include <asm/current.h>
 #include <linux/device.h>
 #include <linux/ioctl.h>
 #include <linux/slab.h>
+#include <linux/uaccess.h>
+#include <linux/mutex.h>
+#include <linux/capability.h>
+
 #include "ioctl_const.h"
 
 #define CHAR_DEV_NAME "my_cdrv"
-#define MAX_LENGTH length
-#define SUCCESS 0
+#define DEFAULT_LENGTH 4000
 
-static char *char_device_buf;
-struct cdev *my_cdev;
-static unsigned int length = 4000;
-dev_t mydev;
-int count=1;
-static struct class *my_class;
-
-static int char_dev_open(struct inode *inode,
-			    struct file  *file)
-{
-	static int counter = 0;
-	counter++;
-	printk(KERN_INFO "Number of times open() was called: %d\n", counter);
-	printk (KERN_INFO " MAJOR number = %d, MINOR number = %d\n",imajor (inode), iminor (inode));
-	printk(KERN_INFO "Process id of the current process: %d\n",current->pid );
-	printk (KERN_INFO "ref=%lu\n", module_refcount(THIS_MODULE));
-	return SUCCESS;
-}
-
-static int char_dev_release(struct inode *inode,
-		            struct file *file)
-{
-	return SUCCESS;
-}
-
-static ssize_t char_dev_read(struct file *file, 
-		            char *buf,
-			    size_t lbuf,
-			    loff_t *ppos)
-{
-	int maxbytes; /* number of bytes from ppos to MAX_LENGTH */
-	int bytes_to_do; /* number of bytes to read */
-	int nbytes; /* number of bytes actually read */
-
-	maxbytes = MAX_LENGTH - *ppos;
-	
-	if( maxbytes > lbuf ) bytes_to_do = lbuf;
-	else bytes_to_do = maxbytes;
-	
-	if( bytes_to_do == 0 ) {
-		printk("Reached end of device\n");
-		return -ENOSPC; /* Causes read() to return EOF */
-	}
-	
-	nbytes = bytes_to_do - 
-		 copy_to_user( buf, /* to */
-			       char_device_buf + *ppos, /* from */
-			       bytes_to_do ); /* how many bytes */
-
-	*ppos += nbytes;
-	return nbytes;	
-}
-
-static ssize_t char_dev_write(struct file *file,
-		            const char *buf,
-			    size_t lbuf,
-			    loff_t *ppos)
-{
-	int nbytes; /* Number of bytes written */
-	int bytes_to_do; /* Number of bytes to write */
-	int maxbytes; /* Maximum number of bytes that can be written */
-
-	maxbytes = MAX_LENGTH - *ppos;
-
-	if( maxbytes > lbuf ) bytes_to_do = lbuf;
-	else bytes_to_do = maxbytes;
-
-	if( bytes_to_do == 0 ) {
-		printk("Reached end of device\n");
-		return -ENOSPC; /* Returns EOF at write() */
-	}
-
-	nbytes = bytes_to_do -
-	         copy_from_user( char_device_buf + *ppos, /* to */
-				 buf, /* from */
-				 bytes_to_do ); /* how many bytes */
-	*ppos += nbytes;
-	return nbytes;
-}
-
-
-/*
-				     big_kernel_lock()	
-ioctl----> sys_ioctl---->do_ioctl ------------------->fops--->ioctl==> char_dev_ioctl 
-                                       unlock()
-
-
-*/
-static long char_dev_ioctl(  struct file *filp,
-                            unsigned int cmd,
-                            unsigned long arg)
-{
- /*	step 1: verify args */
-
-        unsigned int i, size;
-        char *new_buf;
-        char c, enc_key;
-        int retbytes;
-        if( _IOC_TYPE(cmd) != MY_MAGIC ) return -ENOTTY;
-        if( _IOC_NR(cmd) > MY_MAX_CMDS ) return -ENOTTY;
-
-#if 1
-        if( _IOC_DIR(cmd) & _IOC_READ )
-                if (!access_ok((void __user *)arg, _IOC_SIZE(cmd)))
-                        return -EFAULT;
-        if( _IOC_DIR(cmd) & _IOC_WRITE )
-                if (!access_ok((void __user *)arg, _IOC_SIZE(cmd)))
-                        return -EFAULT;
-#endif
-	    printk("Executing IOCTL\n");
-	    /* implement support of commands using switch/case */
-        /* sounds ok lets continue */
-        switch(cmd) {
-
-        case MY_FILL_ZERO:
-                for(i=0; i<MAX_LENGTH; i++) char_device_buf[i] = 0;
-		        printk(KERN_DEBUG " FILL_ZERO config executed\n ");
-                break;
-
-        case MY_FILL_CHAR:
-                retbytes = copy_from_user( &c, (char *)arg, sizeof(char) );
-                for(i=0; i<MAX_LENGTH; i++) char_device_buf[i] = c;
-		        printk(KERN_DEBUG "FILL_CHAR config executed \n");
-                break;
-
-        case MY_SET_SIZE:
-		        if (!capable(CAP_SYS_ADMIN))
-		        {
-			        printk("Not ADMIN\n");
-                    return -EPERM;
-		        }
-
-                retbytes=copy_from_user( &size, (unsigned int*)arg,
-                                sizeof(unsigned int) );
-                new_buf = (char *)kmalloc( size*sizeof(char),
-                                           GFP_KERNEL );
-                if( !new_buf ) return -ENOSPC;
-                kfree( char_device_buf );
-                char_device_buf = (char *)new_buf;
-                MAX_LENGTH = size;
-                for(i=0; i<MAX_LENGTH; i++) char_device_buf[i] = 0;
-                filp->f_pos = 0;
-		        printk(KERN_DEBUG "SET_SIZE config executed\n");
-                break;
-	    case MY_GET_SIZE:
-		        if (!capable(CAP_SYS_ADMIN))
-		        {
-			        printk("Not ADMIN\n");
-                    return -EPERM;
-		        }
-
-				size = MAX_LENGTH;
-				retbytes=copy_to_user( (unsigned int*)arg, &size , sizeof(unsigned int) );
-				printk(KERN_DEBUG "GET_SIZE config executed \n");	
-				break;
-	    case MY_ENCRYPT:
-				if (!capable(CAP_SYS_ADMIN))
-				{
-					printk("Not ADMIN\n");
-					return -EPERM;
-				}
-                retbytes = copy_from_user( &enc_key, (char *)arg, sizeof(char) );
-                for(i=0; i<MAX_LENGTH; i++) char_device_buf[i] += enc_key;
-				break;
-	    case MY_DECRYPT:
-				if (!capable(CAP_SYS_ADMIN))
-				{
-					printk("Not ADMIN\n");
-					return -EPERM;
-				}
-                retbytes = copy_from_user( &enc_key, (char *)arg, sizeof(char) );
-                for(i=0; i<MAX_LENGTH; i++) char_device_buf[i] -= enc_key;
-				break;
-		default:
-		        printk(KERN_DEBUG "Invalid IOCTL parameter \n");
-				return -EINVAL;
-        }
-
-        return SUCCESS;
-}	
-
-
-static struct file_operations char_dev_fops = {
-	.owner = THIS_MODULE,
-	.unlocked_ioctl = char_dev_ioctl,
-	.read = char_dev_read,
-	.write = char_dev_write,
-	.open = char_dev_open,
-	.release = char_dev_release,
+/* per-device context */
+struct my_device_context {
+    char            *device_buf;
+    unsigned int     buf_length;
+    struct cdev      cdev;
+    struct mutex     lock;
 };
 
-static __init int char_dev_init(void)
-{
-	int ret;
+static struct my_device_context *dev_ctx;
+static dev_t mydev;
+static struct class *my_class;
 
-	if (alloc_chrdev_region (&mydev, 0, count, CHAR_DEV_NAME) < 0) {
-            printk (KERN_ERR "failed to reserve major/minor range\n");
-            return -1;
+/* ---------------- open ---------------- */
+static int char_dev_open(struct inode *inode, struct file *file)
+{
+    static int counter;
+    counter++;
+
+    pr_info("%s: open count=%d\n", CHAR_DEV_NAME, counter);
+    pr_info("%s: pid=%d\n", CHAR_DEV_NAME, current->pid);
+
+    file->private_data =
+        container_of(inode->i_cdev, struct my_device_context, cdev);
+
+    return 0;
+}
+
+/* ---------------- release ---------------- */
+static int char_dev_release(struct inode *inode, struct file *file)
+{
+    return 0;
+}
+
+/* ---------------- read ---------------- */
+static ssize_t char_dev_read(struct file *file, char __user *buf,
+                              size_t lbuf, loff_t *ppos)
+{
+    struct my_device_context *ctx = file->private_data;
+    int maxbytes, bytes_to_do, nbytes;
+
+    if (mutex_lock_interruptible(&ctx->lock))
+        return -ERESTARTSYS;
+
+    maxbytes = ctx->buf_length - *ppos;
+
+    if (maxbytes <= 0) {
+        mutex_unlock(&ctx->lock);
+        return 0;
     }
 
-        if (!(my_cdev = cdev_alloc ())) {
-            printk (KERN_ERR "cdev_alloc() failed\n");
-            unregister_chrdev_region (mydev, count);
-            return -1;
- 	}
-	cdev_init(my_cdev,&char_dev_fops);
+    bytes_to_do = min((size_t)maxbytes, lbuf);
 
-	ret=cdev_add(my_cdev,mydev,count);
-	if( ret < 0 ) {
-		printk(KERN_INFO "Error registering device driver\n");
-	        cdev_del (my_cdev);
-                unregister_chrdev_region (mydev, count); 	
-		return -1;
-	}
+    nbytes = bytes_to_do -
+             copy_to_user(buf, ctx->device_buf + *ppos, bytes_to_do);
 
-	my_class = class_create ( "VIRTUAL");
-        device_create (my_class, NULL, mydev, NULL, "%s", "my_cdrv");
+    if (nbytes == 0 && bytes_to_do > 0) {
+        mutex_unlock(&ctx->lock);
+        return -EFAULT;
+    }
 
-	printk(KERN_INFO"\nDevice Registered: %s\n",CHAR_DEV_NAME);
-	printk (KERN_INFO "Major number = %d, Minor number = %d\n", MAJOR (mydev),MINOR (mydev));
+    *ppos += nbytes;
 
-	char_device_buf =(char *)kmalloc(MAX_LENGTH,GFP_KERNEL);
-	return 0;
+    mutex_unlock(&ctx->lock);
+    return nbytes;
 }
 
-static __exit void  char_dev_exit(void)
+/* ---------------- write ---------------- */
+static ssize_t char_dev_write(struct file *file, const char __user *buf,
+                               size_t lbuf, loff_t *ppos)
 {
-	 device_destroy (my_class, mydev);
-     class_destroy (my_class);
-	 cdev_del(my_cdev);
-	 unregister_chrdev_region(mydev,1);
-	 kfree(char_device_buf);
-	 printk(KERN_INFO "\n Driver unregistered \n");
+    struct my_device_context *ctx = file->private_data;
+    int maxbytes, bytes_to_do, nbytes;
+
+    if (mutex_lock_interruptible(&ctx->lock))
+        return -ERESTARTSYS;
+
+    maxbytes = ctx->buf_length - *ppos;
+
+    if (maxbytes <= 0) {
+        mutex_unlock(&ctx->lock);
+        return -ENOSPC;
+    }
+
+    bytes_to_do = min((size_t)maxbytes, lbuf);
+
+    nbytes = bytes_to_do -
+             copy_from_user(ctx->device_buf + *ppos, buf, bytes_to_do);
+
+    if (nbytes == 0 && bytes_to_do > 0) {
+        mutex_unlock(&ctx->lock);
+        return -EFAULT;
+    }
+
+    *ppos += nbytes;
+
+    mutex_unlock(&ctx->lock);
+    return nbytes;
 }
+
+/* ---------------- llseek (NEW) ---------------- */
+static loff_t char_dev_llseek(struct file *file, loff_t off, int whence)
+{
+    struct my_device_context *ctx = file->private_data;
+
+    return fixed_size_llseek(file, off, whence, ctx->buf_length);
+}
+
+/* ---------------- ioctl ---------------- */
+static long char_dev_ioctl(struct file *filp, unsigned int cmd,
+                           unsigned long arg)
+{
+    struct my_device_context *ctx = filp->private_data;
+    unsigned int size, i;
+    char *new_buf;
+    char c, key;
+
+    if (_IOC_TYPE(cmd) != MY_MAGIC) return -ENOTTY;
+    if (_IOC_NR(cmd) > MY_MAX_CMDS) return -ENOTTY;
+
+    switch (cmd) {
+
+    case MY_FILL_ZERO:
+        if (mutex_lock_interruptible(&ctx->lock))
+            return -ERESTARTSYS;
+
+        memset(ctx->device_buf, 0, ctx->buf_length);
+
+        mutex_unlock(&ctx->lock);
+        break;
+
+    case MY_FILL_CHAR:
+        if (copy_from_user(&c, (char __user *)arg, 1))
+            return -EFAULT;
+
+        if (mutex_lock_interruptible(&ctx->lock))
+            return -ERESTARTSYS;
+
+        memset(ctx->device_buf, c, ctx->buf_length);
+
+        mutex_unlock(&ctx->lock);
+        break;
+
+    case MY_SET_SIZE:
+        if (!capable(CAP_SYS_ADMIN))
+            return -EPERM;
+
+        if (copy_from_user(&size, (unsigned int __user *)arg, sizeof(size)))
+            return -EFAULT;
+
+        new_buf = kzalloc(size, GFP_KERNEL);
+        if (!new_buf)
+            return -ENOMEM;
+
+        if (mutex_lock_interruptible(&ctx->lock)) {
+            kfree(new_buf);
+            return -ERESTARTSYS;
+        }
+
+        kfree(ctx->device_buf);
+        ctx->device_buf = new_buf;
+        ctx->buf_length = size;
+
+        filp->f_pos = 0;
+
+        mutex_unlock(&ctx->lock);
+        break;
+
+    case MY_GET_SIZE:
+        if (!capable(CAP_SYS_ADMIN))
+            return -EPERM;
+
+        size = ctx->buf_length;
+
+        if (copy_to_user((unsigned int __user *)arg, &size, sizeof(size)))
+            return -EFAULT;
+        break;
+
+    case MY_ENCRYPT:
+        if (!capable(CAP_SYS_ADMIN))
+            return -EPERM;
+
+        if (copy_from_user(&key, (char __user *)arg, 1))
+            return -EFAULT;
+
+        if (mutex_lock_interruptible(&ctx->lock))
+            return -ERESTARTSYS;
+
+        for (i = 0; i < ctx->buf_length; i++)
+            ctx->device_buf[i] += key;
+
+        mutex_unlock(&ctx->lock);
+        break;
+
+    case MY_DECRYPT:
+        if (!capable(CAP_SYS_ADMIN))
+            return -EPERM;
+
+        if (copy_from_user(&key, (char __user *)arg, 1))
+            return -EFAULT;
+
+        if (mutex_lock_interruptible(&ctx->lock))
+            return -ERESTARTSYS;
+
+        for (i = 0; i < ctx->buf_length; i++)
+            ctx->device_buf[i] -= key;
+
+        mutex_unlock(&ctx->lock);
+        break;
+
+    default:
+        return -EINVAL;
+    }
+
+    return 0;
+}
+
+/* ---------------- file ops ---------------- */
+static const struct file_operations char_dev_fops = {
+    .owner          = THIS_MODULE,
+    .open           = char_dev_open,
+    .release        = char_dev_release,
+    .read           = char_dev_read,
+    .write          = char_dev_write,
+    .unlocked_ioctl = char_dev_ioctl,
+    .llseek         = char_dev_llseek,   /* ✅ ADDED */
+};
+
+/* ---------------- init ---------------- */
+static int __init char_dev_init(void)
+{
+    int ret;
+
+    ret = alloc_chrdev_region(&mydev, 0, 1, CHAR_DEV_NAME);
+    if (ret < 0)
+        return ret;
+
+    dev_ctx = kzalloc(sizeof(*dev_ctx), GFP_KERNEL);
+    if (!dev_ctx) goto fail;
+
+    mutex_init(&dev_ctx->lock);
+
+    dev_ctx->device_buf = kzalloc(DEFAULT_LENGTH, GFP_KERNEL);
+    if (!dev_ctx->device_buf) goto fail_ctx;
+
+    dev_ctx->buf_length = DEFAULT_LENGTH;
+
+    cdev_init(&dev_ctx->cdev, &char_dev_fops);
+
+    ret = cdev_add(&dev_ctx->cdev, mydev, 1);
+    if (ret) goto fail_buf;
+
+    my_class = class_create(CHAR_DEV_NAME);
+    if (IS_ERR(my_class)) goto fail_cdev;
+
+    device_create(my_class, NULL, mydev, NULL, "%s", "my_cdrv");
+
+    pr_info("driver loaded\n");
+    return 0;
+
+fail_cdev:
+    cdev_del(&dev_ctx->cdev);
+fail_buf:
+    kfree(dev_ctx->device_buf);
+fail_ctx:
+    kfree(dev_ctx);
+fail:
+    unregister_chrdev_region(mydev, 1);
+    return -ENOMEM;
+}
+
+/* ---------------- exit ---------------- */
+static void __exit char_dev_exit(void)
+{
+    device_destroy(my_class, mydev);
+    class_destroy(my_class);
+
+    cdev_del(&dev_ctx->cdev);
+    unregister_chrdev_region(mydev, 1);
+
+    kfree(dev_ctx->device_buf);
+    kfree(dev_ctx);
+
+    pr_info("driver unloaded\n");
+}
+
 module_init(char_dev_init);
 module_exit(char_dev_exit);
 
-MODULE_AUTHOR("MY");
-MODULE_DESCRIPTION("Character Device Driver - Test");
 MODULE_LICENSE("GPL");

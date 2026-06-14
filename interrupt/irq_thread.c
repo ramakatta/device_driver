@@ -1,77 +1,65 @@
 #include <linux/module.h>
-#include <linux/kernel.h>
-#include <linux/fs.h>
-#include <linux/poll.h>
-#include <linux/ioport.h>
-#include <linux/errno.h>
-#include <linux/cdev.h>
-#include <linux/wait.h>
-#include <linux/sched.h>
-#include <linux/pci.h>
-#include <linux/kthread.h> 
-#include <linux/interrupt.h> 
-#include <asm/io.h>
-#include <linux/ioport.h>
 #include <linux/interrupt.h>
+#include <linux/kernel.h>
 
 MODULE_AUTHOR("Rama Krishna");
 MODULE_LICENSE("GPL");
+
 #define LOCAL_IRQ_NO 1
 
-static int isrCnt = 0;
-static int my_devid;
+static int dev_id;
 
-/*******************************************************************************
-* Name:myIntHandler
-*******************************************************************************/
-static irqreturn_t isr_routine(int irq, void *dev_id)
+/* ================= Hard IRQ ================= */
+static irqreturn_t isr_top_half(int irq, void *dev_id)
 {
-printk("*******Hard IRQ routine************\n");
-printk("in_interrupt: %d\n", in_interrupt());
-printk("in_irq : %d\n", in_irq());
-printk("in_task: %d\n", in_task());
-return IRQ_WAKE_THREAD;
+    pr_info("=== Hard IRQ (top half) ===\n");
+    pr_info("in_interrupt: %d\n", in_interrupt());
+    pr_info("in_irq: %d\n", in_irq());
+    pr_info("in_task: %d\n", in_task());
+
+    return IRQ_WAKE_THREAD;
 }
 
-/*******************************************************************************
-* Name:ThreadHandler
-*******************************************************************************/
-static irqreturn_t isr_thread_func(int irq, void *dev_id)
+/* ================= Threaded IRQ ================= */
+static irqreturn_t isr_bottom_half(int irq, void *dev_id)
 {
-printk("***********Thread function ISR*******\n");
-printk("in_interrupt: %d\n", in_interrupt());
-printk("in_irq : %d\n", in_irq());
-printk("in_task: %d\n", in_task());
-return IRQ_HANDLED;
+    pr_info("=== Threaded IRQ (bottom half) ===\n");
+    pr_info("in_interrupt: %d\n", in_interrupt());
+    pr_info("in_irq: %d\n", in_irq());
+    pr_info("in_task: %d\n", in_task());
+
+    return IRQ_HANDLED;
 }
 
-
-/*******************************************************************************
-* Name: init_module
-*******************************************************************************/
-int init_module(void)
+/* ================= Init ================= */
+static int __init irq_demo_init(void)
 {
-   int res;
-   int retval;
-    if(request_threaded_irq(LOCAL_IRQ_NO,isr_routine,isr_thread_func, IRQF_SHARED,"irq0",&my_devid))
-    {
-	printk("can't get interrupt:%x\n",LOCAL_IRQ_NO);
-	goto fail_exit1;
+    int ret;
+
+    ret = request_threaded_irq(
+        LOCAL_IRQ_NO,
+        isr_top_half,
+        isr_bottom_half,
+        IRQF_SHARED,
+        "irq_demo",
+        &dev_id
+    );
+
+    if (ret) {
+        pr_err("Failed to request IRQ %d (err=%d)\n", LOCAL_IRQ_NO, ret);
+        return ret;
     }
 
-     printk("Interrupt installed sucessfully\n");
-     return 0;
-
-fail_exit1:
-    return -1;
+    pr_info("IRQ %d registered successfully\n", LOCAL_IRQ_NO);
+    return 0;
 }
 
-/*******************************************************************************
-* Name:cleanup_module
-*******************************************************************************/
-void cleanup_module(void)
+/* ================= Exit ================= */
+static void __exit irq_demo_exit(void)
 {
-free_irq(LOCAL_IRQ_NO,&my_devid);
-printk(KERN_ALERT "intr unloaded successfully \n");
+    free_irq(LOCAL_IRQ_NO, &dev_id);
+    pr_info("IRQ %d freed successfully\n", LOCAL_IRQ_NO);
 }
 
+module_init(irq_demo_init);
+module_exit(irq_demo_exit);

@@ -1,0 +1,183 @@
+https://www.ta-embedded.com/blog/booting-a-raspberry-pi-4-with-tf-a-and-u-boot/
+RP4 - 192.168.0.82/79
+RP3 - 192.168.0.16
+
+Classic ARM SoC (e.g. STM32MP2):
+BootROM → TF-A BL1 → TF-A BL2 → BL31 → U-Boot → Linux
+
+Raspberry Pi 4:
+GPU firmware (start4.elf) → TF-A BL31 (armstub8.bin) → U-Boot → Linux
+Why bother with TF-A on RPi4?
+
+Most RPi4 tutorials skip TF-A entirely. Copy a kernel8.img to a FAT partition, add a config.txt, and U-Boot starts. Simple.
+
+But on a real embedded product — an automotive ECU, a medical device, a drone flight controller — TF-A is not optional. It provides three things that matter in production:
+
+PSCI is the ARM standard for CPU power management. Without it, reboot and shutdown do not work correctly on ARM. The kernel calls into BL31 via SMC instructions whenever it needs to manage CPU power states.
+
+CPU errata workarounds are silicon bug patches applied at EL3 before Linux runs. The Cortex-A72 has several known errata. TF-A applies the workarounds automatically during initialization.
+
++-----------------------------+
+| BCM2711 Boot ROM (GPU)      |
+| - starts from EEPROM        |
++-----------------------------+
+              |
+              v
++-----------------------------+
+| EEPROM bootloader           |
+| - initializes basic HW      |
+| - loads start4.elf          |
++-----------------------------+
+              |
+              v
++-----------------------------+
+| start4.elf (VideoCore)      |
+|                             |
+| - initializes DRAM          | <---- DRAM INIT HERE
+| - configures clocks         |
+| - configures power domains  |
+| - loads ARM firmware        |
+| - loads DTB                 |
+| - loads BL31                |
+| - loads U-Boot              |
++-----------------------------+
+              |
+              v
++-----------------------------+
+| TF-A BL31 (EL3)             |
+|                             |
+| - assumes DRAM is ready     |
+| - initializes EL3 runtime   |
+| - installs PSCI             |
+| - patches DTB               |
++-----------------------------+
+              |
+              v
++-----------------------------+
+| U-Boot BL33                 |
+|                             |
+| - assumes DRAM is ready     |
+| - loads Linux kernel        |
+| - prepares boot arguments   |
++-----------------------------+
+              |
+              v
++-----------------------------+
+| Linux kernel                |
+|                             |
+| - uses initialized DRAM     |
++-----------------------------+
+
+Build TF-A
+
+git clone https://git.trustedfirmware.org/TF-A/trusted-firmware-a.git
+cd trusted-firmware-a
+git checkout v2.10.0
+
+make \
+  CROSS_COMPILE=aarch64-linux-gnu- \
+  PLAT=rpi4 \
+  RPI3_PRELOADED_DTB_BASE=0x2600000 \
+  PRELOADED_BL33_BASE=0x80000 \
+  SUPPORT_VFP=1 \
+  DEBUG=1 \
+  all
+trusted-firmware-a/build/rpi4/debug/bl31.bin
+sudo cp trusted-firmware-a/build/rpi4/debug/bl31.bin /mnt/armstub8.bin
+
+
+
+
+Build U-boot
+
+git clone https://gitlab.denx.de/u-boot/u-boot
+cd u-boot
+git checkout v2023.01
+make CROSS_COMPILE=aarch64-linux-gnu- rpi_4_defconfig
+make CROSS_COMPILE=aarch64-linux-gnu- menuconfig
+make CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)
+ls -lh u-boot.bin
+# u-boot.bin  603K
+cp u-boot.bin kernel8.img
+
+
+sudo tee /mnt/config.txt << 'EOF'
+arm_64bit=1
+enable_uart=1
+dtoverlay=disable-bt
+armstub=armstub8.bin
+kernel=kernel8.img
+device_tree_address=0x2600000
+EOF
+
+
+From U-boot
+
+U-Boot> fdt addr 0x2600000
+U-Boot> fdt print /psci
+U-Boot> fdt print /cpus/cpu@0
+U-Boot> fdt resize
+U-Boot> setenv bootargs "console=serial0,115200 console=tty1 root=/dev/mmcblk0p2 rootwait rw"
+U-Boot> fatload mmc 0:1 0x00080000 kernel8.img
+10168774 bytes read in 2221 ms (4.4 MiB/s)
+U-Boot> setenv kernel_comp_addr_r 0x30000000
+U-Boot> setenv kernel_comp_size 0x02000000
+U-Boot> booti 0x00080000 - 0x2600000     
+
+
+Config.txt in bootfs 0 partition
+
+# Run in 64-bit mode
+arm_64bit=1
+enable_uart=1
+enable_gic=1
+dtoverlay=disable-bt
+armstub=bl31.bin
+# Force the Pi to boot your U-Boot binary instead of the Linux kernel
+kernel=u-boot.bin
+device_tree_address=0x2600000
+
+
+                CPU1 OFFLINE
+
+Linux CPU1                         TF-A BL31
+    |                                  |
+    | CPU hotplug                      |
+    |                                  |
+    | PSCI CPU_OFF                     |
+    |                                  |
+    |------ SMC ---------------------->|
+    |                                  |
+    |                         PSCI CPU_OFF
+    |                                  |
+    |                         pwr_domain_off()
+    |                                  |
+    |                                  |
+    X                                  |
+ CPU OFF                               |
+                                       |
+                                       |
+                CPU1 ONLINE             |
+                                       |
+Linux CPU0                            TF-A
+    |                                  |
+    | PSCI CPU_ON                     |
+    |------ SMC ---------------------->|
+    |                                  |
+    |                         PSCI CPU_ON
+    |                                  |
+    |                         pwr_domain_on()
+    |                                  |
+    |<----- CPU starts ----------------|
+    |                                  |
+ CPU1 running                          |
+
+--------------------------------------------------------------------------------------------
+Enable KDUMP & KEXEC, Crash kernel on Raspberry PI 4
+
+CONFIG_KEXEC=y
+CONFIG_KEXEC_FILE=y
+CONFIG_KEXEC_CORE=y
+CONFIG_CRASH_DUMP=y
+CONFIG_RELOCATABLE=y
+kdump-config show

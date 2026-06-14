@@ -1,6 +1,7 @@
-obj-m := khello.o
+obj-m := khello_2.o
 KDIR := /lib/modules/$(shell uname -r)/build
 PWD := $(shell pwd)
+#ccflags-y := -DTRIGGER_OOPS
 default:
 	$(MAKE) -C $(KDIR) M=$(PWD) modules
 

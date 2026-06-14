@@ -13,5 +13,5 @@
  echo '2-2' > /sys/bus/usb/drivers/usb/bind #ON
  
  
- sudo apt-get install libusb-1.0-0-dev
+sudo apt-get install libusb-1.0-0-dev
 g++ test.cpp -lpthread -I/usr/local/include/libusb-1.0 -lusb-1.0

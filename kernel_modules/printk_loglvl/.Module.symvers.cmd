@@ -1,1 +1,0 @@
-savedcmd_/home/vector/rama/Vector_DD/Vector_DD/kernel_modules/printk_loglvl/Module.symvers :=  scripts/mod/modpost -M -m -a      -o /home/vector/rama/Vector_DD/Vector_DD/kernel_modules/printk_loglvl/Module.symvers -T /home/vector/rama/Vector_DD/Vector_DD/kernel_modules/printk_loglvl/modules.order -i Module.symvers -e 

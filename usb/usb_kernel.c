@@ -19,7 +19,7 @@
 #define IS_NEW_METHOD_USED  ( 1 )
 
 #define USB_VENDOR_ID       ( 0x0781 )      //USB device's vendor ID
-#define USB_PRODUCT_ID      ( 0x5591 )      //USB device's product ID
+#define USB_PRODUCT_ID      ( 0x5581 )      //USB device's product ID
 
 
 #define PRINT_USB_INTERFACE_DESCRIPTOR( i )                         \
