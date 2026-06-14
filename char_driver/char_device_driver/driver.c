@@ -15,7 +15,7 @@
 #include<linux/uaccess.h>              //copy_to/from_user()
 #include <linux/err.h>
 
-#define mem_size        1024           //Memory Size
+#define MAX_MEM_SIZE        1024           //Memory Size
  
 dev_t dev = 0;
 static struct class *dev_class;
@@ -68,13 +68,15 @@ static int etx_release(struct inode *inode, struct file *file)
 */
 static ssize_t etx_read(struct file *filp, char __user *buf, size_t len, loff_t *off)
 {
+        size_t bytes = min(len, (size_t)MAX_MEM_SIZE);
         //Copy the data from the kernel space to the user-space
-        if( copy_to_user(buf, kernel_buffer, mem_size) )
+        if( copy_to_user(buf, kernel_buffer, bytes) )
         {
                 pr_err("Data Read : Err!\n");
+                return -EFAULT;
         }
         pr_info("Data Read : Done!\n");
-        return mem_size;
+        return bytes;
 }
 
 /*
@@ -82,10 +84,13 @@ static ssize_t etx_read(struct file *filp, char __user *buf, size_t len, loff_t 
 */
 static ssize_t etx_write(struct file *filp, const char __user *buf, size_t len, loff_t *off)
 {
+        if(len > MAX_MEM_SIZE)
+        len = MAX_MEM_SIZE;
         //Copy the data to kernel space from the user-space
         if( copy_from_user(kernel_buffer, buf, len) )
         {
                 pr_err("Data Write : Err!\n");
+                return -EFAULT;
         }
         pr_info("Data Write : Done!\n");
         return len;
@@ -115,7 +120,7 @@ static int __init etx_driver_init(void)
         /*Creating struct class*/
         if(IS_ERR(dev_class = class_create("etx_class"))){
             pr_info("Cannot create the struct class\n");
-            goto r_class;
+            goto r_cdev;
         }
  
         /*Creating device*/
@@ -125,24 +130,31 @@ static int __init etx_driver_init(void)
         }
         
         /*Creating Physical memory*/
-        if((kernel_buffer = kmalloc(mem_size , GFP_KERNEL)) == 0){
+        kernel_buffer = kzalloc(MAX_MEM_SIZE, GFP_KERNEL);
+        if (!kernel_buffer) {
             pr_info("Cannot allocate memory in kernel\n");
-            goto r_device;
+            goto r_kmalloc;
         }
         
         printk("in_interrupt : %d\n", in_interrupt());
         printk("in_task : %d\n", in_task());
         
-        strcpy(kernel_buffer, "Hello_World");
+        memcpy(kernel_buffer, "Hello_World", sizeof("Hello_World"));
         
         pr_info("Device Driver Insert...Done!!!\n");
         return 0;
- 
+r_kmalloc:
+    device_destroy(dev_class, dev);
+
 r_device:
-        class_destroy(dev_class);
+    class_destroy(dev_class);
+
+r_cdev:
+    cdev_del(&etx_cdev);
+
 r_class:
-        unregister_chrdev_region(dev,1);
-        return -1;
+    unregister_chrdev_region(dev,1); 
+    return -1;
 }
 
 /*

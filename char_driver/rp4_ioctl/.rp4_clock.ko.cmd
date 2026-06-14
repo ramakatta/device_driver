@@ -1,0 +1,1 @@
+savedcmd_rp4_clock.ko := aarch64-linux-gnu-ld -r -EL  -maarch64elf -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T /home/vector/Downloads/rp4/linux/scripts/module.lds -o rp4_clock.ko rp4_clock.o rp4_clock.mod.o .module-common.o

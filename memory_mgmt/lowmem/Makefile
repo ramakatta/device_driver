@@ -29,7 +29,7 @@
 #  make ARCH=<arch> CROSS_COMPILE=<cross-compiler-prefix>
 ifeq ($(ARCH),arm)
   # *UPDATE* 'KDIR' below to point to the ARM Linux kernel source tree on your box
-  KDIR ?= ~/rpi_work/kernel_rpi/linux
+  KDIR ?= /home/vector/Downloads/linux
 else ifeq ($(ARCH),arm64)
   # *UPDATE* 'KDIR' below to point to the ARM64 (Aarch64) Linux kernel source
   # tree on your box
@@ -44,27 +44,24 @@ else
   KDIR ?= /lib/modules/$(shell uname -r)/build
 endif
 
-# Set FNAME_C to the kernel module name source filename (without .c)
-FNAME_C := lowlevel_mem
-
-PWD            := $(shell pwd)
-obj-m          += ${FNAME_C}.o
-EXTRA_CFLAGS   += -DDEBUG
+PWD                   := $(shell pwd)
+obj-m                 += lowlevel_mem.o
+#show_kernel_seg-objs  += kernel_seg.o klib_llkd.o
+EXTRA_CFLAGS          += -DDEBUG -Wformat=0
+#CROSS_COMPILE := arm-linux-gnueabihf-
+#ARCH := arm
+#KDIR = /home/rama/Downloads/linux
 
 all:
 	@echo
 	@echo '--- Building : KDIR=${KDIR} ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} EXTRA_CFLAGS=${EXTRA_CFLAGS} ---'
 	@echo
-	make -C $(KDIR) M=$(PWD) modules
+	make  ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} -C $(KDIR) M=$(PWD) modules
 install:
 	@echo
 	@echo "--- installing ---"
-	@echo " [First, invoke the 'make' ]"
-	make
 	@echo
-	@echo " [Now for the 'sudo make install' ]"
-	sudo make -C $(KDIR) M=$(PWD) modules_install
-	sudo depmod
+	make -C $(KDIR) M=$(PWD) modules_install
 clean:
 	@echo
 	@echo "--- cleaning ---"
@@ -139,10 +136,10 @@ sa_cppcheck:
 	@echo
 	@echo "--- static analysis with cppcheck ---"
 	@echo
-	cppcheck -v --force --enable=all -i .tmp_versions/ -i *.mod.c -i bkp/ --suppress=missingIncludeSystem .
+	cppcheck -v --force .
 
 # Packaging; just tar.xz as of now
-PKG_NAME := ${FNAME_C}
+PKG_NAME := lkm_template
 tarxz-pkg:
 	rm -f ../${PKG_NAME}.tar.xz 2>/dev/null
 	make clean
@@ -152,8 +149,6 @@ tarxz-pkg:
 	tar caf ../${PKG_NAME}.tar.xz *
 	ls -l ../${PKG_NAME}.tar.xz
 	@echo '=== package created: ../$(PKG_NAME).tar.xz ==='
-	@echo 'Tip: when extracting, to extract into a dir of the same name as the tar file,'
-	@echo ' do: tar -xvf ${PKG_NAME}.tar.xz --one-top-level'
 
 help:
 	@echo '=== Makefile Help : additional targets available ==='
@@ -163,7 +158,7 @@ help:
 
 	@echo '--- 'usual' kernel LKM targets ---'
 	@echo 'typing "make" or "all" target : builds the kernel module object (the .ko)'
-	@echo 'install     : installs the kernel module(s) to INSTALL_MOD_PATH (default here: /lib/modules/$(shell uname -r)/)'
+	@echo 'install     : installs the kernel module(s) to INSTALL_MOD_PATH (defaults: /lib/modules/$(shell uname -r)/)'
 	@echo 'clean       : cleanup - remove all kernel objects, temp files/dirs, etc'
 
 	@echo
@@ -175,10 +170,9 @@ help:
 	@echo
 	@echo '--- kernel static analyzer targets ---'
 	@echo 'sa         : "wrapper" target over the following kernel static analyzer targets'
-	@echo ' sa_sparse     : run the static analysis sparse tool on the source file(s)'
-	@echo ' sa_gcc        : run gcc with option -W1 ("Generally useful warnings") on the source file(s)'
+	@echo ' sa_sparse  : run the static analysis sparse tool on the source file(s)'
+	@echo ' sa_gcc     : run gcc with option -W1 ("Generally useful warnings") on the source file(s)'
 	@echo ' sa_flawfinder : run the static analysis flawfinder tool on the source file(s)'
-	@echo ' sa_cppcheck   : run the static analysis cppcheck tool on the source file(s)'
 	@echo 'TIP: use coccinelle as well (requires spatch): https://www.kernel.org/doc/html/v4.15/dev-tools/coccinelle.html'
 
 	@echo
@@ -190,6 +184,4 @@ help:
 	@echo
 	@echo '--- misc targets ---'
 	@echo 'tarxz-pkg  : tar and compress the LKM source files as a tar.xz into the dir above; allows one to transfer and build the module on another system'
-	@echo ' Tip: when extracting, to extract into a dir of the same name as the tar file,'
-	@echo '  do: tar -xvf ${PKG_NAME}.tar.xz --one-top-level'
 	@echo 'help       : this help target'

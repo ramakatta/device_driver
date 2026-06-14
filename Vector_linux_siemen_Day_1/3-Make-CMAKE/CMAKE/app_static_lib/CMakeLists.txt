@@ -1,6 +1,0 @@
-cmake_minimum_required(VERSION 3.0)
-project(myapp)
-#add_subdirectory(libtest_project)
-add_executable(myapp main.c)
-target_link_libraries(myapp test)
-install(TARGETS myapp DESTINATION bin)

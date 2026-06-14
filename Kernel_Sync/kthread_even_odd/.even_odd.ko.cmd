@@ -1,1 +1,1 @@
-savedcmd_even_odd.ko := ld -r -m elf_x86_64 -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T /usr/src/linux-headers-6.17.0-14-generic/scripts/module.lds -o even_odd.ko even_odd.o even_odd.mod.o .module-common.o
+savedcmd_even_odd.ko := ld -r -m elf_x86_64 -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T /usr/src/linux-headers-7.0.0-28-generic/scripts/module.lds -o even_odd.ko even_odd.o even_odd.mod.o .module-common.o

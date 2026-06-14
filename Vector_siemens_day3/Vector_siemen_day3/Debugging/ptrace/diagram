@@ -1,0 +1,49 @@
+       TRACER PROCESS (Parent)             TRACEE PROCESS (Child)
+       =======================             ======================
+
+1.     fork()
+              |
+              |---------------------------> Child created
+                                            |
+2.                                          PTRACE_TRACEME
+                                            |
+3.                                          exec("./tracee")
+                                            |
+                                            | Kernel stops child
+                                            | after successful exec
+                                            |
+4.     waitpid() <-------------------------- Child stopped
+       |
+5.     PTRACE_GETREGS
+       Read registers
+       |
+6.     PTRACE_CONT -----------------------> Child resumes
+                                            |
+                                            | Executes main()
+                                            |
+                                            | Calls abc()
+                                            |
+                                            | Prints &local_abc
+                                            |
+                                            | raise(SIGSTOP)
+                                            |
+                                            | Kernel stops child
+                                            |
+7.     waitpid() <-------------------------- Child stopped
+       |
+8.     PTRACE_GETREGS
+       Read registers
+       |
+9.     User enters memory address
+       |
+10.    PTRACE_PEEKTEXT -------------------> Read child memory
+       |
+11.    PTRACE_POKETEXT ------------------> Modify child memory
+       |
+12.    PTRACE_PEEKTEXT -------------------> Read modified memory
+       |
+13.    PTRACE_CONT ----------------------> Child resumes
+                                            |
+                                            | while (1)
+                                            | Infinite loop
+                                            |

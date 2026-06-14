@@ -50,7 +50,7 @@ static int show_prcs_in_tasklist(void)
 		    );
 		numread += n;
 		pr_info("%s", tmp);
-		//pr_debug("n=%d numread=%d tmp=%s\n", n, numread, tmp);
+		pr_debug("n=%d numread=%d tmp=%s\n", n, numread, tmp);
 
 		cond_resched();
 		total++;

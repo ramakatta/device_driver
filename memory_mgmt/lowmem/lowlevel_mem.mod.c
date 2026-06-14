@@ -18,58 +18,21 @@ __section(".gnu.linkonce.this_module") = {
 
 static const struct modversion_info ____versions[]
 __used __section("__versions") = {
-	{ 0xd272d446, "__x86_return_thunk" },
-	{ 0xd272d446, "__fentry__" },
-	{ 0xf5bae445, "__virt_addr_valid" },
-	{ 0xbd03ed67, "page_offset_base" },
-	{ 0xbd03ed67, "phys_base" },
-	{ 0xd272d446, "__stack_chk_fail" },
-	{ 0x6bded543, "get_free_pages_noprof" },
-	{ 0x48fd0ca0, "get_zeroed_page_noprof" },
-	{ 0xb54d37ac, "alloc_pages_noprof" },
-	{ 0xbd03ed67, "vmemmap_base" },
-	{ 0xc2614bbe, "param_ops_int" },
-	{ 0xe8213e80, "_printk" },
-	{ 0x02e1dca7, "free_pages" },
-	{ 0xba157484, "module_layout" },
+	{ 0x92997ed8, "_printk" },
+	{ 0x4302d0eb, "free_pages" },
+	{ 0xefd6cf06, "__aeabi_unwind_cpp_pr0" },
+	{ 0xb1ad28e0, "__gnu_mcount_nc" },
+	{ 0xf0fdf6cb, "__stack_chk_fail" },
+	{ 0xccf69887, "get_free_pages_noprof" },
+	{ 0x8f14d45b, "get_zeroed_page_noprof" },
+	{ 0x308416ce, "__alloc_pages_noprof" },
+	{ 0xe9b836d3, "mem_map" },
+	{ 0x987c11c7, "__pv_phys_pfn_offset" },
+	{ 0x2d7d2346, "param_ops_int" },
+	{ 0xf1ce2f51, "module_layout" },
 };
-
-static const u32 ____version_ext_crcs[]
-__used __section("__version_ext_crcs") = {
-	0xd272d446,
-	0xd272d446,
-	0xf5bae445,
-	0xbd03ed67,
-	0xbd03ed67,
-	0xd272d446,
-	0x6bded543,
-	0x48fd0ca0,
-	0xb54d37ac,
-	0xbd03ed67,
-	0xc2614bbe,
-	0xe8213e80,
-	0x02e1dca7,
-	0xba157484,
-};
-static const char ____version_ext_names[]
-__used __section("__version_ext_names") =
-	"__x86_return_thunk\0"
-	"__fentry__\0"
-	"__virt_addr_valid\0"
-	"page_offset_base\0"
-	"phys_base\0"
-	"__stack_chk_fail\0"
-	"get_free_pages_noprof\0"
-	"get_zeroed_page_noprof\0"
-	"alloc_pages_noprof\0"
-	"vmemmap_base\0"
-	"param_ops_int\0"
-	"_printk\0"
-	"free_pages\0"
-	"module_layout\0"
-;
 
 MODULE_INFO(depends, "");
 
 
-MODULE_INFO(srcversion, "6DCD339DFA3F4856A875932");
+MODULE_INFO(srcversion, "ED5A8D7CDFD3A3FDBC036E9");

@@ -22,25 +22,26 @@ __used __section("__versions") = {
 	{ 0xd272d446, "__x86_return_thunk" },
 	{ 0x9f222e1e, "alloc_chrdev_region" },
 	{ 0xe8213e80, "_printk" },
-	{ 0xea5ac1d9, "class_create" },
+	{ 0xb6c08e4c, "class_create" },
 	{ 0xbd03ed67, "random_kmalloc_seed" },
-	{ 0xfed1e3bc, "kmalloc_caches" },
-	{ 0x70db3fe4, "__kmalloc_cache_noprof" },
+	{ 0x08bfc903, "kmalloc_caches" },
+	{ 0xecd17989, "__kmalloc_cache_noprof" },
 	{ 0xdd6830c7, "sprintf" },
-	{ 0xefd5d5d8, "cdev_init" },
-	{ 0x4c1dbbd9, "cdev_add" },
-	{ 0xf98f93a7, "device_create" },
+	{ 0x4c075f7d, "cdev_init" },
+	{ 0x6459621a, "cdev_add" },
+	{ 0xf350d701, "device_create" },
 	{ 0x90a48d82, "__ubsan_handle_out_of_bounds" },
-	{ 0x6fdeeff0, "device_destroy" },
-	{ 0x0c72f9ad, "cdev_del" },
+	{ 0x30a11079, "device_destroy" },
+	{ 0x0c92f06e, "cdev_del" },
 	{ 0xcb8b6ec6, "kfree" },
-	{ 0x14fcde53, "class_destroy" },
+	{ 0xfd4b4a36, "class_destroy" },
 	{ 0x0bc5fb0d, "unregister_chrdev_region" },
 	{ 0xd272d446, "dump_stack" },
+	{ 0x546c19d9, "validate_usercopy_range" },
 	{ 0xa61fd7aa, "__check_object_size" },
 	{ 0x092a35a2, "_copy_from_user" },
 	{ 0x092a35a2, "_copy_to_user" },
-	{ 0xba157484, "module_layout" },
+	{ 0x814e12e5, "module_layout" },
 };
 
 static const u32 ____version_ext_crcs[]
@@ -49,25 +50,26 @@ __used __section("__version_ext_crcs") = {
 	0xd272d446,
 	0x9f222e1e,
 	0xe8213e80,
-	0xea5ac1d9,
+	0xb6c08e4c,
 	0xbd03ed67,
-	0xfed1e3bc,
-	0x70db3fe4,
+	0x08bfc903,
+	0xecd17989,
 	0xdd6830c7,
-	0xefd5d5d8,
-	0x4c1dbbd9,
-	0xf98f93a7,
+	0x4c075f7d,
+	0x6459621a,
+	0xf350d701,
 	0x90a48d82,
-	0x6fdeeff0,
-	0x0c72f9ad,
+	0x30a11079,
+	0x0c92f06e,
 	0xcb8b6ec6,
-	0x14fcde53,
+	0xfd4b4a36,
 	0x0bc5fb0d,
 	0xd272d446,
+	0x546c19d9,
 	0xa61fd7aa,
 	0x092a35a2,
 	0x092a35a2,
-	0xba157484,
+	0x814e12e5,
 };
 static const char ____version_ext_names[]
 __used __section("__version_ext_names") =
@@ -90,6 +92,7 @@ __used __section("__version_ext_names") =
 	"class_destroy\0"
 	"unregister_chrdev_region\0"
 	"dump_stack\0"
+	"validate_usercopy_range\0"
 	"__check_object_size\0"
 	"_copy_from_user\0"
 	"_copy_to_user\0"
@@ -99,4 +102,4 @@ __used __section("__version_ext_names") =
 MODULE_INFO(depends, "");
 
 
-MODULE_INFO(srcversion, "C4270AE59DF003CD4B7D349");
+MODULE_INFO(srcversion, "8ED08B9CEEAC86836B3F383");

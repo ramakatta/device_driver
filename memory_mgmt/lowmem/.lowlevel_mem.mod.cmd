@@ -1,1 +1,1 @@
-savedcmd_lowlevel_mem.mod := printf '%s\n'   lowlevel_mem.o | awk '!x[$$0]++ { print("./"$$0) }' > lowlevel_mem.mod
+savedcmd_/home/vector/rama/Vector_DD/Vector_DD/memory_mgmt/lowmem/lowlevel_mem.mod := printf '%s\n'   lowlevel_mem.o | awk '!x[$$0]++ { print("/home/vector/rama/Vector_DD/Vector_DD/memory_mgmt/lowmem/"$$0) }' > /home/vector/rama/Vector_DD/Vector_DD/memory_mgmt/lowmem/lowlevel_mem.mod

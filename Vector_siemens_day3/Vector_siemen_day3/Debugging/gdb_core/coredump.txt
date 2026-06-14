@@ -1,0 +1,38 @@
+Certain signals cause a process to create a core dump and terminate . A core dump is a file containing a memory image of the process at thetime it terminated. (The term core derives from an old memory technology.) 
+This memory image can be loaded into a debugger in order to examine the state of a program’s code and data at the moment when the signal arrived.
+One way of causing a program to produce a core dump is to type the quit character (usually Control-\), which causes the SIGQUIT signal to be generated:
+
+$ ulimit -c unlimited
+$ sleep 30
+Type Control-\
+Quit (core dumped)
+$ ls -l core
+-rw-------
+1 mtk
+Shows core dump file for sleep(1)
+users
+57344 Nov 30 13:39 core
+In this example, the message Quit (core dumped) is printed by the shell, which detects that its child (the process running sleep) was killed by SIGQUIT and did a core dump.
+The core dump file was created in the working directory of the process, with the name core . This is the default location and name for a core dump file; shortly,
+we explain how these defaults can be changed.
+Many implementations provide a tool (e.g., gcore on FreeBSD and Solaris) to obtain a core dump of a running process. Similar functionality is available on Linux by attaching to a running process using gdb and then using the gcore command. 
+
+$gcore pid
+
+A core dump is not produced in the following circumstances:
+
+The process doesn’t have permission to write the core dump file. This could happen because the process doesn’t have write permission for the directory in which the core dump file is to be created, or because a file with the same name
+already exists and either is not writable or is not a regular file (e.g., it is a directory or a symbolic link).
+A regular file with the same name already exists, and is writable, but there is more than one (hard) link to the file.
+The directory in which the core dump file is to be created doesn’t exist. The process resource limit on the size of a core dump file is set to 0. 
+
+sysctl -w kernel.core_pattern=core
+Run ulimit -c unlimited
+Run sudo systemctl enable apport
+Run sudo service apport start
+echo "core" > /proc/sys/kernel/core_pattern
+sysctl kernel.core_pattern
+gdb ./a.out core
+#gcc -g symbols.c
+#nm a.out 
+#addr2line -e a.out   0x00000000000011a0
