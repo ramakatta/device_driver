@@ -10,157 +10,164 @@
 #include <linux/pci.h>
 #include <linux/kthread.h> 
 #include <linux/interrupt.h> 
+#include <linux/device.h>
+
 static int mydev_open(struct inode *inode, struct file *file);
 static int mydev_close(struct inode *inode, struct file *file);
 static int mydev_fasync(int fd, struct file *fp, int mode);
 
 MODULE_AUTHOR("Rama Krishna");
 MODULE_LICENSE("GPL");
+
 #define LOCAL_IRQ_NO 1
-
-struct myadvdev
-{
-  struct cdev mycdev;
-};
-
-wait_queue_head_t wq;
-struct class *myclass;
-struct tasklet_struct my_tasklet;
-dev_t mydevno;
-static struct  task_struct *ts;
-struct myadvdev mydevcb;
-struct fasync_struct *async_queue;
-void do_mytasklet(unsigned long data);
-
 #define MYDEV_NO_DEVS 1
 #define MYDEV_NAME "myadvdev"
-static struct file_operations mydev_ops =
-{
-.open = mydev_open,
-.release = mydev_close,
-.fasync = mydev_fasync,
+
+struct myadvdev {
+    struct cdev mycdev;
 };
 
+static wait_queue_head_t wq;
+static struct class *myclass;
+static struct tasklet_struct my_tasklet;
+static dev_t mydevno;
+static struct task_struct *ts;
+static struct myadvdev mydevcb;
+static struct fasync_struct *async_queue;
 
-static atomic_t data_ready;
+static struct file_operations mydev_ops = {
+    .owner   = THIS_MODULE,
+    .open    = mydev_open,
+    .release = mydev_close,
+    .fasync  = mydev_fasync,
+};
+
+static atomic_t data_ready = ATOMIC_INIT(0);
 static int my_devid;
-static irqreturn_t isr_routine(int irq,void *dev_id)
+
+static irqreturn_t isr_routine(int irq, void *dev_id)
 {
-  atomic_set (&data_ready, 1);
-  tasklet_schedule(&my_tasklet);
-  printk("FRom ISR\n");
-  return IRQ_HANDLED;
+    /* Note: If sharing an IRQ line, verify your hardware's status register here */
+    atomic_set(&data_ready, 1);
+    tasklet_schedule(&my_tasklet);
+    return IRQ_HANDLED;
 }
+
+/* Legacy/Older Signature handler match for tasklet_init */
 void do_mytasklet(unsigned long data)
 {
-  wake_up_interruptible(&wq);
-}
-static int mydev_open(struct inode *inode, struct file * file)
-{
- struct myadvdev *pcb;
- pcb = container_of(inode->i_cdev, struct myadvdev, mycdev);
- file->private_data = pcb;
-return 0;
+    wake_up_interruptible(&wq);
 }
 
-static int mydev_close(struct inode *inode, struct file * file)
+static int mydev_open(struct inode *inode, struct file *file)
 {
-printk("<1>" "device closed\n");
-return 0;
+    struct myadvdev *pcb = container_of(inode->i_cdev, struct myadvdev, mycdev);
+    file->private_data = pcb;
+    return 0;
 }
 
 static int mydev_fasync(int fd, struct file *fp, int mode)
 {
-printk("<1>" "Async called \n");
-return fasync_helper(fd,fp,mode,&async_queue);
+    return fasync_helper(fd, fp, mode, &async_queue);
+}
+
+static int mydev_close(struct inode *inode, struct file *file)
+{
+    /* FIX 3: Detach from fasync queue to prevent dangling pointers on close */
+    mydev_fasync(-1, file, 0);
+    return 0;
 }
 
 int kthread_fct(void *data)
 {
-	while(1)
-	{
-               printk("......");  
-	       wait_event_interruptible(wq, (atomic_read (&data_ready)!=0));
-	       atomic_set (&data_ready, 0);
-		if(kthread_should_stop())
-			do_exit(0);
-		if(async_queue)
-			kill_fasync(&async_queue,SIGIO,POLL_IN);
-	}	
+    while (!kthread_should_stop()) {
+        /* FIX 2: Added kthread_should_stop check inside the wait macro */
+        wait_event_interruptible(wq, (atomic_read(&data_ready) != 0) || kthread_should_stop());
+        
+        if (kthread_should_stop())
+            break; /* FIX 1: Safely break instead of using destructive do_exit(0) */
+
+        atomic_set(&data_ready, 0);
+
+        if (async_queue) {
+            kill_fasync(&async_queue, SIGIO, POLL_IN);
+        }
+    } 
+    return 0;
 }
 
-/*******************************************************************************
-* Name: init_module
-*******************************************************************************/
 int init_module(void)
 {
-   int res;
-   int retval;
-   res = alloc_chrdev_region(&mydevno, 0, MYDEV_NO_DEVS, MYDEV_NAME);
-   if(res<0)
-   {
-	printk("<1>" "Registration Error %d\n",res);
-	return res;
-   }
-   else 
-   {
-	printk("<1>" "Registration success %d\n",res);
-   }
+    int res;
 
-   myclass = class_create(THIS_MODULE, MYDEV_NAME);
+    init_waitqueue_head(&wq);
+    tasklet_init(&my_tasklet, do_mytasklet, 0);
 
-   init_waitqueue_head(&wq);
-   cdev_init(&mydevcb.mycdev, &mydev_ops);
-   mydevcb.mycdev.owner = THIS_MODULE;
-   res = cdev_add(&mydevcb.mycdev, mydevno, 1);
-
-   if(res)
-      goto fail_exit;
-      printk("cdev added successully %d\n",res);
-      device_create(myclass, NULL, mydevno, NULL, MYDEV_NAME);
-      
-     tasklet_init(&my_tasklet,do_mytasklet,0);
-     ts=kthread_run(kthread_fct,NULL,"eint_kthread");
-     if(!ts)
-     {
-	printk("Unable to create kernel thread\n");
-	goto fail_exit1;
-     }	
-    if(request_irq(LOCAL_IRQ_NO,isr_routine,IRQF_SHARED,"irq0",&my_devid))
-    {
-	printk("can't get interrupt:%x\n",LOCAL_IRQ_NO);
-	goto fail_exit1;
+    res = alloc_chrdev_region(&mydevno, 0, MYDEV_NO_DEVS, MYDEV_NAME);
+    if (res < 0) {
+        pr_err("Registration Error %d\n", res);
+        return res;
     }
 
-     printk("Interrupt installed sucessfully\n");
-     return 0;
+    /* Target appropriate class_create call signature matching your build environment */
+    myclass = class_create(THIS_MODULE, MYDEV_NAME);
+    if (IS_ERR(myclass)) {
+        res = PTR_ERR(myclass);
+        goto fail_unregister;
+    }
 
- fail_exit:
- cdev_del(&mydevcb.mycdev);
- unregister_chrdev_region(mydevno, MYDEV_NO_DEVS);
- device_destroy(myclass, mydevno);
- class_destroy(myclass);
- return res;
- fail_exit1:
- cdev_del(&mydevcb.mycdev);
- unregister_chrdev_region(mydevno, MYDEV_NO_DEVS);
- device_destroy(myclass, mydevno);
- class_destroy(myclass);
- kthread_stop(ts);
- return res;
+    cdev_init(&mydevcb.mycdev, &mydev_ops);
+    mydevcb.mycdev.owner = THIS_MODULE;
+    res = cdev_add(&mydevcb.mycdev, mydevno, 1);
+    if (res)
+        goto fail_destroy_class;
+
+    if (IS_ERR(device_create(myclass, NULL, mydevno, NULL, MYDEV_NAME))) {
+        res = -ENOMEM;
+        goto fail_del_cdev;
+    }
+      
+    ts = kthread_run(kthread_fct, NULL, "eint_kthread");
+    if (IS_ERR(ts)) {
+        res = PTR_ERR(ts);
+        goto fail_destroy_device;
+    }  
+
+    res = request_irq(LOCAL_IRQ_NO, isr_routine, IRQF_SHARED, "irq0", &my_devid);
+    if (res) {
+        goto fail_stop_kthread;
+    }
+
+    return 0;
+
+/* Clean, step-by-step unrolling of failed init targets */
+fail_stop_kthread:
+    kthread_stop(ts);
+fail_destroy_device:
+    device_destroy(myclass, mydevno);
+fail_del_cdev:
+    cdev_del(&mydevcb.mycdev);
+fail_destroy_class:
+    class_destroy(myclass);
+fail_unregister:
+    unregister_chrdev_region(mydevno, MYDEV_NO_DEVS);
+    return res;
 }
 
-/*******************************************************************************
-* Name:cleanup_module
-*******************************************************************************/
 void cleanup_module(void)
 {
-kthread_stop(ts);
-cdev_del(&mydevcb.mycdev);
-unregister_chrdev_region(mydevno, MYDEV_NO_DEVS);
-device_destroy(myclass, mydevno);
-class_destroy(myclass);
-free_irq(LOCAL_IRQ_NO,&my_devid);
-printk(KERN_ALERT "char dev unloaded successfully \n");
-}
+    /* FIX: Always free hardware hooks (IRQ) BEFORE breaking infrastructure down */
+    free_irq(LOCAL_IRQ_NO, &my_devid);
+    
+    if (ts) {
+        kthread_stop(ts);
+    }
 
+    tasklet_kill(&my_tasklet);
+    device_destroy(myclass, mydevno);
+    cdev_del(&mydevcb.mycdev);
+    class_destroy(myclass);
+    unregister_chrdev_region(mydevno, MYDEV_NO_DEVS);
+    
+    pr_alert("char dev unloaded successfully\n");
+}

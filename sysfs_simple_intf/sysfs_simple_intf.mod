@@ -1,1 +1,0 @@
-./sysfs_simple_intf.o

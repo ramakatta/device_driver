@@ -1,1 +1,0 @@
-./khello_arg.o

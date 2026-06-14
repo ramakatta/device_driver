@@ -9,4 +9,6 @@ insmod driver.ko
 
 rmmod driver.ko
 
+1. Return the error codes with appropriate error values
+
 

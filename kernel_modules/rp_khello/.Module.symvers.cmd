@@ -1,1 +1,0 @@
-savedcmd_/home/vector/rama/Vector_DD/Vector_DD/kernel_modules/rp_khello/Module.symvers :=  scripts/mod/modpost -M -m -a      -o /home/vector/rama/Vector_DD/Vector_DD/kernel_modules/rp_khello/Module.symvers -T /home/vector/rama/Vector_DD/Vector_DD/kernel_modules/rp_khello/modules.order -i Module.symvers -e 

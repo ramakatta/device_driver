@@ -1,1 +1,0 @@
-savedcmd_core_lkm.ko := ld -r -m elf_x86_64 -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T /usr/src/linux-headers-6.14.0-37-generic/scripts/module.lds -o core_lkm.ko core_lkm.o core_lkm.mod.o .module-common.o

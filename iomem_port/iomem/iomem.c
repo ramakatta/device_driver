@@ -4,7 +4,7 @@
 #include <linux/io.h>
 #include <linux/sched.h>
 
-#define GPIO_REG_BASE 0x7e200000
+#define GPIO_REG_BASE 0x3f200000
 #define GPIO_REG_LEN 164
 static void __iomem *iobase;
 

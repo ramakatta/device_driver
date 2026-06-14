@@ -31,11 +31,8 @@ static ssize_t mtxdemo_read(struct file *f, char __user *buf,
 
     pr_info("mtx_demo: read() trying to take mutex interruptibly...\n");
 
-    ret = mutex_lock_interruptible(&mtx);
-    if (ret) {
-        pr_info("mtx_demo: read() interrupted by signal while waiting for mutex (ret=%d)\n", ret);
-        return -ERESTARTSYS; /* common for syscalls so libc may show EINTR */
-    }
+    mutex_lock(&mtx);
+   
 
     pr_info("mtx_demo: read() acquired mutex; releasing immediately.\n");
     mutex_unlock(&mtx);
@@ -51,7 +48,7 @@ static ssize_t mtxdemo_read(struct file *f, char __user *buf,
 static long mtxdemo_unlocked_ioctl(struct file *f, unsigned int cmd, unsigned long arg)
 {
     unsigned int seconds;
-
+    int ret;
     switch (cmd) {
     case MTXDEMO_IOC_HOLD:
         if (copy_from_user(&seconds, (void __user *)arg, sizeof(seconds)))
@@ -60,8 +57,11 @@ static long mtxdemo_unlocked_ioctl(struct file *f, unsigned int cmd, unsigned lo
         pr_info("mtx_demo: ioctl HOLD for %u seconds; acquiring mutex non-interruptibly.\n", seconds);
 
         /* The holder takes the mutex with the non-interruptible path to keep it. */
-        mutex_lock(&mtx);
-
+        ret = mutex_lock_interruptible(&mtx);
+        if (ret) {
+            pr_info("mtx_demo: read() interrupted by signal while waiting for mutex (ret=%d)\n", ret);
+            return -ERESTARTSYS; /* common for syscalls so libc may show EINTR */
+            }
         while (seconds--) {
             /* Sleep in 1s chunks so removal remains responsive. */
             msleep(1000);
